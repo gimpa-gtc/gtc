@@ -9,3 +9,12 @@ class HomeView(View):
     def get(self, request):
         context = {}
         return render(request, self.template, context)
+
+
+class ContactView(View):
+    '''Contact page view.'''
+    template = 'website/contact.html'
+
+    def get(self, request):
+        context = {}
+        return render(request, self.template, context)
