@@ -3,7 +3,7 @@ from django.views import View
 
 
 class DashboardView(View):
-    template = 'dashboard/dashboard.html'
+    template = 'dashboard/pages/dashboard.html'
 
     def get(self, request):
         context ={}
