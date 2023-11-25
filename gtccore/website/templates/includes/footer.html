@@ -19,10 +19,7 @@
                             <i class="fa fa-envelope-o text-theme-colored2 mr-5"></i>
                             <a class="text-gray" href="#">contact@gtc.gimpa.com</a>
                         </li>
-                        <li class="m-0 pl-10 pr-10">
-                            <i class="fa fa-globe text-theme-colored2 mr-5"></i>
-                            <a class="text-gray" href="#">www.gtc.gimpa.com</a>
-                        </li>
+                       
                     </ul>
                     <ul class="styled-icons icon-sm icon-bordered icon-circled clearfix mt-10">
                         <li>
@@ -49,10 +46,10 @@
                         Useful Links
                     </h4>
                     <ul class="angle-double-right list-border">
-                        <li><a href="#">Home Page</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Our Mission</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="{% url 'website:home' %}">Home</a></li>
+                        <li><a href="{% url 'website:home' %}#about-gtc">About</a></li>
+                        <li><a href="{% url 'website:home' %}#about-vision">Vision</a></li>
+                        <li><a href="{% url 'website:faqs' %}">FAQ</a></li>
                     </ul>
                 </div>
             </div>
@@ -66,29 +63,23 @@
                         <ul class="list-border">
                             <li class="clearfix">
                                 <span> Mon: </span>
-                                <div class="value pull-right">8.00 am - 6.00 pm</div>
+                                <div class="value pull-right">8.30 am - 5.00 pm</div>
                             </li>
                             <li class="clearfix">
                                 <span> Tues:</span>
-                                <div class="value pull-right">8.00 am - 6.00 pm</div>
+                                <div class="value pull-right">8.30 am - 5.00 pm</div>
                             </li>
                             <li class="clearfix">
                                 <span> Wed:</span>
-                                <div class="value pull-right">8.00 am - 6.00 pm</div>
+                                <div class="value pull-right">8.30 am - 5.00 pm</div>
                             </li>
                             <li class="clearfix">
                                 <span> Thur:</span>
-                                <div class="value pull-right">8.00 am - 6.00 pm</div>
+                                <div class="value pull-right">8.30 am - 5.00 pm</div>
                             </li>
                             <li class="clearfix">
                                 <span> Fri : </span>
-                                <div class="value pull-right">9.00 pm - 4.00 pm</div>
-                            </li>
-                            <li class="clearfix">
-                                <span> Sat & Sun: </span>
-                                <div class="value pull-right bg-theme-colored2 text-white closed">
-                                    Closed
-                                </div>
+                                <div class="value pull-right">8.30 pm - 5.00 pm</div>
                             </li>
                         </ul>
                     </div>
