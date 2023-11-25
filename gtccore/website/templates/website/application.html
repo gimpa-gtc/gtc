@@ -1,0 +1,71 @@
+{% extends 'base/primary_base.html' %}
+
+{% load static %}
+
+{% block content %}
+ <!-- Start main-content -->
+ <div class="main-content">
+    <!-- Section: inner-header -->
+    <section class="inner-header divider layer-overlay overlay-theme-colored-7" data-bg-img="{% static 'website/images/bg/bg1.jpg' %}">
+        <div class="container pt-120 pb-60">
+            <!-- Section Content -->
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="secondary-text-color font-36">Application Status</h2>
+                        <ol class="breadcrumb text-left mt-10 white">
+                            <li><a href="{% url 'website:home' %}">Home</a></li>
+                            <li><a href="{% url 'website:home' %}#about-gtc">Application</a></li>
+                            <li class="active">Status</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider: Contact -->
+    <section class="divider">
+        <div class="container pt-50 pb-70">
+            <div class="row pt-10">
+                <div class="col-md-12">
+                    <h4 class="mt-0 mb-30 line-bottom-theme-colored-2">Check The Status of Your Application</h4>
+                    <!--  -->
+                    <small class="secondary-text-color mb-5">Enter the email, phone number and your admission id. The admission ID was sent to your phone number when you started your application process.</small> 
+                    <br> <br>
+                    <!-- Contact Form -->
+                    <form id="contact_form" name="contact_form" class="" action="" method="post">
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group mb-30">
+                                    <label for="phone">Phone Number</label>
+                                    <input id="phone" name="phone" class="form-control" type="text" placeholder="Phone Number" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group mb-30">
+                                    <label for="email">Email</label>
+                                    <input id="email" name="email" class="form-control required" type="email" placeholder="Email" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group mb-30">
+                                    <label for="application_id">Application ID</label>
+                                    <input id="application_id" name="application_id" class="form-control required" type="text" placeholder="Application ID" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-flat btn-default primary-color text-white bg-hover-theme-colored mr-5" data-loading-text="Please wait...">Check Status</button>
+                            <button type="reset" class="btn btn-flat btn-danger bg-hover-theme-colored">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- end main-content -->
+{% endblock %}
