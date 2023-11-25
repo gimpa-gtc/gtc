@@ -65,23 +65,23 @@
                     </a>
                     <ul class="menuzord-menu">
                         <li class="active">
-                            <a href="#home" class="primary-color">Home</a>
+                            <a href="{% url 'website:home' %}" class="primary-color">Home</a>
                         </li>
                         <li>
                             <a href="#">About Us</a>
                             <ul class="dropdown">
                                 <li>
-                                    <a href="#about-gtc">GTC</a>
+                                    <a href="{% url 'website:home' %}#about-gtc">GTC</a>
                                 </li>
                                 <li>
-                                    <a href="#about-facilitators">Facilitors</a>
+                                    <a href="{% url 'website:home' %}#about-facilitators">Facilitors</a>
                                 </li>
 
                                 <li>
-                                    <a href="#about-gallery">Gallery</a>
+                                    <a href="{% url 'website:home' %}#about-gallery">Gallery</a>
                                 </li>
                                 <li>
-                                    <a href="#">Contact</a>
+                                    <a href="{% url 'website:contact' %}">Contact</a>
                                 </li>
                                 <li>
                                     <a href="#">FAQ</a>
