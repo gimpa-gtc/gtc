@@ -27,3 +27,12 @@ class FaqsView(View):
     def get(self, request):
         context = {}
         return render(request, self.template, context)
+    
+
+class ApplicationView(View):
+    '''Application page view.'''
+    template = 'website/application.html'
+
+    def get(self, request):
+        context = {}
+        return render(request, self.template, context)
