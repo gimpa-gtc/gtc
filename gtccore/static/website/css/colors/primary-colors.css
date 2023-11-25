@@ -1,0 +1,33 @@
+
+/* 
+Set the primary color of the theme.
+primary-color: #012951
+secondary-color: #73b839
+*/
+.primary-color  {
+  background-color: #012951 !important;
+}
+
+.primary-text-color {
+  color: #012951 !important;
+}
+
+.secondary-color {
+  background-color: #73b839 !important;
+}
+
+.secondary-text-color {
+  color: #73b839 !important;
+}
+
+.menuzord-menu > li > a:hover{
+  background-color: #012951 !important;
+}
+
+.menuzord-menu > li > a:focus{
+  background-color: #012951 !important;
+}
+
+.menuzord-menu > li > a:active{
+  background-color: #012951 !important;
+}
