@@ -4,7 +4,7 @@ from django.views import View
 
 class HomeView(View):
     '''Home page view.'''
-    template = 'website/home.html'
+    template = 'website/index.html'
 
     def get(self, request):
         context = {}
