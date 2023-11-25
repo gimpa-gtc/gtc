@@ -9,16 +9,6 @@ import random
 import string
 
 
-'''
-List of models:
-1. User
-2. Application
-3. Admission
-4. Course
-5. Course Category
-6. Payment
-'''
-
 class CourseCategory(models.Model):
     '''Course category model'''
     name = models.CharField(max_length=100)
