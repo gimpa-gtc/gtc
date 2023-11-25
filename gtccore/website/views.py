@@ -18,3 +18,12 @@ class ContactView(View):
     def get(self, request):
         context = {}
         return render(request, self.template, context)
+    
+
+class FaqsView(View):
+    '''FAQs page view.'''
+    template = 'website/faqs.html'
+
+    def get(self, request):
+        context = {}
+        return render(request, self.template, context)
