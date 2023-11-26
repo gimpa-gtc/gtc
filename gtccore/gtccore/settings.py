@@ -25,6 +25,7 @@ INSTALLED_APPS = [
 
     'website.apps.WebsiteConfig',
     'dashboard.apps.DashboardConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
