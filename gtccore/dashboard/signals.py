@@ -14,7 +14,8 @@ def extract_applicant(sender, instance, created, **kwargs):
 
     applicant = Applicant.objects.filter(email=email, phone=phone).first()
     if applicant is not None:
-        pass
+        # Applicant already exists
+        return
     else:
         try:
             Applicant.objects.create(
