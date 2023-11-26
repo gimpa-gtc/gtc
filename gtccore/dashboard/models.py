@@ -137,3 +137,14 @@ class Applicant(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Notification(models.Model):
+    '''Notification model: used to send announcements to applicants'''
+
+    title = models.CharField(max_length=400)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.title
