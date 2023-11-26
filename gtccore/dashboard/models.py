@@ -129,6 +129,7 @@ class Payment(models.Model):
 
 
 class Applicant(models.Model):
+    '''Applicant model: Extracted from Applications'''
     name = models.CharField(max_length=300)
     email = models.CharField(max_length=50)
     phone = models.CharField(max_length=10)
