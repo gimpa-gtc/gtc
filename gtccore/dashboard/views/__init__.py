@@ -5,3 +5,4 @@ from .product import *
 from .invoice import *
 from .settings import *
 from .profile import *
+from .applications import *
