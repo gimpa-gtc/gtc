@@ -85,10 +85,10 @@ class Application(models.Model):
     # choices for payment mode: Online, Bank
     PAYMENT_STATUS = [(status.name, status.value) for status in PaymentStatus] #noqa
     
-    # choices for payment status: Pending, Paid
+    # choices for payment status: PENDING, Paid
     PAYMENT_MODE = [(mode.name, mode.value) for mode in PaymentMode] #noqa
 
-    # choices for application status: Pending, Approved, Rejected
+    # choices for application status: PENDING, APPROVED, Rejected
     APPLICATION_STATUS = [(status.name, status.value) for status in ApplicationStatus] #noqa
 
     application_id = models.CharField(max_length=15, default=generate_application_id, unique=True) #noqa
@@ -96,29 +96,29 @@ class Application(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    application_status = models.CharField(max_length=20, default='pending', choices=APPLICATION_STATUS) #noqa
-    payment_mode = models.CharField(max_length=20, default='pending', choices=PAYMENT_MODE) #noqa
-    payment_status = models.CharField(max_length=20, default='pending', choices=PAYMENT_STATUS) #noqa
+    application_status = models.CharField(max_length=20, default='PENDING', choices=APPLICATION_STATUS) #noqa
+    payment_mode = models.CharField(max_length=20, default='PENDING', choices=PAYMENT_MODE) #noqa
+    payment_status = models.CharField(max_length=20, default='PENDING', choices=PAYMENT_STATUS) #noqa
     created_at = models.DateTimeField(auto_now_add=True)
 
 
     def payment_color(self):
         '''Returns the color for the payment status'''
-        if self.payment_status == 'pending':
-            return 'background-color: #FFA500'
-        elif self.payment_status == 'paid':
-            return 'background-color: #32CD32'
+        if self.payment_status == 'PENDING':
+            return 'secondary'
+        elif self.payment_status == 'PAID':
+            return 'success'
         else:
-            return 'background-color: #DC143C'
+            return 'info'
         
     def status_color(self):
         '''Returns the color for the application status'''
-        if self.application_status == 'pending':
-            return 'background-color: #FFA500'
-        elif self.application_status == 'approved':
-            return 'background-color: #32CD32'
+        if self.application_status == 'PENDING':
+            return 'secondary'
+        elif self.application_status == 'APPROVED':
+            return 'success'
         else:
-            return 'background-color: #DC143C'
+            return 'info'
 
     def __str__(self):
         return self.name
@@ -130,7 +130,7 @@ class Admission(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.application.application_id
     
 
 class Payment(models.Model):
