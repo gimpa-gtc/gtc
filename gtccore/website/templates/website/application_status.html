@@ -1,0 +1,99 @@
+{% extends 'base/primary_base.html' %} {% load static %} {% block content %}
+<!-- Start main-content -->
+<div class="main-content">
+    <!-- Section: inner-header -->
+    <section class="inner-header divider layer-overlay overlay-theme-colored-7"
+        data-bg-img="{% static 'website/images/bg/bg1.jpg' %}">
+        <div class="container pt-120 pb-60">
+            <!-- Section Content -->
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="secondary-text-color font-36">Application Status</h2>
+                        <ol class="breadcrumb text-left mt-10 white">
+                            <li><a href="{% url 'website:home' %}">Home</a></li>
+                            <li>
+                                <a href="{% url 'website:home' %}#about-gtc">Application</a>
+                            </li>
+                            <li class="active">Status</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider: Contact -->
+    <section class="divider">
+        <div class="container pt-50 pb-70">
+            <div class="row pt-10">
+                <div class="col-md-12">
+                    <h4 class="mt-0 mb-30 line-bottom-theme-colored-2">
+                        Your Application Status
+                    </h4>
+                    <!--  -->
+                    <br />
+                    <br />
+
+                    <!-- details of application -->
+                    <div class="card container">
+                        <h4 class="text-center card-title">Application Details</h4>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 col-xs-12 text-left mb-5">
+                                    <b>Name</b>
+                                    <p>Prince Kyeremanteng Samuel</p>
+                                </div>
+                                <div class="col-md-4 col-xs- text-left mb-5">
+                                    <b>Email</b>
+                                    <p>prince@gmail.com</p>
+                                </div>
+                                <div class="col-md-4 col-xs-12 text-left mb-5">
+                                    <b>Phone</b>
+                                    <p>0558366133</p>
+                                </div>
+                                <div class="col-md-4 col-xs-12 text-left mb-5">
+                                    <b>Application ID</b>
+                                    <p>GTC-AP-000001</p>
+                                </div>
+                                <div class="col-md-4 col-xs-12 text-left mb-5">
+                                    <b>Application Status</b> <br>
+                                    <p class="badge" style="background-color: yellowgreen;">approved</p>
+                                </div>
+                                <div class="col-md-4 col-xs-12 text-left mb-5">
+                                    <b>Course</b>
+                                    <p>Advanced Software Engineering</p>
+                                </div>
+                                <div class="col-md-4 col-xs-12 text-left mb-5">
+                                    <b>Payment Mode</b>
+                                    <p>Online</p>
+                                </div>
+                                <div class="col-md-4 col-xs-12 text-left mb-5">
+                                    <b>Payment Status</b> <br>
+                                    <p class="badge" style="background-color: yellowgreen;">paid</p>
+                                </div>
+                                <div class="col-md-4 col-xs-12 text-left mb-5">
+                                    <b>Date</b>
+                                    <p>26 Nov 2023 12:30pm</p>
+                                </div>
+
+                                <div class="col-12">
+                                    <!-- <form action="">
+                                        <input type="hidden" name="application_id">
+
+                                        <button type="submit" class="btn btn-primary btn-sm">Download Admission Letter</button>
+                                    </form> -->
+
+                                    <a href="{% url 'website:download_letter' %}" class="btn btn-primary btn-sm">Download Admission Letter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- end main-content -->
+{% endblock %}
