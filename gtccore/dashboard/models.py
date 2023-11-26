@@ -148,3 +148,25 @@ class Notification(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class Faq(models.Model):
+    '''Frequently asked questions model'''
+    question = models.CharField(max_length=400)
+    answer = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.question
+
+
+class Contact(models.Model):
+    '''Contact model'''
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.name
