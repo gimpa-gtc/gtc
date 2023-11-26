@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views import View
 from django.db.models import Q
 from io import BytesIO
+from dashboard.models import Application
 
 from gtccore.library.services import generate_admission_letter
 
@@ -48,7 +49,19 @@ class ApplicationStatusView(View):
     template = 'website/application_status.html'
 
     def get(self, request):
-        context = {}
+        application_id = request.GET.get('application_id')
+        email = request.GET.get('email')
+        phone = request.GET.get('phone')
+
+        application = Application.objects.filter(
+            Q(application_id=application_id) &
+            Q(email=email) &
+            Q(phone=phone)
+        ).first()
+
+        context = {
+            'application': application
+        }
         return render(request, self.template, context)
     
 
@@ -57,6 +70,8 @@ class DownloadAdmissionLetterView(View):
     template = 'website/download_admission_letter.html'
 
     def get(self, request):
+
+
         pdf = generate_admission_letter()
 
         # Create a BytesIO buffer to store the PDF content
