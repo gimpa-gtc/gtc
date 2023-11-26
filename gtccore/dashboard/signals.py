@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 from .models import Application, Applicant, Notification, CustomCourseRequest
 from gtccore.library.services import send_sms
-from gtccore.settings import SENDER_ID, ARKESEL_API_KEY
+from gtccore.settings import SENDER_ID
 
 
 @receiver(post_save, sender=Application)
