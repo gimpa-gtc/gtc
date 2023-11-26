@@ -105,11 +105,20 @@ class Application(models.Model):
     def payment_color(self):
         '''Returns the color for the payment status'''
         if self.payment_status == 'pending':
-            return '#FFA500'
+            return 'background-color: #FFA500'
         elif self.payment_status == 'paid':
-            return '#32CD32'
+            return 'background-color: #32CD32'
         else:
-            return '#DC143C'
+            return 'background-color: #DC143C'
+        
+    def status_color(self):
+        '''Returns the color for the application status'''
+        if self.application_status == 'pending':
+            return 'background-color: #FFA500'
+        elif self.application_status == 'approved':
+            return 'background-color: #32CD32'
+        else:
+            return 'background-color: #DC143C'
 
     def __str__(self):
         return self.name
