@@ -6,6 +6,7 @@ from .models import Application, Applicant
 
 @receiver(post_save, sender=Application)
 def extract_applicant(sender, instance, created, **kwargs):
+    '''For every saved Application, extract and save the corresponding Applicant'''
     email = instance.email
     phone = instance.phone
 
@@ -13,8 +14,12 @@ def extract_applicant(sender, instance, created, **kwargs):
     if applicant is not None:
         pass
     else:
-        Applicant.objects.create(
-            email=instance.email,
-            phone=instance.phone,
-            name=instance.name
-        )
+        try:
+            Applicant.objects.create(
+                email=instance.email,
+                phone=instance.phone,
+                name=instance.name
+            )
+        except Exception as er:
+            print(f"Error: {er}")
+        return True
