@@ -45,43 +45,44 @@
                             <div class="row">
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Name</b>
-                                    <p>Prince Kyeremanteng Samuel</p>
+                                    <p>{{application.name}}</p>
                                 </div>
                                 <div class="col-md-4 col-xs- text-left mb-5">
                                     <b>Email</b>
-                                    <p>prince@gmail.com</p>
+                                    <p>{{application.email}}</p>
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Phone</b>
-                                    <p>0558366133</p>
+                                    <p>{{application.phone}}</p>
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Application ID</b>
-                                    <p>GTC-AP-000001</p>
+                                    <p>{{application.application_id}}</p>
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Application Status</b> <br>
-                                    <p class="badge" style="background-color: yellowgreen;">approved</p>
+                                    <p class="badge" style="background-color: yellowgreen;">{{application.application_status}}</p>
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Course</b>
-                                    <p>Advanced Software Engineering</p>
+                                    <p>{{application.course.title}}</p>
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Payment Mode</b>
-                                    <p>Online</p>
+                                    <p>{{application.payment_mode}}</p>
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Payment Status</b> <br>
-                                    <p class="badge" style="background-color: yellowgreen;">paid</p>
+                                    <p class="badge" style="background-color: yellowgreen;">{{application.payment_status}}</p>
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Date</b>
-                                    <p>26 Nov 2023 12:30pm</p>
+                                    <p>{{application.created_at}}</p>
                                 </div>
 
-                                <div class="col-12">
-                                    <a href="{% url 'website:download_letter' %}" class="btn btn-primary btn-sm">Download Admission Letter</a>
+                                <br>
+                                <div class="col-12 mt-5">
+                                    <a href="{% url 'website:download_letter' %}?application_id={{application.application_id}}?email={{application.email}}?phone={{application.phone}}" class="btn btn-primary btn-sm">Download Admission Letter</a>
                                 </div>
                             </div>
                         </div>
