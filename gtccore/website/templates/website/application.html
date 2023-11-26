@@ -34,7 +34,7 @@
                     <small class="secondary-text-color mb-5">Enter the email, phone number and your admission id. The admission ID was sent to your phone number when you started your application process.</small> 
                     <br> <br>
                     <!-- Contact Form -->
-                    <form id="contact_form" name="contact_form" class="" action="" method="post">
+                    <form id="contact_form" name="contact_form" class="" action="{% url 'website:application_status' %}" method="GET">
 
                         <div class="row">
                             <div class="col-sm-4">
