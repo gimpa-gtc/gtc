@@ -72,14 +72,15 @@ class Course(models.Model):
         return Admission.objects.filter(application__course=self).count()
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Application(models.Model):
     '''Application model'''
     def generate_application_id() -> str:
         '''Generates a unique application id'''
-        return 'GTC-AP-'.join(random.choices(string.digits, k=7))
+        sub = 'GTC-AP-'
+        return sub + ''.join(random.choices(string.digits, k=7))
     
     # choices for payment mode: Online, Bank
     PAYMENT_STATUS = [(status.name, status.value) for status in PaymentStatus] #noqa
@@ -99,6 +100,16 @@ class Application(models.Model):
     payment_mode = models.CharField(max_length=20, default='pending', choices=PAYMENT_MODE) #noqa
     payment_status = models.CharField(max_length=20, default='pending', choices=PAYMENT_STATUS) #noqa
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+    def payment_color(self):
+        '''Returns the color for the payment status'''
+        if self.payment_status == 'pending':
+            return '#FFA500'
+        elif self.payment_status == 'paid':
+            return '#32CD32'
+        else:
+            return '#DC143C'
 
     def __str__(self):
         return self.name
