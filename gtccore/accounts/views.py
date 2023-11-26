@@ -32,5 +32,4 @@ class LogoutView(View):
     def get(self, request):
         '''Handles GET requests'''
         logout(request)
-        messages.success(request, 'Successfully logged out')
         return redirect('website:home')
