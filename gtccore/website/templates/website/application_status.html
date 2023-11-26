@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Application Status</b> <br>
-                                    <p class="badge" style="background-color: yellowgreen;">{{application.application_status}}</p>
+                                    <p class="badge bg-{{application.status_color}}">{{application.application_status}}</p>
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Course</b>
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Payment Status</b> <br>
-                                    <p class="badge" style="background-color: yellowgreen;">{{application.payment_status}}</p>
+                                    <p class="badge bg-{{application.payment_color}}">{{application.payment_status}}</p>
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Date</b>
@@ -81,10 +81,11 @@
                                 </div>
 
                                 <br>
-
+                                {% if application.application_status == 'APPROVED' %}
                                 <div class="col-12 mt-5">
                                     <a href="{% url 'website:download_letter' %}?application_id={{application.application_id}}?email={{application.email}}?phone={{application.phone}}" class="btn btn-primary btn-sm">Download Admission Letter</a>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                         {% else %}
