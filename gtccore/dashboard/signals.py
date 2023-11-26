@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .models import Application, Applicant, Notification, CustomCourseRequest
+from .models import Admission, Application, Applicant, Notification, CustomCourseRequest
 from gtccore.library.services import send_sms
 from gtccore.settings import SENDER_ID
 
@@ -54,3 +54,23 @@ def notify_custom_course_admin(sender, instance, created, **kwargs):
     msg = f"Hello Admin, \nA new request for a custom course has been received. Please check the admin panel for details."
     send_sms(SENDER_ID, msg, ["0558366133"])
     return True
+
+
+@receiver(post_save, sender=Application)
+def generate_admission(sender, instance, created, **kwargs):
+    '''Generate admission number for applicant'''
+    admission = Admission.objects.filter(application=instance).first()
+    approved = instance.application_status == 'APPROVED'
+    # Create admission if application is approved and admission is None
+    if approved and admission is None:
+        try:
+            Admission.objects.create(
+                application=instance,
+            )
+        except Exception as er:
+            print(f"Error: {er}")
+        return True
+    # Delete admission if application is not approved
+    if not(approved) and admission is not None:
+        admission.delete()
+        return True
