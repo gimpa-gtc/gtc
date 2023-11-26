@@ -16,8 +16,8 @@
             <!-- Main -->
             <ul>
                 <li class="menu-title"><span>Main</span></li>
-                <li class="submenu">
-                    <a href="#"><i class="fe fe-home"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
+                <li class="">
+                    <a href="{% url 'dashboard:dashboard' %}"><i class="fe fe-home"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                 </li>
             </ul>
             <!-- /Main -->
@@ -26,10 +26,13 @@
             <ul>
                 <li class="menu-title"><span>Applications</span></li>
                 <li>
-                    <a href=""><i class="fe fe-users"></i> <span>Applications</span></a>
+                    <a href="{% url 'dashboard:applications' %}"><i class="fe fe-users"></i> <span>Applications</span></a>
                 </li>
                 <li>
                     <a href=""><i class="fe fe-file"></i> <span>Admissions</span></a>
+                </li>
+                <li>
+                    <a href=""><i class="fe fe-file"></i> <span>Applicants</span></a>
                 </li>
             </ul>
             <!-- /Customers -->
@@ -62,8 +65,8 @@
                 <li class="submenu">
                     <a href="#"><i class="fe fe-user"></i> <span> Manage Users</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="add-user.html">Add User</a></li>
-                        <li><a href="users.html">Users</a></li>
+                        <li><a href="">Add User</a></li>
+                        <li><a href="">Users</a></li>
                     </ul>
                 </li>
                 <li>
@@ -116,6 +119,9 @@
                 </li>
                 <li>
                     <a href=""><i class="fe fe-printer"></i> <span>Custom Courses</span></a>
+                </li>
+                <li>
+                    <a href=""><i class="fe fe-printer"></i> <span>Notifications</span></a>
                 </li>
                
             </ul>
