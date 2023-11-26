@@ -1,3 +1,6 @@
+import array
+
+import requests
 
 from fpdf import FPDF
 
