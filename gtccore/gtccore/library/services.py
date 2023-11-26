@@ -4,6 +4,8 @@ import requests
 
 from fpdf import FPDF
 
+from gtccore import settings
+
 def generate_admission_letter():
     # Create a PDF object
     pdf = FPDF()
