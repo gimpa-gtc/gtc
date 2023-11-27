@@ -30,6 +30,60 @@
             <div class="row pt-10">
                 <div class="col-md-12">
                     <h4 class="mt-0 mb-30 line-bottom-theme-colored-2">Pay Your Application Fee Here</h4>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-5">
+                            <div class="box-hover-effect effect1 mb-sm-30">
+                                <div class="caption">
+                                    <h4 class="text-uppercase letter-space-1 mt-0">Application ID</h4>
+                                    <p class="text-gray-dimgray font-13 mb-20">{{application.application_id}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-5">
+                            <div class="box-hover-effect effect1 mb-sm-30">
+                                <div class="caption">
+                                    <h4 class="text-uppercase letter-space-1 mt-0">Course</h4>
+                                    <p class="text-gray-dimgray font-13 mb-20">{{application.course.title}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-5">
+                            <div class="box-hover-effect effect1 mb-sm-30">
+                                <div class="caption">
+                                    <h4 class="text-uppercase letter-space-1 mt-0">Duration</h4>
+                                    <p class="text-gray-dimgray font-13 mb-20">{{application.course.start_date}} - {{application.course.end_date}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-5">
+                            <div class="box-hover-effect effect1 mb-sm-30">
+                                <div class="caption">
+                                    <h4 class="text-uppercase letter-space-1 mt-0">Name</h4>
+                                    <p class="text-gray-dimgray font-13 mb-20">{{application.name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-5">
+                            <div class="box-hover-effect effect1 mb-sm-30">
+                                <div class="caption">
+                                    <h4 class="text-uppercase letter-space-1 mt-0">Email</h4>
+                                    <p class="text-gray-dimgray font-13 mb-20">{{application.email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-5">
+                            <div class="box-hover-effect effect1 mb-sm-30">
+                                <div class="caption">
+                                    <h4 class="text-uppercase letter-space-1 mt-0">Phone</h4>
+                                    <p class="text-gray-dimgray font-13 mb-20">{{application.phone}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
                     <!--  -->
                     <small class="secondary-text-color mb-5">Make sure you've verified the application you're making payment for.</small> 
                     <br> <br>
@@ -56,7 +110,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group mb-30">
                                     <label for="amount">Amount</label>
-                                    <input id="amount" name="amount" value="{{application.course.price}}" class="form-control required" type="text" placeholder="Application ID" required readonly>
+                                    <input id="amount" name="amount" value="{{application.course.price}}" class="form-control required" type="text" placeholder="Amount" required readonly>
                                 </div>
                             </div>
                         </div>
