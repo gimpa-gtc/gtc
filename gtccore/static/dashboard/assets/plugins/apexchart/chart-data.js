@@ -24,14 +24,14 @@ $(document).ready(function() {
             columnConfig = {
                 colors: ['#7638ff', '#fda600'],
                 series: [{
-                        name: "Received",
+                        name: "Applications",
                         type: "column",
-                        data: [70, 150, 80, 180, 150, 175, 201, 60, 200, 120, 190, 160, 50]
+                        data: [70, 150, 80, 180, 150, 175, 201, 60, 200, 120, 190, 160]
                     },
                     {
-                        name: "Pending",
+                        name: "Admissions",
                         type: "column",
-                        data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16, 80]
+                        data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
                     }
                 ],
                 chart: {
@@ -58,11 +58,11 @@ $(document).ready(function() {
                     colors: ['transparent']
                 },
                 xaxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', "Nov", "Dec"],
                 },
                 yaxis: {
                     title: {
-                        text: '$ (thousands)'
+                        text: 'Total Applications & Admissions'
                     }
                 },
                 fill: {
@@ -71,7 +71,7 @@ $(document).ready(function() {
                 tooltip: {
                     y: {
                         formatter: function(val) {
-                            return "$ " + val + " thousands"
+                            return val
                         }
                     }
                 }
