@@ -15,3 +15,9 @@ urlpatterns += [
     path('application/status/', views.ApplicationStatusView.as_view(), name='application_status'), #noqa
     path('application/download/', views.DownloadAdmissionLetterView.as_view(), name='download_letter'), #noqa
 ]
+
+# courses
+urlpatterns += [
+    path('courses/', views.CoursesView.as_view(), name='courses'),
+    path('courses-details/', views.CourseDetailsView.as_view(), name='course_details'), #noqa
+]
