@@ -237,7 +237,7 @@
                             <div class="categories">
                                 <ul class="list-border">
                                     {% for category in categories %}
-                                    <li><a href="#">{{category.name}}<span>({{category.get_total_courses}})</span></a></li>
+                                    <li><a href="{% url 'website:courses' %}?category_id={{category.id}}&category_name={{category.name}}">{{category.name}}<span>({{category.get_total_courses}})</span></a></li>
                                     {% endfor %}
                                 </ul>
                             </div>
