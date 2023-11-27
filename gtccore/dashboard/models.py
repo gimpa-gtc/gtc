@@ -46,6 +46,7 @@ class Course(models.Model):
     '''Course model'''
     title = models.CharField(max_length=200)
     description = models.TextField()
+    details = models.TextField(default='') #noqa More extensive description
     category = models.ForeignKey(CourseCategory, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
@@ -57,6 +58,7 @@ class Course(models.Model):
     student_capacity = models.IntegerField(default=1)
     requirements = models.TextField(default='None')
     syllabus = models.TextField(default='None')
+    thumbnail = models.ImageField(upload_to='courses', null=True, blank=True) #noqa
     created_at = models.DateTimeField(auto_now_add=True)
 
     def is_active(self):
@@ -210,6 +212,18 @@ class Testimonial(models.Model):
     company = models.CharField(max_length=100)
     image = models.ImageField(upload_to='testimonials')
     content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.name
+    
+
+class Comment(models.Model):
+    '''Comment model'''
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    comment = models.TextField()
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
