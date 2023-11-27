@@ -202,3 +202,15 @@ class CustomCourseRequest(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+
+class Testimonial(models.Model):
+    '''Testimonial model'''
+    name = models.CharField(max_length=100)
+    company = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='testimonials')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.name
