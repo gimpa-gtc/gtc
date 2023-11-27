@@ -21,3 +21,8 @@ urlpatterns += [
     path('courses/', views.CoursesView.as_view(), name='courses'),
     path('courses-details/', views.CourseDetailsView.as_view(), name='course_details'), #noqa
 ]
+
+# payment
+urlpatterns += [
+    path('make-payment/', views.MakePaymentView.as_view(), name='make_payment'),
+]
