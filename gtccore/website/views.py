@@ -98,6 +98,20 @@ class CoursesView(View):
         return render(request, self.template, context)
 
 
+
+class MakePaymentView(View):
+    '''Make Payment page view.'''
+    template = 'website/online-payment.html'
+
+    def get(self, request):
+        application_id = request.GET.get('application_id')
+        application = Application.objects.filter(application_id=application_id).first() # noqa
+        context = {
+            'application': application
+        }
+        return render(request, self.template, context)
+
+
 class CourseDetailsView(View):
     '''Course Details page view.'''
     template = 'website/course-details.html'
