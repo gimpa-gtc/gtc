@@ -92,11 +92,10 @@
                         <li>
                             <a href="#courses">Courses</a>
                             <ul class="dropdown">
-                                <li><a href="">Professional</a></li>
-                                <li><a href="">Advanced</a></li>
-                                <li>
-                                    <a href="">Top Up</a>
-                                </li>
+                                <li><a href="{% url 'website:courses' %}">Explore All</a></li>
+                                <li><a href="{% url 'website:courses' %}?category=professional">Professional</a></li>
+                                <li><a href="{% url 'website:courses' %}?category=advanced">Advanced</a></li>
+                                <li><a href="{% url 'website:courses' %}?category=topup"">Top Up</a></li>
                             </ul>
                         </li>
                         <li>
