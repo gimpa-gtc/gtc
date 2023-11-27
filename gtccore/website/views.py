@@ -76,7 +76,6 @@ class CoursesView(View):
         category_name = request.GET.get('category_name') or None
         category_id = request.GET.get('category_id') or None
         category = None
-
         # recently added courses: 5
         latst_courses = Course.objects.all().order_by('-id')[:5]
         # set all courses as default
