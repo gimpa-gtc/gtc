@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views import View
 from django.db.models import Q
 from io import BytesIO
-from dashboard.models import Application
+from dashboard.models import Application, Comment, Course, CourseCategory, Faq
 
 from gtccore.library.services import generate_admission_letter
 
@@ -31,7 +31,10 @@ class FaqsView(View):
     template = 'website/faqs.html'
 
     def get(self, request):
-        context = {}
+        faqs = Faq.objects.all()
+        context = {
+            'faqs': faqs
+        }
         return render(request, self.template, context)
     
 
@@ -63,7 +66,56 @@ class ApplicationStatusView(View):
             'application': application
         }
         return render(request, self.template, context)
-    
+
+
+class CoursesView(View):
+    '''Courses page view.'''
+    template = 'website/courses.html'
+
+    def get(self, request):
+        category_name = request.GET.get('category_name') or None
+        category_id = request.GET.get('category_id') or None
+        category = None
+
+        # recently added courses: 5
+        latst_courses = Course.objects.all().order_by('-id')[:5]
+        # set all courses as default
+        courses = Course.objects.all()
+        if category_id:
+            category_id = int(category_id)
+            category = CourseCategory.objects.filter(id=category_id).first()
+
+        if category:
+            courses = Course.objects.filter(category=category)
+
+        categories = CourseCategory.objects.all()
+        context = {
+            'category_name': category_name,
+            'category': category,
+            'courses': courses,
+            'categories': categories,
+            'latst_courses': latst_courses
+        }
+        return render(request, self.template, context)
+
+
+class CourseDetailsView(View):
+    '''Course Details page view.'''
+    template = 'website/course-details.html'
+
+    def get(self, request):
+        course_id = request.GET.get('course_id')
+        course_id = int(course_id)
+        course = Course.objects.filter(id=course_id).first()
+        comments = Comment.objects.filter(course=course)
+        categories = CourseCategory.objects.all()
+        context = {
+            'course': course,
+            'comments': comments,
+            'categories': categories
+        }
+        return render(request, self.template, context)
+
 
 class DownloadAdmissionLetterView(View):
     '''Download Admission Letter page view.'''
