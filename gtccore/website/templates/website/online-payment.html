@@ -85,10 +85,12 @@
                     </div>
                     <hr>
                     <!--  -->
-                    <small class="secondary-text-color mb-5">Make sure you've verified the application you're making payment for.</small> 
+                    <small class="secondary-text-color mb-5">Make sure you've verified the application before making payment.</small> 
                     <br> <br>
                     <!-- Contact Form -->
-                    <form id="contact_form" name="contact_form" class="" action="" method="GET">
+                    <form id="contact_form" name="contact_form" class="" action="{% url 'website:make_payment' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="application_id" value="{{application.application_id}}">
 
                         <div class="row">
                             <div class="col-sm-4">
