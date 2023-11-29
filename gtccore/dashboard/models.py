@@ -73,6 +73,11 @@ class Course(models.Model):
         '''Returns the total number of admissions for this course'''
         return Admission.objects.filter(application__course=self).count()
 
+
+    def get_total_comment(self):
+        '''gets the total number of comments for that course'''
+        return Comment.objects.filter(course=self).count()
+
     def __str__(self):
         return self.title
 
