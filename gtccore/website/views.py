@@ -1,11 +1,13 @@
 from django.http import FileResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 from django.db.models import Q
 from io import BytesIO
+from dashboard.forms import ApplicationForm
 from dashboard.models import Application, Comment, Course, CourseCategory, Faq
 
 from gtccore.library.services import generate_admission_letter
+from django.http import HttpResponseRedirect
 
 
 class HomeView(View):
@@ -110,7 +112,11 @@ class MakePaymentView(View):
             'application': application
         }
         return render(request, self.template, context)
-
+    
+    def post(self, request):
+        # implement payment logic here
+        # implement payment logic here
+        return redirect('website:enroll_success')
 
 class CourseDetailsView(View):
     '''Course Details page view.'''
@@ -127,6 +133,57 @@ class CourseDetailsView(View):
             'comments': comments,
             'categories': categories
         }
+        return render(request, self.template, context)
+
+
+
+class EnrollView(View):
+    '''Enroll page view.'''
+    template = 'website/enroll.html'
+    template_make_payment = 'website/online-payment.html'
+
+    def get(self, request):
+        course_id = request.GET.get('course_id')
+        course_id = int(course_id)
+        course = Course.objects.filter(id=course_id).first()
+        context = {
+            'course': course
+        }
+        return render(request, self.template, context)
+    
+    def post(self, request):
+        form = ApplicationForm(request.POST)
+        course_id = request.POST.get('course_id')
+        pay_now = request.POST.get('pay_now')
+        course_id = int(course_id)
+        course = Course.objects.filter(id=course_id).first()
+        if course is None:
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.course = course                
+            application.save()
+            context = {
+                'application': application
+            }
+            if pay_now:
+                # redirect to payment page
+                return render(request, self.template_make_payment, context)
+            return redirect('website:enroll_success')
+        
+        context = {
+            'course': course
+        }
+        return render(request, self.template, context)
+
+
+class EnrollSuccessView(View):
+    '''Enroll Success page view.'''
+    template = 'website/enroll-success.html'
+
+    def get(self, request):
+        context = {}
         return render(request, self.template, context)
 
 
