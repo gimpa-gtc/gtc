@@ -5,6 +5,7 @@ from django.db.models import Q
 from io import BytesIO
 from dashboard.forms import ApplicationForm
 from dashboard.models import Application, Comment, Course, CourseCategory, Facilitator, Faq, Image, Testimonial
+from gtccore.library.constants import PaymentStatus
 
 from gtccore.library.services import generate_admission_letter
 from django.http import HttpResponseRedirect
@@ -24,7 +25,7 @@ class HomeView(View):
             'testimonials': testimonials,
             'images': images,
             'popular_courses': popular_courses
-            
+
         }
         return render(request, self.template, context)
 
@@ -124,8 +125,14 @@ class MakePaymentView(View):
         return render(request, self.template, context)
     
     def post(self, request):
+        application_id = request.POST.get('application_id')
+        application = Application.objects.filter(application_id=application_id).first() # noqa
         # implement payment logic here
         # implement payment logic here
+        if application:
+            # mimic successfull payment
+            application.status = PaymentStatus.PAID.name
+            application.save()
         return redirect('website:enroll_success')
 
 class CourseDetailsView(View):
