@@ -3,7 +3,7 @@ from django.views import View
 
 from dashboard.models import Course
 
-class InvoiceListView(View):
+class CoursesView(View):
     template = 'dashboard/pages/courses.html'
 
     def get(self, request):
