@@ -97,9 +97,9 @@ class Application(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True) #noqa
     application_status = models.CharField(max_length=20, default='PENDING', choices=APPLICATION_STATUS) #noqa
-    payment_mode = models.CharField(max_length=20, default='PENDING', choices=PAYMENT_MODE) #noqa
+    payment_mode = models.CharField(max_length=20, default='ONLINE', choices=PAYMENT_MODE) #noqa
     payment_status = models.CharField(max_length=20, default='PENDING', choices=PAYMENT_STATUS) #noqa
     created_at = models.DateTimeField(auto_now_add=True)
 
