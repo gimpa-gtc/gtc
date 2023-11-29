@@ -6,3 +6,4 @@ from .invoice import *
 from .settings import *
 from .profile import *
 from .applications import *
+from .courses import *
