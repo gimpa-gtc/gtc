@@ -1,0 +1,49 @@
+{% extends 'base/primary_base.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- Start main-content -->
+<div class="main-content">
+    <!-- Section: inner-header -->
+    <section class="inner-header divider layer-overlay overlay-theme-colored-7"
+        data-bg-img="{% static 'website/images/bg/bg1.jpg' %}">
+        <div class="container pt-120 pb-60">
+            <!-- Section Content -->
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="secondary-text-color font-36">Enrollment</h2>
+                        <ol class="breadcrumb text-left mt-10 white">
+                            <li><a href="{% url 'website:home' %}">Home</a></li>
+                            <li><a href="{% url 'website:home' %}#about-gtc">Courses</a></li>
+                            <li class="active">Enrollment Successul</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider: Contact -->
+    <section class="divider">
+        <div class="container pt-50 pb-70">
+            <div class="row pt-10">
+                <div class="col-md-8">
+                    <h4 class="mt-0 mb-30 line-bottom-theme-colored-2">Enrollment Successul</h4>
+                  <!-- successful card image -->
+                  <div class="card container">
+                    <div class="card-body">
+                        <div class="card-img">
+                            <img src="{% static 'website/images/success.jpg' %}" alt="successful">
+                            <p class="card-text">Thank you for enrolling</p>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- end main-content -->
+{% endblock %}
