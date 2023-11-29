@@ -358,12 +358,12 @@
                     <div class="item">
                         <div class="course-single-item bg-white border-1px clearfix mb-30">
                             <div class="course-thumb">
-                                <img class="img-fullwidth" alt="" src="{% if course.thumbnail %} {{course.thumbnail.url}} {% static 'website/images/course/sm1.jpg' %} {% endif %} " />
+                                <img class="img-fullwidth" alt="" src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/course/sm1.jpg' %} {% endif %} " />
                                 <div class="price-tag">GH₵{{course.price}}</div>
                             </div>
                             <div class="course-details clearfix p-20 pt-15">
                                 <div class="course-top-part pull-left mr-40">
-                                    <a href="">
+                                    <a href="{% url 'website:course_details' %}?course_id={{course.id}}">
                                         <h4 class="mt-0 mb-5">{{course.title}}</h4>
                                     </a>
                                     <ul class="list-inline">
@@ -391,7 +391,7 @@
                                 {% endcomment %}
                                 <div class="clearfix"></div>
                                 <p class="course-description mt-20">
-                                   {{course.description|safe}}
+                                   {{course.description|truncatewords:20|safe}}
                                 </p>
                                 <ul class="list-inline course-meta mt-15">
                                     <li>
