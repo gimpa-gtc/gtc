@@ -21,3 +21,8 @@ urlpatterns += [
     path('admissions/', views.AdmissionsView.as_view(), name='admissions'),
     path('applicants/', views.ApplicantsView.as_view(), name='applicants'),
 ]
+
+# courses
+urlpatterns += [
+    path('courses/', views.CoursesView.as_view(), name='courses'),
+]
