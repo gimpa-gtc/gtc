@@ -20,6 +20,8 @@ urlpatterns += [
 urlpatterns += [
     path('courses/', views.CoursesView.as_view(), name='courses'),
     path('courses-details/', views.CourseDetailsView.as_view(), name='course_details'), #noqa
+    path('enroll/', views.EnrollView.as_view(), name='enroll'),
+    path('enroll/success', views.EnrollSuccessView.as_view(), name='enroll_success'),
 ]
 
 # payment
