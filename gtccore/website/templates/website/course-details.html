@@ -49,7 +49,7 @@
                                 </div>
                             </li>
                         </ul>
-                        <img src="{% static 'website/images/course/course-details1.jpg' %}" alt="">
+                        <img src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/course/course-details1.jpg' %} {% endif %} " alt="">
                         <h3 class="text-uppercase mt-30 mb-10">{{course.title}}</h3>
                         <div class="double-line-bottom-theme-colored-2 mt-10"></div>
                         <p>{{course.description|safe}}</p>
@@ -243,14 +243,20 @@
                             </div>
                         </div>
                         <div class="widget border-1px bg-silver-deep p-15">
-                            <h4 class="widget-title line-bottom-theme-colored-2">Quick Contact</h4>
+                            <h4 class="widget-title line-bottom-theme-colored-2">Custom Course Request</h4>
                             <br> <p class="primary-text-color">Request for custom training</p>
-                            <form id="quick_contact_form_sidebar" name="footer_quick_contact_form" class="quick-contact-form" action="" method="post">
+                            <form id="quick_contact_form_sidebar" name="footer_quick_contact_form" class="quick-contact-form" action="" method="POST">
                                 <div class="form-group">
-                                    <input name="form_email" class="form-control" type="text" required="" placeholder="Enter Email">
+                                    <input name="email" class="form-control" type="text" required="" placeholder="Enter Email">
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="form_message" class="form-control" required="" placeholder="Enter Message" rows="3"></textarea>
+                                    <input name="name" class="form-control" type="text" required="" placeholder="Enter Name">
+                                </div>
+                                <div class="form-group">
+                                    <input name="phone" class="form-control" type="text" required="" placeholder="Enter Phone">
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="message" class="form-control" required="" placeholder="Enter Message" rows="3"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <input name="form_botcheck" class="form-control" type="hidden" value="" />
