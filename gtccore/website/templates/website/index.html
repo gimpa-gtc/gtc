@@ -353,16 +353,18 @@
             </div>
             <div class="row mtli-row-clearfix">
                 <div class="owl-carousel-3col" data-nav="true">
+                    
+                    {% for course in popular_courses %}
                     <div class="item">
                         <div class="course-single-item bg-white border-1px clearfix mb-30">
                             <div class="course-thumb">
-                                <img class="img-fullwidth" alt="" src="{% static 'website/images/course/sm1.jpg' %}" />
-                                <div class="price-tag">GH₵290</div>
+                                <img class="img-fullwidth" alt="" src="{% if course.thumbnail %} {{course.thumbnail.url}} {% static 'website/images/course/sm1.jpg' %} {% endif %} " />
+                                <div class="price-tag">GH₵{{course.price}}</div>
                             </div>
                             <div class="course-details clearfix p-20 pt-15">
                                 <div class="course-top-part pull-left mr-40">
                                     <a href="">
-                                        <h4 class="mt-0 mb-5">Nural Networking Course</h4>
+                                        <h4 class="mt-0 mb-5">{{course.title}}</h4>
                                     </a>
                                     <ul class="list-inline">
                                         <li class="review-stars">
@@ -373,214 +375,45 @@
                                             <i class="fa fa-star"></i>
                                         </li>
                                         <li>
-                                            25
+                                            {{course.get_total_comment}}
                                             <i class="fa fa-comments-o text-theme-colored2"></i>
                                         </li>
                                         <li>
-                                            68
+                                            {{course.get_total_comment}}
                                             <i class="fa fa-thumbs-o-up text-theme-colored2"></i>
                                         </li>
                                     </ul>
                                 </div>
+                                {% comment %}
                                 <div class="author-thumb">
                                     <img src="{% static 'website/images/course/xs1.jpg' %}" alt="" class="img-circle" />
                                 </div>
+                                {% endcomment %}
                                 <div class="clearfix"></div>
                                 <p class="course-description mt-20">
-                                    Lorem ipsum dolor sit amet, consec teturadipsi cing
-                                    elit. Nobis commodi esse aliquam eligend reprehenderit,
-                                    numquam a odio.
+                                   {{course.description|safe}}
                                 </p>
                                 <ul class="list-inline course-meta mt-15">
                                     <li>
-                                        <h6>2 Months</h6>
+                                        <h6>{{course.duration}}</h6>
                                         <span> Course</span>
                                     </li>
                                     <li>
-                                        <h6>50</h6>
+                                        <h6>{{course.student_capacity}}</h6>
                                         <span> Class Size</span>
                                     </li>
                                     <li>
                                         <h6>
-                                            <span class="course-time">2 hours</span>
+                                            <span class="course-time">{{course.start_date }}</span>
                                         </h6>
-                                        <span> Class Duration</span>
+                                        <span> Start Date</span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="item">
-                        <div class="course-single-item bg-white border-1px clearfix mb-30">
-                            <div class="course-thumb">
-                                <img class="img-fullwidth" alt="" src="{% static 'website/images/course/sm2.jpg' %}" />
-                                <div class="price-tag">GH₵290</div>
-                            </div>
-                            <div class="course-details clearfix p-20 pt-15">
-                                <div class="course-top-part pull-left mr-40">
-                                    <a href="">
-                                        <h4 class="mt-0 mb-5">Nural Networking Course</h4>
-                                    </a>
-                                    <ul class="list-inline">
-                                        <li class="review-stars">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </li>
-                                        <li>
-                                            25
-                                            <i class="fa fa-comments-o text-theme-colored2"></i>
-                                        </li>
-                                        <li>
-                                            68
-                                            <i class="fa fa-thumbs-o-up text-theme-colored2"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="author-thumb">
-                                    <img src="{% static 'website/images/course/xs2.jpg' %}" alt="" class="img-circle" />
-                                </div>
-                                <div class="clearfix"></div>
-                                <p class="course-description mt-20">
-                                    Lorem ipsum dolor sit amet, consec teturadipsi cing
-                                    elit. Nobis commodi esse aliquam eligend reprehenderit,
-                                    numquam a odio.
-                                </p>
-                                <ul class="list-inline course-meta mt-15">
-                                    <li>
-                                        <h6>1 Month</h6>
-                                        <span> Course</span>
-                                    </li>
-                                    <li>
-                                        <h6>20</h6>
-                                        <span> Class Size</span>
-                                    </li>
-                                    <li>
-                                        <h6>
-                                            <span class="course-time">1 hour 45 min</span>
-                                        </h6>
-                                        <span> Class Duration</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="course-single-item bg-white border-1px clearfix mb-30">
-                            <div class="course-thumb">
-                                <img class="img-fullwidth" alt="" src="{% static 'website/images/course/sm3.jpg' %}" />
-                                <div class="price-tag">Free</div>
-                            </div>
-                            <div class="course-details clearfix p-20 pt-15">
-                                <div class="course-top-part pull-left mr-40">
-                                    <a href="">
-                                        <h4 class="mt-0 mb-5">Nural Networking Course</h4>
-                                    </a>
-                                    <ul class="list-inline">
-                                        <li class="review-stars">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </li>
-                                        <li>
-                                            25
-                                            <i class="fa fa-comments-o text-theme-colored2"></i>
-                                        </li>
-                                        <li>
-                                            68
-                                            <i class="fa fa-thumbs-o-up text-theme-colored2"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="author-thumb">
-                                    <img src="{% static 'website/images/course/xs3.jpg' %}" alt="" class="img-circle" />
-                                </div>
-                                <div class="clearfix"></div>
-                                <p class="course-description mt-20">
-                                    Lorem ipsum dolor sit amet, consec teturadipsi cing
-                                    elit. Nobis commodi esse aliquam eligend reprehenderit,
-                                    numquam a odio.
-                                </p>
-                                <ul class="list-inline course-meta mt-15">
-                                    <li>
-                                        <h6>3 Weeks</h6>
-                                        <span> Course</span>
-                                    </li>
-                                    <li>
-                                        <h6>30</h6>
-                                        <span> Class Size</span>
-                                    </li>
-                                    <li>
-                                        <h6>
-                                            <span class="course-time">2 hours</span>
-                                        </h6>
-                                        <span> Class Duration</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="course-single-item bg-white border-1px clearfix mb-30">
-                            <div class="course-thumb">
-                                <img class="img-fullwidth" alt="" src="{% static 'website/images/course/sm4.jpg' %}" />
-                                <div class="price-tag">GH₵290</div>
-                            </div>
-                            <div class="course-details clearfix p-20 pt-15">
-                                <div class="course-top-part pull-left mr-40">
-                                    <a href="">
-                                        <h4 class="mt-0 mb-5">Nural Networking Course</h4>
-                                    </a>
-                                    <ul class="list-inline">
-                                        <li class="review-stars">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </li>
-                                        <li>
-                                            25
-                                            <i class="fa fa-comments-o text-theme-colored2"></i>
-                                        </li>
-                                        <li>
-                                            68
-                                            <i class="fa fa-thumbs-o-up text-theme-colored2"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="author-thumb">
-                                    <img src="{% static 'website/images/course/xs1.jpg' %}" alt="" class="img-circle" />
-                                </div>
-                                <div class="clearfix"></div>
-                                <p class="course-description mt-20">
-                                    Lorem ipsum dolor sit amet, consec teturadipsi cing
-                                    elit. Nobis commodi esse aliquam eligend reprehenderit,
-                                    numquam a odio.
-                                </p>
-                                <ul class="list-inline course-meta mt-15">
-                                    <li>
-                                        <h6>1 Month</h6>
-                                        <span> Course</span>
-                                    </li>
-                                    <li>
-                                        <h6>45</h6>
-                                        <span> Class Size</span>
-                                    </li>
-                                    <li>
-                                        <h6>
-                                            <span class="course-time">3 hours 20 min</span>
-                                        </h6>
-                                        <span> Class Duration</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
+                   
                 </div>
             </div>
         </div>
@@ -1159,7 +992,7 @@
                             </div>
                             <div class="double-line-bottom-centered-theme-colored-2 mt-0 mb-25"></div>
                             <h5 class="text-white text-uppercase mb-0">
-                                Happy Students
+                                Total Students
                             </h5>
                         </div>
                     </div>
@@ -1213,7 +1046,7 @@
                         <h2 class="text-uppercase title">
                             What <span class="text-theme-colored2">People </span>Say
                         </h2>
-                        <p class="text-uppercase mb-0">Student and Parents Opinion</p>
+                        <p class="text-uppercase mb-0">Here is what people are saying</p>
                         <div class="double-line-bottom-theme-colored-2"></div>
                     </div>
                 </div>
@@ -1221,74 +1054,25 @@
             <div class="row">
                 <div class="col-md-12 mb-30">
                     <div class="owl-carousel-2col boxed" data-dots="true">
+                        
+                        {% for testimonial in testimonials %}
                         <div class="item">
                             <div class="testimonial pt-10">
                                 <div class="thumb pull-left mb-0 mr-0">
-                                    <img class="img-thumbnail img-circle" alt="" src="{% static 'website/images/testimonials/1.jpg' %}"
-                                        width="110" />
+                                    <img class="img-thumbnail img-circle" alt="" src="{% if testimonial.image %} {{ testimonial.image.url }} {% else %} {% static 'website/images/testimonials/1.jpg' %} {% endif %} "
+                                        width="110" style="width: 110px !important; height: 110px !important;" />
                                 </div>
                                 <div class="testimonial-content">
                                     <h4 class="mt-0 font-weight-300">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit. Quas vel sint, ut. Quisquam doloremque minus
-                                        possimus eligendi dolore ad.
+                                       {{testimonial.content|safe}}
                                     </h4>
-                                    <h5 class="mt-10 font-16 mb-0">Catherine Grace</h5>
-                                    <h6 class="mt-5">CEO apple.inc</h6>
+                                    <h5 class="mt-10 font-16 mb-0">{{testimonial.name}}</h5>
+                                    <h6 class="mt-5">{{testinomonial.company}}</h6>
                                 </div>
                             </div>
                         </div>
-                        <div class="item">
-                            <div class="testimonial pt-10">
-                                <div class="thumb pull-left mb-0 mr-0">
-                                    <img class="img-thumbnail img-circle" alt="" src="{% static 'website/images/testimonials/1.jpg' %}"
-                                        width="110" />
-                                </div>
-                                <div class="testimonial-content">
-                                    <h4 class="mt-0 font-weight-300">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit. Quas vel sint, ut. Quisquam doloremque minus
-                                        possimus eligendi dolore ad.
-                                    </h4>
-                                    <h5 class="mt-10 font-16 mb-0">Catherine Grace</h5>
-                                    <h6 class="mt-5">CEO apple.inc</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial pt-10">
-                                <div class="thumb pull-left mb-0 mr-0">
-                                    <img class="img-thumbnail img-circle" alt="" src="{% static 'website/images/testimonials/2.jpg' %}"
-                                        width="110" />
-                                </div>
-                                <div class="testimonial-content">
-                                    <h4 class="mt-0 font-weight-300">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit. Quas vel sint, ut. Quisquam doloremque minus
-                                        possimus eligendi dolore ad.
-                                    </h4>
-                                    <h5 class="mt-10 font-16 mb-0">Catherine Grace</h5>
-                                    <h6 class="mt-5">CEO apple.inc</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial pt-10">
-                                <div class="thumb pull-left mb-0 mr-0">
-                                    <img class="img-thumbnail img-circle" alt="" src="{% static 'website/images/testimonials/3.jpg' %}"
-                                        width="110" />
-                                </div>
-                                <div class="testimonial-content">
-                                    <h4 class="mt-0 font-weight-300">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit. Quas vel sint, ut. Quisquam doloremque minus
-                                        possimus eligendi dolore ad.
-                                    </h4>
-                                    <h5 class="mt-10 font-16 mb-0">Catherine Grace</h5>
-                                    <h6 class="mt-5">CEO apple.inc</h6>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
+
                     </div>
                 </div>
             </div>
@@ -1552,6 +1336,7 @@
         </div>
     </section>
 
+    {% comment %}
     <!-- Divider: Clients -->
     <section class="clients secondary-color">
         <div class="container pt-10 pb-10">
@@ -1595,5 +1380,6 @@
         </div>
     </section>
     <!-- end main-content -->
+    {% endcomment %}
 </div>
 {% endblock %}
