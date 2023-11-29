@@ -1,4 +1,4 @@
-from datetime import timezone
+from django.utils import timezone
 
 from django.db import models
 
@@ -143,7 +143,7 @@ class Admission(models.Model):
 class Payment(models.Model):
     '''Payment model'''
     transaction_id = models.CharField(max_length=100)
-    application = models.OneToOneField(Application, on_delete=models.CASCADE) #noqa
+    application = models.OneToOneField(Application, on_delete=models.CASCADE, blank=True, null=True) #noqa
     amount = models.IntegerField(default=0)
     network = models.CharField(max_length=5)
     number = models.CharField(max_length=10)
