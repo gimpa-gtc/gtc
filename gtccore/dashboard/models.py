@@ -240,3 +240,22 @@ class Facilitator(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+
+class ImageCategory(models.Model):
+    '''Image category model'''
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.name
+    
+
+class Image(models.Model):
+    '''Image model'''
+    image = models.ImageField(upload_to='gallery')
+    category = models.ForeignKey(ImageCategory, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.image.name
