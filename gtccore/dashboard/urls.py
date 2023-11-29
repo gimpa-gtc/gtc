@@ -25,4 +25,5 @@ urlpatterns += [
 # courses
 urlpatterns += [
     path('courses/', views.CoursesView.as_view(), name='courses'),
+    path('course-categories/', views.CourseCategoriesView.as_view(), name='course_categories'), #noqa
 ]
