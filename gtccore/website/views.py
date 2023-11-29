@@ -4,7 +4,7 @@ from django.views import View
 from django.db.models import Q
 from io import BytesIO
 from dashboard.forms import ApplicationForm
-from dashboard.models import Application, Comment, Course, CourseCategory, Facilitator, Faq
+from dashboard.models import Application, Comment, Course, CourseCategory, Facilitator, Faq, Image, Testimonial
 
 from gtccore.library.services import generate_admission_letter
 from django.http import HttpResponseRedirect
@@ -15,9 +15,16 @@ class HomeView(View):
     template = 'website/index.html'
 
     def get(self, request):
+        popular_courses = Course.objects.all().order_by('-id')[:5]
         facilitators = Facilitator.objects.all()
+        testimonials = Testimonial.objects.all()
+        images = Image.objects.all()
         context = {
-            'facilitators': facilitators
+            'facilitators': facilitators,
+            'testimonials': testimonials,
+            'images': images,
+            'popular_courses': popular_courses
+            
         }
         return render(request, self.template, context)
 
