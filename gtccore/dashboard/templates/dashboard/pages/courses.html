@@ -29,7 +29,7 @@
                         </li>
                       
                         <li>
-                            <a class="btn btn-primary" href=""><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New Applicant</a>
+                            <a class="btn btn-primary" href=""><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New Course</a>
                         </li>
                     </ul>
                 </div>
@@ -48,6 +48,7 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th>#</th>
+                                        <th>Thumbnail</th>
                                         <th>Title</th>
                                         <th>Category</th>
                                         <th>Price</th>
@@ -63,6 +64,11 @@
                                     {% for course in courses %}
                                     <tr>
                                         <td>{{forloop.counter}}</td>
+                                        <td>
+                                            <div class="avatar avatar-lg">
+                                                <img src="{% static 'website/images/course/course-list1.jpg' %}" alt="Course Image" class="avatar-img rounded-circle">
+                                            </div>
+                                        </td>
                                         <td>{{course.title}}</td>
                                         <td>{{course.category.name}}</td>
                                         <td>{{course.price}}</td>
