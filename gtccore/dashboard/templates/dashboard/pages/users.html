@@ -48,34 +48,38 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th>#</th>
-                                        <th>Payment ID</th>
-                                        <th>Application ID</th>
+                                        <th>Thumbnail</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
                                         <th>Number</th>
-                                        <th>Network</th>
-                                        <th>Amount</th>
-                                        <th>Status Code</th>
-                                        <th>Status Message</th>
+                                        <th>Staff</th>
+                                        <th>Active</th>
+                                        <th>Superuser</th>
                                         <th>Created At</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% if payments %}
-                                    {% for payment in payments %}
+                                    {% if users %}
+                                    {% for user in users %}
                                     <tr>
                                         <td>{{forloop.counter}}</td>
-                                        <td>{{payment.payment_id}}</td>
-                                        <td>{{payment.application.application_id}}</td>
-                                        <td>{{payment.number}}</td>
-                                        <td>{{payment.network}}</td>
-                                        <td>{{payment.amount}}</td>
-                                        <td>{{payment.status_code}}</td>
-                                        <td>{{payment.status_message}}</td>
-                                        <td>{{payment.created_at}}</td>
+                                        <td>
+                                            <div class="avatar avatar-lg">
+                                                <img src="{% static 'website/images/course/course-list1.jpg' %}" alt="Course Image" class="avatar-img rounded-circle">
+                                            </div>
+                                        </td>
+                                        <td>{{user.name}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.phone}}</td>
+                                        <td>{{user.is_staff}}</td>
+                                        <td>{{user.is_active}}</td>
+                                        <td>{{user.is_superuser}}</td>
+                                        <td>{{user.created_at}}</td>
                                     </tr>
                                     {% endfor %}
                                     {% else %}
                                     <tr>
-                                        <td colspan="9" class="text-center">No Payments Found</td>
+                                        <td colspan="9" class="text-center">No Users Found</td>
                                     </tr>
                                     {% endif %}
                                 </tbody>
@@ -114,7 +118,7 @@
                                     <div class="col-md-12">
                                         <div id="checkBoxes1">
                                             <div class="form-custom">
-                                                <input type="text" class="form-control" id="member_search1" placeholder="Search Payment">
+                                                <input type="text" class="form-control" id="member_search1" placeholder="Search User">
                                                 <span><img src="{% static 'dashboard/assets/img/icons/search.svg' %}" alt="img"></span>
                                             </div>
                                         </div>
