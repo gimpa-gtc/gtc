@@ -21,7 +21,7 @@
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <ul class="d-block">
                                         <li>
-                                            <a class="d-flex align-items-center download-item" href="javascript:void(0);" download><i class="far fa-file-text me-2"></i>CVS</a>
+                                            <a class="d-flex align-items-center download-item" href="{% url 'dashboard:download_users' %}" download><i class="far fa-file-text me-2"></i>CVS</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -29,7 +29,7 @@
                         </li>
                       
                         <li>
-                            <a class="btn btn-primary" href=""><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New User</a>
+                            <a class="btn btn-primary" href="{% url 'dashboard:create_update_user' %}"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New User</a>
                         </li>
                     </ul>
                 </div>
