@@ -42,25 +42,20 @@
                 <div class="col-md-2">
                     <ul class="list-inline sm-pull-none sm-text-center text-right text-white mb-sm-20 mt-10">
                         <li class="m-0 pl-10">
-                            <a href="ajax-load/login-form.html" class="text-white ajaxload-popup"><i
-                                    class="fa fa-user-o mr-5 text-white"></i> Login /</a>
-                        </li>
-                        <li class="m-0 pl-0 pr-10">
-                            <a href="ajax-load/register-form.html" class="text-white ajaxload-popup"><i
-                                    class="fa fa-edit mr-5"></i>Register</a>
+                            <a href="#" class="text-white"><i
+                                    class="fa fa-user-o mr-5 text-white"></i> Login</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-   
+
     <div class="header-nav">
         <div class="header-nav-wrapper navbar-scrolltofixed bg-white nav-lg">
             <div class="container">
                 <nav id="menuzord-right" class="menuzord default no-bg">
-                    <a class="menuzord-brand switchable-logo pull-left flip mt-20 pt-5"
-                        href="#">
+                    <a class="menuzord-brand switchable-logo pull-left flip mt-20 pt-5" href="#">
                         <img class="logo-default" src="{% static 'website/images/logo-wide.png' %}" alt="" />
                         <img class="logo-scrolled-to-fixed" src="{% static 'website/images/logo-wide.png' %}" alt="" />
                     </a>
@@ -95,7 +90,9 @@
 
                                 <li><a href="{% url 'website:courses' %}">Explore All</a></li>
                                 {% for category in all_categories %}
-                                <li><a href="{% url 'website:courses' %}?category_id={{category.id}}&category_name={{category.name}}">{{category.name}}</a></li>
+                                <li><a
+                                        href="{% url 'website:courses' %}?category_id={{category.id}}&category_name={{category.name}}">{{category.name}}</a>
+                                </li>
                                 {% endfor %}
                             </ul>
                         </li>
@@ -105,12 +102,12 @@
                         <li>
                             <a href="{% url 'website:application' %}">Application</a>
                         </li>
-                      
+
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
 
-    
+
 </header>
