@@ -24,15 +24,21 @@ urlpatterns += [
     path('applications/', views.ApplicationsView.as_view(), name='applications'),
     path('admissions/', views.AdmissionsView.as_view(), name='admissions'),
     path('applicants/', views.ApplicantsView.as_view(), name='applicants'),
+    path('download-applications/', views.DownloadApplicationsView.as_view(), name='download_applications'), #noqa
+    path('download-applicants/', views.DownloadApplicantsView.as_view(), name='download_applicants'), #noqa
+    path('download-admissions/', views.DownloadAdmissionsView.as_view(), name='download_admissions'), #noqa
 ]
 
 # courses
 urlpatterns += [
     path('courses/', views.CoursesView.as_view(), name='courses'),
     path('course-categories/', views.CourseCategoriesView.as_view(), name='course_categories'), #noqa
+    path('download-courses/', views.DownloadCoursesView.as_view(), name='download_courses'), #noqa
+    path('download-categories/', views.DownloadCategoriesView.as_view(), name='download_categories'), #noqa
 ]
 
 # payments
 urlpatterns += [
     path('payments/', views.PaymentsView.as_view(), name='payments'),
+    path('download-payments/', views.DownloadPaymentsView.as_view(), name='download_payments'), #noqa
 ]
