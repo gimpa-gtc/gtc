@@ -23,7 +23,7 @@ class LoginView(View):
             messages.success(request, f'Successfully logged in as {username}')
             return redirect('dashboard:dashboard')
         else:
-            messages.error(request, 'Invalid username or password')
+            messages.info(request, 'Invalid username or password')
             return render(request, self.template_name)
         
 

@@ -1,3 +1,5 @@
+import csv
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.db.models import Q
@@ -21,3 +23,15 @@ class PaymentsView(View):
             'payments': payments
         }
         return render(request, self.template, context)
+    
+class DownloadPaymentsView(View):
+    '''Download payments as csv'''
+    def get(self, request):
+        payments = Payment.objects.all().order_by('-id')
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="payments.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['transaction_id', 'application', 'amount', 'network', 'number', 'status_code', 'status_message', 'created_at']) # noqa
+        for payment in payments:
+            writer.writerow([payment.transaction_id, payment.application, payment.amount, payment.network, payment.number, payment.status_code, payment.status_message, payment.created_at]) # noqa
+        return response
