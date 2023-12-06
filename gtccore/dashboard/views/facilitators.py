@@ -5,96 +5,65 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.contrib import messages
 from django.db.models import Q
-from accounts.models import User
-
+from dashboard.forms import FacilitatorForm
+from dashboard.models import Facilitator
 
 class FacilitorsView(View):
-    template = 'dashboard/pages/users.html'
+    template = 'dashboard/pages/facilitors.html'
 
     def get(self, request):
         query = request.GET.get('query')
         if query:
-            users = User.objects.filter(
+            facilitator = Facilitator.objects.filter(
                 Q(name__icontains=query) | 
-                Q(email__icontains=query) | 
-                Q(phone__icontains=query)).order_by('-created_at') # noqa
+                Q(title__icontains=query) | 
+                Q(specialization__icontains=query)).order_by('-created_at') # noqa
         else:
-            users = User.objects.all().order_by('-created_at')
+            facilitator = Facilitator.objects.all().order_by('-created_at')
         context ={
-            'users': users
+            'facilitator': facilitator
         }
         return render(request, self.template, context)
     
 
-class CreateUpdateUser(View):
-    '''Create or update user'''
-    template = 'dashboard/pages/create-update-user.html'
+class CreateUpdateFacilitatorView(View):
+    '''Create or update facilitator'''
+    template = 'dashboard/pages/create-update-facilitator.html'
 
     def get(self, request):
-        user_id = request.GET.get('user_id')
-        user = User.objects.filter(id=user_id).first()
+        facilitator_id = request.GET.get('facilitator_id')
+        facilitator = Facilitator.objects.filter(id=facilitator_id).first()
         context = {
-            'user': user
+            'facilitator': facilitator
         }
         return render(request, self.template, context)
 
     def post(self, request):
-        user_id = request.POST.get('user_id')
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        role = request.POST.get('role')
-        status = request.POST.get('status')
+        facilitator_id = request.POST.get('facilitator_id')
         try:
-            user_id = int(user_id)
+            facilitator_id = int(facilitator_id)
         except:
-            user_id = None
+            facilitator_id = None
 
-        user = User.objects.filter(id=user_id).first()
-        if user:
-            # only update if user exists and attributes are not empty
-            user.name = name if name else user.name
-            user.email = email if email else user.email
-            user.phone = phone if phone else user.phone
-            user.role = role if role else user.role
-            user.status = status if status else user.status
-            user.save()
-        else:
-            user = User.objects.create(
-                name=name,
-                email=email,
-                phone=phone,
-                is_staff=role == 'staff',
-                is_superuser=role == 'superuser',
-                is_active=status == 'active'
-            )
-            messages.success(request, 'User Created Successfully')
-        redirect_url = reverse('dashboard:create_update_user') + '?user_id=' + str(user.id)
+        facilitator = Facilitator.objects.filter(id=facilitator_id).first()
+        form = FacilitatorForm(request.POST, request.FILES, instance=facilitator)
+        if form.is_valid():
+            facilitator = form.save()
+            if facilitator_id is not None:
+                messages.success(request, 'Facilitator Updated Successfully')
+            messages.success(request, 'Facilitator Created Successfully')
+        redirect_url = reverse('dashboard:create_update_facilitator') + '?facilitator_id=' + str(facilitator.id)
         return redirect(redirect_url)
 
 
-    def put(self, request):
-        user_id = request.POST.get('user_id')
-        profile_pic = request.FILES.get('profile_pic')
-        user = User.objects.filter(id=user_id).first()
-        if user:
-            user.profile_pic = profile_pic
-            user.save()
-            messages.success(request, 'Profile Picture Updated Successfully')
-        else:
-            messages.error(request, 'User Not Found')
-        redirect_url = reversed('dashboard:create_update_user') + '?user_id=' + str(user_id)
-        return redirect(redirect_url)
-
-
-class DownloadUsersView(View):
-    '''Download users as csv'''
+class DownloadFacilitatorsView(View):
+    '''Download facilitators as csv'''
     def get(self, request):
-        users = User.objects.all()
+        facilitators = Facilitator.objects.all()
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="users.csv"'
+        response['Content-Disposition'] = 'attachment; filename="facilitators.csv"'
         writer = csv.writer(response)
-        writer.writerow(['primary_key', 'name', 'email', 'phone', 'is_staff', 'is_superuser', 'is_active', 'created_at']) # noqa
-        for user in users:
-            writer.writerow([user.id, user.name, user.email, user.phone, user.is_staff, user.is_superuser, user.is_active, user.created_at])
+        writer.writerow(['name', 'title', 'image', 'specialization', 'created_at']) # noqa
+        for facilitator in facilitators:
+            writer.writerow([facilitator.name, facilitator.title, facilitator.image, facilitator.specialization, facilitator.created_at])
         return response
