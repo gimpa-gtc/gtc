@@ -37,6 +37,13 @@ urlpatterns += [
     path('download-categories/', views.DownloadCategoriesView.as_view(), name='download_categories'), #noqa
 ]
 
+# facilitators
+urlpatterns += [
+    path('facilitators/', views.FacilitorsView.as_view(), name='facilitators'),
+    path('download-facilitators/', views.DownloadFacilitatorsView.as_view(), name='download_facilitators'), #noqa
+    path('create-update-facilitator/', views.CreateUpdateFacilitatorView.as_view(), name='create_update_facilitator'), #noqa
+]
+
 # payments
 urlpatterns += [
     path('payments/', views.PaymentsView.as_view(), name='payments'),
