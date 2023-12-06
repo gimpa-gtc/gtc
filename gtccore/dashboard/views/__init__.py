@@ -7,3 +7,4 @@ from .profile import *
 from .applications import *
 from .courses import *
 from .payments import *
+from .facilitators import *
