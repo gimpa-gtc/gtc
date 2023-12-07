@@ -1,0 +1,64 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="content-page-header">
+            <h5>Admission Portal</h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="form-group-item">
+                        <h5 class="form-title">Give Admissions</h5>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{user.id}}">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Admitted Applications</label>
+                                    <input type="text" class="form-control" value="{{approved_applications}} Applications" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Pending Applications</label>
+                                    <input type="text" class="form-control" value="{{pending_applications}} Applications" readonly>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Rejected Applications</label>
+                                    <input type="text" class="form-control" value="{{rejected_applications}} Applications" readonly>
+                                </div>
+                            </div>
+
+                        </div>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <form action="{% url 'dashboard:give_admission' %}" style="display: inline-block;" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="admission_type" value="pending"> 
+                                <input type="submit" class="btn btn-primary btn-sm" value="Admit All Pending">
+                            </form>
+
+                            <form action="{% url 'dashboard:give_admission' %}" style="display: inline-block;" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="admission_type" value="all"> 
+                                <input type="submit" class="btn btn-danger btn-sm" value="Admit All">
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper -->
+{% endblock content %}
