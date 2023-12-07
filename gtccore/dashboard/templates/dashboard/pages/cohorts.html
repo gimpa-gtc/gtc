@@ -21,7 +21,7 @@
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <ul class="d-block">
                                         <li>
-                                            <a class="d-flex align-items-center download-item" href="" download><i class="far fa-file-text me-2"></i>CVS</a>
+                                            <a class="d-flex align-items-center download-item" href="{% url 'dashboard:download_cohorts' %}" download><i class="far fa-file-text me-2"></i>CVS</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -56,13 +56,12 @@
                                 </thead>
                                 <tbody>
                                     {% if cohorts %}
-                                    {% for applicant in cohorts %}
+                                    {% for cohort in cohorts %}
                                     <tr>
                                         <td>{{forloop.counter}}</td>
-                                        <td>{{applicant.name}}</td>
-                                        <td>{{applicant.email}}</td>
-                                        <td>{{applicant.phone}}</td>
-                                        <td>{{applicant.created_at}}</td>
+                                        <td>{{cohort.name}}</td>
+                                        <td>{{cohort.start_month}}</td>
+                                        <td>{{cohort.created_at}}</td>
                                         <td class="d-flex align-items-center">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class=" btn-action-icon " data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
@@ -82,7 +81,7 @@
                                     {% endfor %}
                                     {% else %}
                                     <tr>
-                                        <td colspan="6" class="text-center">No Applicants Found</td>
+                                        <td colspan="5" class="text-center">No Cohort Found</td>
                                     </tr>
                                     {% endif %}
                                 </tbody>
@@ -121,7 +120,7 @@
                                     <div class="col-md-12">
                                         <div id="checkBoxes1">
                                             <div class="form-custom">
-                                                <input type="text" class="form-control" id="member_search1" placeholder="Search Applicant">
+                                                <input type="text" class="form-control" id="member_search1" placeholder="Search Cohort">
                                                 <span><img src="{% static 'dashboard/assets/img/icons/search.svg' %}" alt="img"></span>
                                             </div>
                                         </div>
