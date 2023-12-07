@@ -4,7 +4,8 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.db.models import Q
 from django.contrib import messages
-from dashboard.models import Admission, Applicant, Application
+from dashboard.forms import ApplicationForm
+from dashboard.models import Admission, Applicant, Application, Course
 from gtccore.library.constants import ApplicationStatus
 
 
@@ -30,7 +31,47 @@ class ApplicationsView(View):
             'applications': applications,
         }
         return render(request, self.template, context)
+
+
+class CreateUpdateApplicationView(View):
+    '''Create or update application view'''
+    template = 'dashboard/pages/create-update-application.html'
+
+    def get(self, request):
+        courses = Course.objects.all().order_by('title')
+        application_id = request.GET.get('application_id')
+        application = Application.objects.filter(application_id=application_id).first() # noqa
+        context = {
+            'courses': courses,
+            'application': application,
+        }
+        return render(request, self.template, context)
     
+
+    def post(self, request):
+        application_id = request.POST.get('application_id')
+        course_id = request.POST.get('course_id')
+        course = Course.objects.filter(id=course_id).first()
+        application = Application.objects.filter(application_id=application_id).first() # noqa
+
+        if not course:
+            messages.error(request, 'Invalid Course')
+            return redirect('dashboard:create_update_application')
+        
+        form = ApplicationForm(request.POST, instance=application)
+        new_application = form.save(commit=False)
+        new_application.course = course                
+        new_application.save()
+        if application:
+            messages.success(request, 'Application Updated Successfully')
+        else:
+            messages.success(request, 'Application Created Successfully')
+        return redirect('dashboard:applications')
+    
+
+
+
+
 
 class AdmissionsView(View):
     '''Admissions view'''
