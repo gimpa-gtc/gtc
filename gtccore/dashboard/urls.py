@@ -23,6 +23,7 @@ urlpatterns += [
 urlpatterns += [
     path('applications/', views.ApplicationsView.as_view(), name='applications'),
     path('admissions/', views.AdmissionsView.as_view(), name='admissions'),
+    path('give-admission/', views.GiveAdmissionView.as_view(), name='give_admission'), #noqa
     path('applicants/', views.ApplicantsView.as_view(), name='applicants'),
     path('download-applications/', views.DownloadApplicationsView.as_view(), name='download_applications'), #noqa
     path('download-applicants/', views.DownloadApplicantsView.as_view(), name='download_applicants'), #noqa
