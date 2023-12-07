@@ -1,0 +1,152 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="content-page-header">
+            <h5>Add Course</h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="form-group-item">
+                        <h5 class="form-title">Course Form</h5>
+                        <form action="{% url 'dashboard:create_update_course' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="course_id" value="{{course.id}}">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text" class="form-control" name="title" value="{{course.title}}" placeholder="Course title">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="number" class="form-control" value="{{course.price}}" placeholder="Course Price" name="price">
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Location</label>
+                                    <input type="text" class="form-control" name="location" value="{{course.location}}" placeholder="Course location">
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="form-control" name="course_id">
+                                        {% for category in categories %}
+                                            <option value="{{category.id}}" {% if category.id == course.category.id %} selected {% endif %}>{{category.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Cohort</label>
+                                    <select class="form-control" name="cohort_id">
+                                        {% for cohort in cohorts %}
+                                            <option value="{{cohort.id}}" {% if cohort.id == course.cohort.id %} selected {% endif %}>{{cohort.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <input type="date" class="form-control" value="{{course.start_date}}" name="start_date">
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <input type="date" class="form-control" name="end_date" value="{{course.end_date}}" >
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Class Days</label>
+                                    <input type="text" class="form-control" value="{{course.start_date}}" name="class_days">
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Class Time</label>
+                                    <input type="time" class="form-control" name="class_time" value="{{course.end_date}}" >
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Duration</label>
+                                    <input type="text" class="form-control" value="{{course.duration}}" name="duration">
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Class Capacity</label>
+                                    <input type="number" class="form-control" name="student_capacity" value="{{course.student_capacity}}" >
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Description (Short)</label>
+                                    <textarea name="description" cols="30" rows="5">{{course.description|safe}}</textarea>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Course Details (Long)</label>
+                                    <textarea name="details" cols="30" rows="10">{{course.details|safe}}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Course Requirements</label>
+                                    <textarea name="requirements" cols="30" rows="5">{{course.requirements}}</textarea>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Course Syllabus</label>
+                                    <textarea name="syllabus" cols="30" rows="10">{{course.syllabus|safe}}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Course Thumbnail</label>
+                                    <input type="file" class="form-control" name="thumbnail" accept="image/*">
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <input type="reset"  class="btn btn-danger" value="Clear">
+                                    <input type="submit"  class="btn btn-primary" value="Submit">
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper -->
+{% endblock content %}
