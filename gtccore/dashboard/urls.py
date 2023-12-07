@@ -34,14 +34,16 @@ urlpatterns += [
     path('download-applications/', views.DownloadApplicationsView.as_view(), name='download_applications'), #noqa
     path('download-applicants/', views.DownloadApplicantsView.as_view(), name='download_applicants'), #noqa
     path('download-admissions/', views.DownloadAdmissionsView.as_view(), name='download_admissions'), #noqa
+    path('download-cohorts/', views.DownloadCohortView.as_view(), name='download_cohorts'), #noqa
+    path('download-courses/', views.DownloadCoursesView.as_view(), name='download_courses'), #noqa
+    path('download-categories/', views.DownloadCategoriesView.as_view(), name='download_categories'), #noqa
 ]
 
 # courses
 urlpatterns += [
     path('courses/', views.CoursesView.as_view(), name='courses'),
     path('course-categories/', views.CourseCategoriesView.as_view(), name='course_categories'), #noqa
-    path('download-courses/', views.DownloadCoursesView.as_view(), name='download_courses'), #noqa
-    path('download-categories/', views.DownloadCategoriesView.as_view(), name='download_categories'), #noqa
+    path('cohorts/', views.CohortsView.as_view(), name='cohorts'), #noqa
 ]
 
 # facilitators
