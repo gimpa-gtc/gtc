@@ -10,49 +10,41 @@
             <div class="col-md-12">
                 <div class="card-body">
                     <div class="form-group-item">
-                        <h5 class="form-title">Profile Picture</h5>
-                        <form action="{% url 'dashboard:create_update_user' %}" method="POST">
+                        <h5 class="form-title">Application Form</h5>
+                        <form action="{% url 'dashboard:create_update_application' %}" method="POST">
                             {% csrf_token %}
-                            <input type="hidden" name="user_id" value="{{user.id}}">
+                            <input type="hidden" name="application_id" value="{{application.application_id}}">
                         <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label>Fullname</label>
-                                    <input type="text" class="form-control" name="name" value="{{user.name}}" placeholder="Enter Fullname">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" value="{{application.name}}" placeholder="Enter Fullname">
                                 </div>
                             </div>
                            
-                            <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" name="email" value="{{user.email}}" placeholder="Enter Email Address">
+                                    <input type="email" class="form-control" name="email" value="{{application.email}}" placeholder="Enter Email Address">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Phone Number</label>
-                                    <input type="text" class="form-control" value="{{user.phone}}" placeholder="Enter Phone Number" name="phone">
+                                    <input type="text" class="form-control" value="{{application.phone}}" placeholder="Enter Phone Number" name="phone">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label>Role</label>
-                                    <select class="form-control" name="role">
-                                        <option value="superuser" {% if user.is_superuser %} selected {% endif %}>Superuser</option>
-                                            <option value="staff" {% if user.is_staff %} selected {% endif %} >Staff</option>
+                                    <label>Course</label>
+                                    <select class="form-control" name="course_id">
+                                        {% for course in courses %}
+                                            <option value="{{course.id}}" {% if course.id == application.course.id %} selected {% endif %}>{{course.title}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
                            
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <select class="form-control" name="status">
-                                            <option value="active" {% if user.is_active %} selected {% endif %}>Active</option>
-                                            <option value="inactive" {% if not user.is_active %} selected {% endif %} >Inactive</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <input type="reset"  class="btn btn-danger" value="Clear">
