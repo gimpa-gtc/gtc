@@ -58,10 +58,10 @@ def notify_custom_course_admin(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Application)
 def generate_admission(sender, instance, created, **kwargs):
-    '''Generate admission number for applicant'''
+    '''Generate admission for applicant'''
     admission = Admission.objects.filter(application=instance).first()
     approved = instance.application_status == 'APPROVED'
-    # Create admission if application is approved and admission is None
+    # Create admission if application is approved and admission is not None
     if approved and admission is None:
         try:
             Admission.objects.create(
