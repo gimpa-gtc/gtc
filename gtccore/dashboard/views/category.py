@@ -1,15 +1,22 @@
 import csv
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 from django.db.models import Q
+from django.contrib import messages
+from dashboard.forms import CohortForm
 
 from dashboard.models import Cohort, CourseCategory
-class CategoryListView(View):
-    template = 'dashboard/pages/category.html'
+
+class CourseCategoriesView(View):
+    '''Course categories view'''
+    template = 'dashboard/pages/course_categories.html'
 
     def get(self, request):
-        context ={}
+        categories = CourseCategory.objects.all().order_by('-id')
+        context ={
+            'categories': categories
+        }
         return render(request, self.template, context)
     
 class DownloadCategoriesView(View):
@@ -29,11 +36,52 @@ class CohortsView(View):
     template = 'dashboard/pages/cohorts.html'
 
     def get(self, request):
-        months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+        cohorts = Cohort.objects.all().order_by('-id')
+        query = request.GET.get('query')
+        if query:
+            cohorts = Cohort.objects.filter(
+                Q(name__icontains=query) | 
+                Q(start_month__icontains=query)
+            ).order_by('-id')
         context ={
-            'months': months
+            'cohorts': cohorts
         }
         return render(request, self.template, context)
+    
+
+class CreateUpdateCohortView(View):
+    template = 'dashboard/pages/create-update-cohort.html'
+
+    def get(self, request):
+        cohort_id = request.GET.get('cohort_id')
+        cohort = None
+        if cohort_id:
+            cohort = Cohort.objects.filter(id=cohort_id).first()
+
+        months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+        context ={
+            'months': months,
+            'cohort': cohort
+        }
+        return render(request, self.template, context)
+    
+    def post(self, request):
+        cohort_id = request.POST.get('cohort_id')
+        cohort = None
+        if cohort_id:
+            cohort = Cohort.objects.filter(id=cohort_id).first()
+        form = CohortForm(request.POST, instance=cohort)
+        if form.is_valid():
+            form.save()
+            if cohort is None:
+                messages.success(request, 'Cohort created successfully.')
+                return redirect('dashboard:cohorts')
+            messages.success(request, 'Cohort Updated successfully.')
+            return redirect('dashboard:cohorts')
+        else:
+            for k, v in form.errors.items():
+                messages.error(request, f"{k}: {v}")
+                return redirect('dashboard:cohorts')
     
 class DownloadCohortView(View):
     '''Download cohorts as csv'''
