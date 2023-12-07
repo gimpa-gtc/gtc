@@ -18,7 +18,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" class="form-control" name="name" value="{{cohort.name}}" placeholder="Enter Fullname">
+                                    <input type="text" class="form-control" name="name" value="{{cohort.name}}" placeholder="Enter name">
                                 </div>
                             </div>
                            
@@ -27,7 +27,7 @@
                                     <label>Start Month</label>
                                     <select class="form-control" name="start_month">
                                         {% for month in months %}
-                                            <option value="{{month}}" {% if momth == cohort.start_month %} selected {% endif %}>{{month}}</option>
+                                            <option value="{{month}}" {% if month == cohort.start_month %} selected {% endif %}>{{month}}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
