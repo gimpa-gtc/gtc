@@ -55,7 +55,7 @@ class Course(models.Model):
     duration = models.CharField(max_length=100, default='')
     class_days = models.CharField(max_length=100, default='')
     class_time = models.TimeField()
-    teachers = models.CharField(max_length=100, default='')
+    location = models.CharField(max_length=100, default='GIMPA MAIN CAMPUS')
     student_capacity = models.IntegerField(default=1)
     requirements = models.TextField(default='None')
     syllabus = models.TextField(default='None')
