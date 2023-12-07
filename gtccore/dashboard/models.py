@@ -47,12 +47,12 @@ class Course(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     details = models.TextField(default='') #noqa More extensive description
-    cohorts = models.ManyToManyField('Cohort', blank=True)
-    category = models.ForeignKey(CourseCategory, on_delete=models.CASCADE)
+    cohort = models.ForeignKey('Cohort', blank=True, null=True, on_delete=models.CASCADE) #noqa
+    category = models.ForeignKey(CourseCategory, on_delete=models.CASCADE, null=True, blank=True) #noqa
     start_date = models.DateField()
     end_date = models.DateField()
     price = models.IntegerField(default=0)
-    duration = models.CharField(max_length=100, default='')
+    duration = models.CharField(max_length=100, default='1 MONTH')
     class_days = models.CharField(max_length=100, default='')
     class_time = models.TimeField()
     location = models.CharField(max_length=100, default='GIMPA MAIN CAMPUS')
