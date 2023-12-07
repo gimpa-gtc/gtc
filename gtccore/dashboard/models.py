@@ -47,6 +47,7 @@ class Course(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     details = models.TextField(default='') #noqa More extensive description
+    cohorts = models.ManyToManyField('Cohort', blank=True)
     category = models.ForeignKey(CourseCategory, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
@@ -209,7 +210,17 @@ class CustomCourseRequest(models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
+
+
+class Cohort(models.Model):
+    '''Cohort model'''
+    name = models.CharField(max_length=100)
+    start_month = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.name
+
 
 class Testimonial(models.Model):
     '''Testimonial model'''
