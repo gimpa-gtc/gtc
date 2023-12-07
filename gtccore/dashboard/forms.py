@@ -1,6 +1,6 @@
 from django import forms
 
-from dashboard.models import Application, Comment, Course, CourseCategory, Faq, Facilitator
+from dashboard.models import Application, Cohort, Comment, Course, CourseCategory, Faq, Facilitator
 
 
 class ApplicationForm(forms.ModelForm):
@@ -15,3 +15,10 @@ class FacilitatorForm(forms.ModelForm):
     class Meta:
         model = Facilitator
         fields = ['name', 'title', 'image', 'specialization']
+
+
+class CohortForm(forms.ModelForm):
+    '''Cohort form.'''
+    class Meta:
+        model = Cohort
+        fields = ['name', 'start_month']
