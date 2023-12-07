@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
-from dashboard.models import Course, CourseCategory
+from dashboard.models import Cohort, Course, CourseCategory
 
 class CoursesView(View):
     template = 'dashboard/pages/courses.html'
@@ -14,6 +14,19 @@ class CoursesView(View):
             'courses': courses
         }
         return render(request, self.template, context)
+    
+class CreateUpdateCourseView(View):
+    template = 'dashboard/pages/create_update_course.html'
+
+    def get(self, request):
+        categories = CourseCategory.objects.all()
+        cohorts = Cohort.objects.all()
+        context ={
+            'categories': categories,
+            'cohorts': cohorts
+        }
+        return render(request, self.template, context)
+
 
     
 class DownloadCoursesView(View):
