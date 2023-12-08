@@ -104,13 +104,13 @@
             <ul>
                 <li class="menu-title"><span>Support</span></li>
                 <li>
-                    <a href=""><i class="fe fe-printer"></i> <span>Contact Messages</span></a>
+                    <a href="{% url 'dashboard:contact_messages' %}"><i class="fe fe-printer"></i> <span>Contact Messages</span></a>
                 </li>
                 <li>
-                    <a href=""><i class="fe fe-printer"></i> <span>Custom Courses</span></a>
+                    <a href="{% url 'dashboard:course_requests' %}"><i class="fe fe-printer"></i> <span>Custom Courses</span></a>
                 </li>
                 <li>
-                    <a href=""><i class="fe fe-printer"></i> <span>Notifications</span></a>
+                    <a href="{% url 'dashboard:notifications' %}"><i class="fe fe-printer"></i> <span>Notifications</span></a>
                 </li>
                
             </ul>
@@ -120,7 +120,7 @@
             <ul>
                 <li class="menu-title"><span>Settings</span></li>
                 <li>
-                    <a href=""><i class="fe fe-settings"></i> <span>Settings</span></a>
+                    <a href="{% url 'dashboard:settings' %}"><i class="fe fe-settings"></i> <span>Settings</span></a>
                 </li>
                 <li>
                     <a href="{% url 'accounts:logout' %}"><i class="fe fe-power"></i> <span>Logout</span></a>
