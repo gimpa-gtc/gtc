@@ -4,7 +4,7 @@
     <div class="sidebar-header">
         <div class="sidebar-logo">
             <a href="">
-                    <img src="{% static 'website/images/logo-wide.png' %}" class="img-fluid logo" alt="">
+                    <img src="{% static 'dashboard/assets/img/gtc-logo.jpg' %}" class="img-fluid logo" alt="">
                 </a>
             <a href="">
                     <img src="{% static 'website/images/gimpa-round-logo.jpg' %}" class="img-fluid logo-small" alt="">
@@ -86,7 +86,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href=""><i class="fe fe-message-square"></i> <span>Facilitators</span></a>
+                    <a href=""><i class="fe fe-message-square"></i> <span>GTC Team</span></a>
                 </li>
                 <li>
                     <a href=""><i class="fe fe-message-square"></i> <span>Media Handles</span></a>
@@ -123,7 +123,7 @@
                     <a href=""><i class="fe fe-settings"></i> <span>Settings</span></a>
                 </li>
                 <li>
-                    <a href=""><i class="fe fe-power"></i> <span>Logout</span></a>
+                    <a href="{% url 'accounts:logout' %}"><i class="fe fe-power"></i> <span>Logout</span></a>
                 </li>
             </ul>
             <!-- /Settings -->
