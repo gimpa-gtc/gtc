@@ -31,9 +31,9 @@
                         </form>
                     </div>
                     <hr>
-                    <div class="form-group-item">
+                    <div class="form-group-item" style="display: inline-block;">
                         <h5 class="form-title">SMS Broadcast</h5>
-                        <form action="#" method="POST" enctype="multipart/form-data">
+                        <form action="{% url 'dashboard:broadcast' %}" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="notification_id"  value="{{notification.id}}">
                             <input type="hidden" name="type" value="sms">
@@ -46,16 +46,16 @@
                         </div>
                         </form>
                     </div>
-                    <div class="form-group-item">
+                    <div class="form-group-item" style="display: inline-block;">
                         <h5 class="form-title">Email Broadcast</h5>
-                        <form action="#" method="POST" enctype="multipart/form-data">
+                        <form action="{% url 'dashboard:broadcast' %}" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="notification_id"  value="{{notification.id}}">
                             <input type="hidden" name="type" value="email">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <input type="submit"  class="btn btn-primary" value="Broadcast As Email">
+                                    <input type="submit"  class="btn btn-outline-primary" value="Broadcast As Email">
                                 </div>
                             </div>
                         </div>
