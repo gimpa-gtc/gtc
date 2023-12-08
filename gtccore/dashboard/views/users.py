@@ -60,14 +60,19 @@ class CreateUpdateUser(View):
             user.status = status if status else user.status
             user.save()
         else:
-            user = User.objects.create(
-                name=name,
-                email=email,
-                phone=phone,
-                is_staff=role == 'staff',
-                is_superuser=role == 'superuser',
-                is_active=status == 'active'
-            )
+            try:
+                user = User.objects.create(
+                    name=name,
+                    email=email,
+                    phone=phone,
+                    is_staff=role == 'staff',
+                    is_superuser=role == 'superuser',
+                    is_active=status == 'active'
+                )
+            except Exception as e:
+                user = None
+                messages.error(request, f'Error: {e}')
+                return redirect('dashboard:create_update_user')
             messages.success(request, 'User Created Successfully')
         redirect_url = reverse('dashboard:create_update_user') + '?user_id=' + str(user.id)
         return redirect(redirect_url)
