@@ -29,7 +29,7 @@
                         </li>
                       
                         <li>
-                            <a class="btn btn-primary" href=""><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New Category</a>
+                            <a class="btn btn-primary" href="{% url 'dashboard:create_update_category' %}"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New Category</a>
                         </li>
                     </ul>
                 </div>
@@ -76,7 +76,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <ul>
                                                         <li>
-                                                            <a class="dropdown-item" href=""><i class="far fa-edit me-2"></i>Edit</a>
+                                                            <a class="dropdown-item" href="{% url 'dashboard:create_update_category' %}?category_id={{category.id}}"><i class="far fa-edit me-2"></i>Edit</a>
                                                         </li>
                                                         <li>
                                                             <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="far fa-trash-alt me-2"></i>Delete</a>
@@ -110,7 +110,7 @@
                 <a href="#" class="sidebar-closes"><i class="fa-regular fa-circle-xmark"></i></a>
             </div>
             <div class="sidebar-body">
-                <form action="#" autocomplete="off">
+                <form action="{% url 'dashboard:course_categories' %}" method="GET" autocomplete="off">
                     <!-- Product -->
                     <div class="accordion" id="accordionMain1">
                         <div class="card-header-new" id="headingOne">
@@ -128,7 +128,7 @@
                                     <div class="col-md-12">
                                         <div id="checkBoxes1">
                                             <div class="form-custom">
-                                                <input type="text" class="form-control" id="member_search1" placeholder="Search Course Category">
+                                                <input type="text" class="form-control" id="member_search1" name="query" placeholder="Search Course Category">
                                                 <span><img src="{% static 'dashboard/assets/img/icons/search.svg' %}" alt="img"></span>
                                             </div>
                                         </div>
