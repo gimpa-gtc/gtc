@@ -1,9 +1,11 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .models import Admission, Application, Applicant, Notification, CustomCourseRequest
 from gtccore.library.services import send_sms
 from gtccore.settings import SENDER_ID
+
+from .models import (Admission, Applicant, Application, CustomCourseRequest,
+                     Notification)
 
 
 @receiver(post_save, sender=Application)
