@@ -246,7 +246,7 @@ class Comment(models.Model):
         return self.name
     
 
-class Facilitator(models.Model):
+class Facilitator(models.Model): #GTC TEAM
     '''Facilitator model'''
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
