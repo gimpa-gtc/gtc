@@ -29,3 +29,10 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         exclude = ['cohort', 'category']
+
+
+class CourseCategoryForm(forms.ModelForm):
+    '''Course category form.'''
+    class Meta:
+        model = CourseCategory
+        fields = ['name']
