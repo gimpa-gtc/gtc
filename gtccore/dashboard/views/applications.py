@@ -158,7 +158,15 @@ class ApplicantsView(View):
     template = 'dashboard/pages/applicants.html'
 
     def get(self, request):
+        query = request.GET.get('query')
         applicants = Applicant.objects.all().order_by('-created_at')
+        if query:
+            query = query.strip()
+            applicants = applicants.filter(
+                Q(name__icontains=query) |
+                Q(email__icontains=query) |
+                Q(phone__icontains=query)
+            ).order_by('-created_at')
         context ={
             'applicants': applicants,
         }
