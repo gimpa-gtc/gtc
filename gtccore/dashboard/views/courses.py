@@ -1,12 +1,14 @@
 import csv
+
+from django.contrib import messages
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.db.models import Q
-from django.contrib import messages
 from django.views import View
-from dashboard.forms import CourseForm
 
+from dashboard.forms import CourseForm
 from dashboard.models import Cohort, Course, CourseCategory
+
 
 class CoursesView(View):
     template = 'dashboard/pages/courses.html'
