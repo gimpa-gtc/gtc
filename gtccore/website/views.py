@@ -1,14 +1,15 @@
-from django.http import FileResponse
+from io import BytesIO
+
+from django.db.models import Q
+from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
-from django.db.models import Q
-from io import BytesIO
-from dashboard.forms import ApplicationForm
-from dashboard.models import Application, Comment, Course, CourseCategory, Facilitator, Faq, Image, Testimonial
-from gtccore.library.constants import PaymentStatus
 
+from dashboard.forms import ApplicationForm
+from dashboard.models import (Application, Comment, Course, CourseCategory,
+                              Facilitator, Faq, Image, Testimonial)
+from gtccore.library.constants import PaymentStatus
 from gtccore.library.services import generate_admission_letter
-from django.http import HttpResponseRedirect
 
 
 class HomeView(View):
