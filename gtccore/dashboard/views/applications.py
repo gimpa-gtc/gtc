@@ -17,7 +17,9 @@ class ApplicationsView(View):
         query = request.GET.get('query')
         applications = Application.objects.all().order_by('-created_at')
         if query:
+            query = query.strip()
             applications = applications.filter(
+                Q(application_id__icontains=query) |
                 Q(name__icontains=query) |
                 Q(email__icontains=query) |
                 Q(phone__icontains=query) |
