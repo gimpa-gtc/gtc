@@ -56,6 +56,7 @@
                                         <th>Active</th>
                                         <th>Superuser</th>
                                         <th>Created At</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,7 +66,7 @@
                                         <td>{{forloop.counter}}</td>
                                         <td>
                                             <div class="avatar avatar-lg">
-                                                <img src="{% static 'website/images/course/course-list1.jpg' %}" alt="Course Image" class="avatar-img rounded-circle">
+                                                <img src="{% if user.profile_pic %} {{user.profile_pic.url}} {% else %} {% static 'website/images/course/course-list1.jpg' %} {% endif %} " alt="Course Image" class="avatar-img rounded-circle">
                                             </div>
                                         </td>
                                         <td>{{user.name}}</td>
@@ -75,11 +76,26 @@
                                         <td>{{user.is_active}}</td>
                                         <td>{{user.is_superuser}}</td>
                                         <td>{{user.created_at}}</td>
+                                        <td class="d-flex align-items-center">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class=" btn-action-icon " data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <ul>
+                                                        <li>
+                                                            <a class="dropdown-item" href="{% url 'dashboard:create_update_user' %}?user_id={{user.id}}"><i class="far fa-edit me-2"></i>Edit</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                     {% else %}
                                     <tr>
-                                        <td colspan="9" class="text-center">No Users Found</td>
+                                        <td colspan="10" class="text-center">No Users Found</td>
                                     </tr>
                                     {% endif %}
                                 </tbody>
