@@ -2,3 +2,5 @@ venv
 env
 db.sqlite3
 media
+cred.py
+
