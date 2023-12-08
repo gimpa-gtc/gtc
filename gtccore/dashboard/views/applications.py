@@ -1,9 +1,11 @@
 import csv
+
+from django.contrib import messages
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
-from django.db.models import Q
-from django.contrib import messages
+
 from dashboard.forms import ApplicationForm
 from dashboard.models import Admission, Applicant, Application, Course
 from gtccore.library.constants import ApplicationStatus
@@ -70,10 +72,6 @@ class CreateUpdateApplicationView(View):
             messages.success(request, 'Application Created Successfully')
         return redirect('dashboard:applications')
     
-
-
-
-
 
 class AdmissionsView(View):
     '''Admissions view'''
@@ -150,8 +148,6 @@ class GiveAdmissionView(View):
             messages.error(request, 'No Applications Found')
             return redirect('dashboard:give_admission')
         
-
-
 
 class ApplicantsView(View):
     '''applicants view'''
