@@ -1,12 +1,11 @@
 import array
+import time
+
 import requests
 from fpdf import FPDF
 
-import time
-
 from gtccore import settings
 
-from fpdf import FPDF
 
 class PDF(FPDF):
     '''Custom PDF class.'''
