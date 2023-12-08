@@ -1,8 +1,9 @@
 {% extends 'base/primary_base.html' %} {% load static %} {% block content %}
- <!-- Start main-content -->
- <div class="main-content">
+<!-- Start main-content -->
+<div class="main-content">
     <!-- Section: inner-header -->
-    <section class="inner-header divider layer-overlay overlay-theme-colored-7" data-bg-img="{% static 'website/images/bg/bg1.jpg' %}">
+    <section class="inner-header divider layer-overlay overlay-theme-colored-7"
+        data-bg-img="{% static 'website/images/bg/bg1.jpg' %}">
         <div class="container pt-120 pb-60">
             <!-- Section Content -->
             <div class="section-content">
@@ -49,14 +50,15 @@
                                 </div>
                             </li>
                         </ul>
-                        <img src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/course/course-details1.jpg' %} {% endif %} " alt="">
+                        <img src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/course/course-details1.jpg' %} {% endif %} "
+                            alt="">
                         <h3 class="text-uppercase mt-30 mb-10">{{course.title}}</h3>
                         <div class="double-line-bottom-theme-colored-2 mt-10"></div>
                         <p>{{course.description|safe}}</p>
                         <ul id="myTab" class="nav nav-tabs mt-30">
                             <li class="active"><a href="#tab1" data-toggle="tab">Description</a></li>
                             <li><a href="#tab2" data-toggle="tab">Course Info</a></li>
-                            <li><a href="#tab3" data-toggle="tab">Teachers</a></li>
+                            <li><a href="#tab3" data-toggle="tab">Location & Cohort</a></li>
                             <li><a href="#tab4" data-toggle="tab">Reviews</a></li>
                             <li><a href="#tab5" data-toggle="tab">Comments</a></li>
                         </ul>
@@ -78,41 +80,68 @@
                                 <ul class="course-info-list font-14 mt-20">
                                     <li>
                                         <span class="course-info-title">
-              <i class="fa fa-calendar font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Class Start:</span>
+                                            <i
+                                                class="fa fa-calendar font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Class
+                                            Start:</span>
                                         <span class="course-info-details">{{course.start_date}}</span>
                                     </li>
                                     <li>
                                         <span class="course-info-title">
-              <i class="fa fa-clock-o font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Course Duration:</span>
+                                            <i
+                                                class="fa fa-clock-o font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Course
+                                            Duration:</span>
                                         <span class="course-info-details">{{course.duration}}</span>
                                     </li>
                                     <li>
                                         <span class="course-info-title">
-              <i class="fa fa-window-maximize font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Course Capacity:</span>
-                                        <span class="course-info-details">Max {{course.student_capacity}} Students</span>
+                                            <i
+                                                class="fa fa-window-maximize font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Course
+                                            Capacity:</span>
+                                        <span class="course-info-details">Max {{course.student_capacity}}
+                                            Students</span>
                                     </li>
                                     <li>
                                         <span class="course-info-title">
-              <i class="fa fa-calendar-o font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Class Schedule:</span>
+                                            <i
+                                                class="fa fa-calendar-o font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Class
+                                            Schedule:</span>
                                         <span class="course-info-details">{{course.class_days}}</span>
                                     </li>
                                     <li>
                                         <span class="course-info-title">
-              <i class="fa fa-clock-o font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Class Time:</span>
+                                            <i
+                                                class="fa fa-clock-o font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Class
+                                            Time:</span>
                                         <span class="course-info-details">{{course.class_time}}</span>
                                     </li>
                                 </ul>
                             </div>
+
                             <div class="tab-pane fade" id="tab3">
-                                <h4 class="line-bottom-theme-colored-2 mb-20">Course Teachers</h4>
-                                <div class="row">
-                                    <div class="container"><p>{{course.teachers}}</p></div>
-                                </div>
+                                <h4 class="line-bottom-theme-colored-2 mb-20">Location & Cohorts</h4>
+                                <ul class="course-info-list font-14 mt-20">
+                                    <li>
+                                        <span class="course-info-title">
+                                            <i
+                                                class="fa fa-location font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Location:
+                                        </span>
+                                        <span class="course-info-details">{{course.location}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="course-info-title">
+                                            <i
+                                                class="fa fa-calendar font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Cohort:
+                                        </span>
+                                        <span class="course-info-details">{{course.cohort.name}}</span>
+                                    </li>
+                                </ul>
                             </div>
                             <div class="tab-pane fade" id="tab4">
                                 <h4 class="line-bottom-theme-colored-2 mb-20">Course Reviews</h4>
                                 <div class="course-reviews">
-                                    <h4 class="mb-0">Average Rating:<span class="text-theme-colored2 vertical-align-middle font-30 ml-20">4.6</span></h4>
+                                    <h4 class="mb-0">Average Rating:<span
+                                            class="text-theme-colored2 vertical-align-middle font-30 ml-20">4.6</span>
+                                    </h4>
                                     <div class="row">
                                         <div class="col-md-7">
                                             <div class="star-rating filled mt-5 mb-5 ml-0">
@@ -174,12 +203,20 @@
                                                     {% if comments %}
                                                     {% for comment in comments %}
                                                     <li>
-                                                        <div class="media comment-author"> <a class="media-left pull-left flip" href="#"><span class="img-thumbnail"><span class="fa fa-user"></span></span></a>
+                                                        <div class="media comment-author"> <a
+                                                                class="media-left pull-left flip" href="#"><span
+                                                                    class="img-thumbnail"><span
+                                                                        class="fa fa-user"></span></span></a>
                                                             <div class="media-body">
-                                                                <h5 class="media-heading comment-heading">{{comment.name}} says:</h5>
+                                                                <h5 class="media-heading comment-heading">
+                                                                    {{comment.name}} says:</h5>
                                                                 <div class="comment-date">{{comment.created_at}}</div>
                                                                 <p>{{comment.comment}}</p>
-                                                                <a class="replay-icon pull-right text-theme-colored2" href="javascript:void()"> <i class="fa fa-commenting-o text-theme-colored2"></i> ...</a> </div>
+                                                                <a class="replay-icon pull-right text-theme-colored2"
+                                                                    href="javascript:void()"> <i
+                                                                        class="fa fa-commenting-o text-theme-colored2"></i>
+                                                                    ...</a>
+                                                            </div>
                                                         </div>
                                                     </li>
                                                     {% endfor %}
@@ -200,21 +237,33 @@
                                                             <form role="form" id="comment-form">
                                                                 <div class="col-sm-6 pt-0 pb-0">
                                                                     <div class="form-group">
-                                                                        <input type="text" class="form-control" required name="contact_name" id="contact_name" placeholder="Enter Name">
+                                                                        <input type="text" class="form-control" required
+                                                                            name="contact_name" id="contact_name"
+                                                                            placeholder="Enter Name">
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <input type="text" required class="form-control" name="contact_email2" id="contact_email2" placeholder="Enter Email">
+                                                                        <input type="text" required class="form-control"
+                                                                            name="contact_email2" id="contact_email2"
+                                                                            placeholder="Enter Email">
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <input type="text" placeholder="Enter Phone" required class="form-control" name="subject">
+                                                                        <input type="text" placeholder="Enter Phone"
+                                                                            required class="form-control"
+                                                                            name="subject">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <textarea class="form-control" required name="contact_message2" id="contact_message2" placeholder="Enter Message" rows="7"></textarea>
+                                                                        <textarea class="form-control" required
+                                                                            name="contact_message2"
+                                                                            id="contact_message2"
+                                                                            placeholder="Enter Message"
+                                                                            rows="7"></textarea>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <button type="submit" class="btn btn-dark btn-flat pull-right m-0" data-loading-text="Please wait...">Submit</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-dark btn-flat pull-right m-0"
+                                                                            data-loading-text="Please wait...">Submit</button>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -227,7 +276,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div><a class="btn btn-xl primary-color mt-30 pr-40 pl-40 text-white" href="{% url 'website:enroll' %}?course_id={{course.id}}">Enroll Now</a></div>
+                        <div><a class="btn btn-xl primary-color mt-30 pr-40 pl-40 text-white"
+                                href="{% url 'website:enroll' %}?course_id={{course.id}}">Enroll Now</a></div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
@@ -237,37 +287,47 @@
                             <div class="categories">
                                 <ul class="list-border">
                                     {% for category in categories %}
-                                    <li><a href="{% url 'website:courses' %}?category_id={{category.id}}&category_name={{category.name}}">{{category.name}}<span>({{category.get_total_courses}})</span></a></li>
+                                    <li><a
+                                            href="{% url 'website:courses' %}?category_id={{category.id}}&category_name={{category.name}}">{{category.name}}<span>({{category.get_total_courses}})</span></a>
+                                    </li>
                                     {% endfor %}
                                 </ul>
                             </div>
                         </div>
                         <div class="widget border-1px bg-silver-deep p-15">
                             <h4 class="widget-title line-bottom-theme-colored-2">Custom Course Request</h4>
-                            <br> <p class="primary-text-color">Request for custom training</p>
-                            <form id="quick_contact_form_sidebar" name="footer_quick_contact_form" class="quick-contact-form" action="" method="POST">
+                            <br>
+                            <p class="primary-text-color">Request for custom training</p>
+                            <form id="quick_contact_form_sidebar" name="footer_quick_contact_form"
+                                class="quick-contact-form" action="" method="POST">
                                 <div class="form-group">
-                                    <input name="email" class="form-control" type="text" required="" placeholder="Enter Email">
+                                    <input name="email" class="form-control" type="text" required=""
+                                        placeholder="Enter Email">
                                 </div>
                                 <div class="form-group">
-                                    <input name="name" class="form-control" type="text" required="" placeholder="Enter Name">
+                                    <input name="name" class="form-control" type="text" required=""
+                                        placeholder="Enter Name">
                                 </div>
                                 <div class="form-group">
-                                    <input name="phone" class="form-control" type="text" required="" placeholder="Enter Phone">
+                                    <input name="phone" class="form-control" type="text" required=""
+                                        placeholder="Enter Phone">
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="message" class="form-control" required="" placeholder="Enter Message" rows="3"></textarea>
+                                    <textarea name="message" class="form-control" required=""
+                                        placeholder="Enter Message" rows="3"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <input name="form_botcheck" class="form-control" type="hidden" value="" />
-                                    <button type="submit" class="btn btn-default btn-flat btn-xs btn-quick-contact text-gray pt-5 pb-5" data-loading-text="Please wait...">Send Message</button>
+                                    <button type="submit"
+                                        class="btn btn-default btn-flat btn-xs btn-quick-contact text-gray pt-5 pb-5"
+                                        data-loading-text="Please wait...">Send Message</button>
                                 </div>
                             </form>
 
                             <!-- Quick Contact Form Validation-->
                             <script type="text/javascript">
                                 $("#quick_contact_form_sidebar").validate({
-                                    submitHandler: function(form) {
+                                    submitHandler: function (form) {
                                         var form_btn = $(form).find('button[type="submit"]');
                                         var form_result_div = '#form-result';
                                         $(form_result_div).remove();
@@ -276,13 +336,13 @@
                                         form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                                         $(form).ajaxSubmit({
                                             dataType: 'json',
-                                            success: function(data) {
+                                            success: function (data) {
                                                 if (data.status == 'true') {
                                                     $(form).find('.form-control').val('');
                                                 }
                                                 form_btn.prop('disabled', false).html(form_btn_old_msg);
                                                 $(form_result_div).html(data.message).fadeIn('slow');
-                                                setTimeout(function() {
+                                                setTimeout(function () {
                                                     $(form_result_div).fadeOut('slow')
                                                 }, 6000);
                                             }
