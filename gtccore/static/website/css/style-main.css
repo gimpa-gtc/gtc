@@ -530,6 +530,7 @@ iframe {
     position: relative;
     margin-bottom: 30px;
     padding-bottom: 10px;
+    color: blue;
 }
 
 .line-bottom:after {
