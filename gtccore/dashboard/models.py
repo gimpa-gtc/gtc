@@ -173,6 +173,20 @@ class Notification(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def broadcast(self, btype='sms'):
+        '''Broadcasts the notification to all applicants'''
+        applicants = Applicant.objects.all()
+        phones = [applicant.phone for applicant in applicants]
+        emails = [applicant.email for applicant in applicants]
+        if btype == 'sms':
+            print('Sending sms to all applicants...')
+            # send sms
+            pass
+        elif btype == 'email':
+            print('Sending email to all applicants...')
+            # send email
+            pass
+
     def __str__(self) -> str:
         return self.title
 
