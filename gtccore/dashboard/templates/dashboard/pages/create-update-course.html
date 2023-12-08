@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="form-group-item">
                         <h5 class="form-title">Course Form</h5>
-                        <form action="{% url 'dashboard:create_update_course' %}" method="POST">
+                        <form action="{% url 'dashboard:create_update_course' %}" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <input type="hidden" name="course_id" value="{{course.id}}">
                         <div class="row">
@@ -39,7 +39,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <select class="form-control" name="course_id">
+                                    <select class="form-control" name="category_id">
                                         {% for category in categories %}
                                             <option value="{{category.id}}" {% if category.id == course.category.id %} selected {% endif %}>{{category.name}}</option>
                                         {% endfor %}
@@ -60,28 +60,28 @@
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Start Date</label>
-                                    <input type="date" class="form-control" value="{{course.start_date}}" name="start_date">
+                                    <input type="date" class="form-control" value="{{course.start_date|date:'Y-m-d'}}" name="start_date">
                                 </div>
                             </div>
                            
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>End Date</label>
-                                    <input type="date" class="form-control" name="end_date" value="{{course.end_date}}" >
+                                    <input type="date" class="form-control" name="end_date" value="{{course.end_date|date:'Y-m-d'}}" >
                                 </div>
                             </div>
 
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Class Days</label>
-                                    <input type="text" class="form-control" value="{{course.start_date}}" name="class_days">
+                                    <input type="text" class="form-control" value="{{course.class_days}}" name="class_days">
                                 </div>
                             </div>
                            
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Class Time</label>
-                                    <input type="time" class="form-control" name="class_time" value="{{course.end_date}}" >
+                                    <input type="time" class="form-control" name="class_time" value="{{course.class_time|date:'H:i'}}" >
                                 </div>
                             </div>
 
@@ -101,38 +101,40 @@
 
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
+                                    <label>Course Thumbnail</label>
+                                    <input type="file" class="form-control" name="thumbnail" accept="image/*" onchange="displayImagePreview(this)">
+                                    <img id="image-preview" src="{% if course.thumbnail %} {{course.thumbnail.url}} {% endif %} " alt="Image Preview" style="max-width: 100%; max-height: 150px; margin-top: 10px;">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
                                     <label>Description (Short)</label>
-                                    <textarea name="description" cols="30" rows="5">{{course.description|safe}}</textarea>
+                                    <textarea class="form-control" name="description" cols="30" rows="10">{{course.description|safe}}</textarea>
                                 </div>
                             </div>
                            
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Course Details (Long)</label>
-                                    <textarea name="details" cols="30" rows="10">{{course.details|safe}}</textarea>
+                                    <textarea class="form-control" name="details" cols="30" rows="10">{{course.details|safe}}</textarea>
                                 </div>
                             </div>
 
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Course Requirements</label>
-                                    <textarea name="requirements" cols="30" rows="5">{{course.requirements}}</textarea>
+                                    <textarea class="form-control" name="requirements" cols="30" rows="10">{{course.requirements}}</textarea>
                                 </div>
                             </div>
                            
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Course Syllabus</label>
-                                    <textarea name="syllabus" cols="30" rows="10">{{course.syllabus|safe}}</textarea>
+                                    <textarea class="form-control" name="syllabus" cols="30" rows="10">{{course.syllabus|safe}}</textarea>
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label>Course Thumbnail</label>
-                                    <input type="file" class="form-control" name="thumbnail" accept="image/*">
-                                </div>
-                            </div>
                            
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
@@ -148,5 +150,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    function displayImagePreview(input) {
+    var preview = document.getElementById('image-preview');
+    var file = input.files[0];
+    
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = "";
+    }
+}
+</script>
 <!-- /Page Wrapper -->
 {% endblock content %}
