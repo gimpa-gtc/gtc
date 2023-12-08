@@ -32,4 +32,4 @@ class LogoutView(View):
     def get(self, request):
         '''Handles GET requests'''
         logout(request)
-        return redirect('website:home')
+        return redirect('accounts:login')
