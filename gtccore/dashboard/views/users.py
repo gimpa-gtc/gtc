@@ -87,15 +87,14 @@ class UpdateUserProfilePicView(View):
         user_id = request.POST.get('user_id')
         profile_pic = request.FILES.get('profile_pic')
         user = User.objects.filter(id=user_id).first()
-        redirect_url = reversed('dashboard:create_update_user') + '?user_id=' + str(user_id)
         if user:
             user.profile_pic = profile_pic
             user.save()
             messages.success(request, 'Profile Picture Updated Successfully')
-            return redirect(redirect_url)
+            return redirect('dashboard:users')
         else:
             messages.error(request, 'User Not Found')
-            return redirect(redirect_url)
+            return redirect('dashboard:users')
 
 
 class DownloadUsersView(View):
