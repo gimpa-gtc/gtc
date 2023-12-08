@@ -62,3 +62,15 @@ urlpatterns += [
     path('create-payment/', views.CreatePaymentView.as_view(), name='create_payment'), #noqa
     path('download-payments/', views.DownloadPaymentsView.as_view(), name='download_payments'), #noqa
 ]
+
+#Support
+urlpatterns += [
+    path('contact-messages/', views.ContactMessagesView.as_view(), name='contact_messages'), #noqa
+    path('contact-messages/reply/', views.ReplyMessageView.as_view(), name='reply_message'), #noqa
+    path('download-contact-messages/', views.DownloadContactMessagesView.as_view(), name='download_contact_messages'), #noqa
+    path('course-requests/', views.CourseRequestsView.as_view(), name='course_requests'), #noqa
+    path('course-requests/reply/', views.ReplyCourseRequestView.as_view(), name='reply_course_request'), #noqa
+    path('download-course-requests/', views.DownloadCourseRequestsView.as_view(), name='download_course_requests'), #noqa
+    path('notifications/', views.NotificationsView.as_view(), name='notifications'), #noqa
+    path('create-update-notification/', views.CreateUpdateNotificationView.as_view(), name='create_update_notification'), #noqa
+]

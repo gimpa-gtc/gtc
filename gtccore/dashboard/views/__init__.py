@@ -8,3 +8,6 @@ from .payments import *
 from .profile import *
 from .settings import *
 from .users import *
+from .contact_messages import *
+from .course_requests import *
+from .notifications import *

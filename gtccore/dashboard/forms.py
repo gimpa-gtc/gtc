@@ -1,7 +1,7 @@
 from django import forms
 
 from dashboard.models import (Application, Cohort, Comment, Course,
-                              CourseCategory, Facilitator, Faq)
+                              CourseCategory, Facilitator, Notification)
 
 
 class ApplicationForm(forms.ModelForm):
@@ -37,3 +37,9 @@ class CourseCategoryForm(forms.ModelForm):
     class Meta:
         model = CourseCategory
         fields = ['name']
+
+class NotificationForm(forms.ModelForm):
+    '''Notification form.'''
+    class Meta:
+        model = Notification
+        fields = ['title', 'content']
