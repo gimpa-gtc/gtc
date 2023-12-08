@@ -19,8 +19,7 @@ class NotificationsView(View):
         if query:
             notifications = Notification.objects.filter(
                 Q(title__icontains=query) | 
-                Q(description__icontains=query) | 
-                Q(created_at__icontains=query)
+                Q(content__icontains=query)
             ).order_by('-id')
         context ={
             'notifications': notifications
@@ -58,3 +57,41 @@ class CreateUpdateNotificationView(View):
             for k, v in form.errors.items():
                 messages.error(request, f"{k}: {v}")
                 return redirect('dashboard:notifications')
+
+
+class BroadcastNotificationView(View):
+    '''Broadcast notification to all users'''
+
+    template = 'dashboard/pages/broadcast-notification.html'
+
+    def get(self, request):
+        notification_id = request.GET.get('notification_id')
+        notification = Notification.objects.filter(id=notification_id).first()
+        context = {
+            'notification': notification
+        }
+        return render(request, self.template, context)
+    
+
+    def post(self, request):
+        notification_id = request.GET.get('notification_id')
+        notification = Notification.objects.filter(id=notification_id).first()
+        if notification:
+            notification.broadcast()
+            messages.success(request, 'Notification Broadcasted Successfully.')
+            return redirect('dashboard:notifications')
+        messages.error(request, 'Notification Not Found.')
+        return redirect('dashboard:notifications')
+
+
+class DownloadNotificationView(View):
+    '''Download notifications as csv'''
+    def get(self, request):
+        notifications = Notification.objects.all()
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="notifications.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['title', 'content', 'created_at']) # noqa
+        for notification in notifications:
+            writer.writerow([notification.title, notification.content, notification.created_at])
+        return response
