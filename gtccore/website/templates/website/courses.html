@@ -1,8 +1,9 @@
 {% extends 'base/primary_base.html' %} {% load static %} {% block content %}
-  <!-- Start main-content -->
-  <div class="main-content">
+<!-- Start main-content -->
+<div class="main-content">
     <!-- Section: inner-header -->
-    <section class="inner-header divider layer-overlay overlay-theme-colored-7" data-bg-img="{% static 'website/images/bg/bg1.jpg' %}">
+    <section class="inner-header divider layer-overlay overlay-theme-colored-7"
+        data-bg-img="{% static 'website/images/bg/bg1.jpg' %}">
         <div class="container pt-120 pb-60">
             <!-- Section Content -->
             <div class="section-content">
@@ -32,13 +33,20 @@
                         {% for course in courses %}
                         <div class="course-list-block clearfix mb-30">
                             <div class="col-sm-6 col-md-4">
-                                <div class="thumb"> <img alt="featured project" src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/course/course-list1.jpg' %} {% endif %} " class="img-fullwidth mt-5"></div>
+                                <div class="thumb"> <img alt="featured project"
+                                        src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/course/course-list1.jpg' %} {% endif %} "
+                                        class="img-fullwidth mt-5"></div>
                             </div>
                             <div class="col-sm-6 col-md-8">
-                                <h4 class="line-bottom mt-0 mb-15 mt-sm-20"><a href="{% url 'website:course_details' %}?course_id={{course.id}}&course_title={{course.title}}">{{course.title}}</a></h4>
+                                <b>
+                                    <h3 class="line-bottom mt-0 mb-15 mt-sm-20" style="color: yellow !important; font-weight: bolder;"><a
+                                            href="{% url 'website:course_details' %}?course_id={{course.id}}&course_title={{course.title}}">{{course.title}}</a>
+                                    </h3>
+                                </b>
                                 <ul class="mb-10">
                                     <li>
-                                        <h4 class="mt-0 mb-5">Price: <span class="text-theme-colored2"> GHC{{course.price|floatformat:2}}</span></h4>
+                                        <h4 class="mt-0 mb-5">Price: <span class="text-theme-colored2">
+                                                GHC{{course.price|floatformat:2}}</span></h4>
                                     </li>
                                     <li class="review-stars">
                                         <i class="fa fa-star"></i>
@@ -49,7 +57,9 @@
                                     </li>
                                 </ul>
                                 <p>{{course.description|safe}}</p>
-                                <a class="btn btn-default btn-sm text-uppercase mt-5" href="{% url 'website:course_details' %}?course_id={{course.id}}&course_title={{course.title}}">view details</a>
+                                <a class="btn btn-default btn-sm text-uppercase mt-5"
+                                    href="{% url 'website:course_details' %}?course_id={{course.id}}&course_title={{course.title}}">view
+                                    details</a>
                             </div>
                         </div>
                         {% endfor %}
@@ -68,7 +78,10 @@
                             <h5 class="widget-title line-bottom">Course Categories</h5>
                             <ul class="list list-divider list-border">
                                 {% for category in categories %}
-                                <li><a href="{% url 'website:courses' %}?category_id={{category.id}}&category_name={{category.name}}"><i class="fa fa-check-square-o mr-10 text-black-light"></i> {{category.name}}</a></li>
+                                <li><a
+                                        href="{% url 'website:courses' %}?category_id={{category.id}}&category_name={{category.name}}"><i
+                                            class="fa fa-check-square-o mr-10 text-black-light"></i>
+                                        {{category.name}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -79,8 +92,11 @@
                             <div class="owl-carousel-1col">
                                 {% for course in latst_courses %}
                                 <div class="item">
-                                    <img src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} https://placehold.it/365x230 {% endif %} " alt="">
-                                    <h4 class="title"> <a href="{% url 'website:course_details' %}?course_id={{course.id}}&course_title={{course.title}}">{{course.title}}</a></h4>
+                                    <img src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} https://placehold.it/365x230 {% endif %} "
+                                        alt="">
+                                    <h4 class="title"> <a
+                                            href="{% url 'website:course_details' %}?course_id={{course.id}}&course_title={{course.title}}">{{course.title}}</a>
+                                    </h4>
                                     <p>{{course.description}}</p>
                                 </div>
                                 {% endfor %}
