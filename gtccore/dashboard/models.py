@@ -1,12 +1,11 @@
-from django.utils import timezone
+import random
+import string
 
 from django.db import models
+from django.utils import timezone
 
 from gtccore.library.constants import (ApplicationStatus, PaymentMode,  # noqa
                                        PaymentStatus)
-
-import random
-import string
 
 
 class CourseCategory(models.Model):
