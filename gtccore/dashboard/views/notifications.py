@@ -2,7 +2,7 @@ import csv
 
 from django.contrib import messages
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
 
@@ -71,17 +71,17 @@ class BroadcastNotificationView(View):
             'notification': notification
         }
         return render(request, self.template, context)
-    
 
     def post(self, request):
-        notification_id = request.GET.get('notification_id')
+        notification_id = request.POST.get('notification_id')
+        notification_type = request.POST.get('type')
         notification = Notification.objects.filter(id=notification_id).first()
         if notification:
-            notification.broadcast()
-            messages.success(request, 'Notification Broadcasted Successfully.')
-            return redirect('dashboard:notifications')
+            notification.broadcast(notification_type)
+            messages.success(request, f'{notification_type.upper()} Notification Broadcasted Successfully.')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         messages.error(request, 'Notification Not Found.')
-        return redirect('dashboard:notifications')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class DownloadNotificationView(View):
