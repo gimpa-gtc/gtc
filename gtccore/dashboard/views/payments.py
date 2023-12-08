@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.db.models import Q
-from dashboard.models import Payment
+from dashboard.models import Application, Payment
 
 
 class PaymentsView(View):
@@ -23,7 +23,22 @@ class PaymentsView(View):
             'payments': payments
         }
         return render(request, self.template, context)
-    
+
+
+class CreatePaymentView(View):
+    '''Create payment'''
+    template = 'dashboard/pages/create-payment.html'
+
+    def get(self, request):
+        application_id = request.GET.get('application_id')
+        application = Application.objects.filter(application_id=application_id).first() # noqa
+        context = {
+            'application': application
+        }
+        return render(request, self.template, context)
+
+   
+
 class DownloadPaymentsView(View):
     '''Download payments as csv'''
     def get(self, request):
