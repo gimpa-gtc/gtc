@@ -14,6 +14,7 @@ urlpatterns = [
 urlpatterns += [
     path('users/', views.UsersView.as_view(), name='users'),
     path('create-update-user/', views.CreateUpdateUser.as_view(), name='create_update_user'), #noqa
+    path('update-user-pic/', views.UpdateUserProfilePicView.as_view(), name='update_profile_pic'), #noqa
     path('download-users/', views.DownloadUsersView.as_view(), name='download_users'), #noqa
 ]
 
