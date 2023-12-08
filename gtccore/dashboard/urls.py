@@ -58,5 +58,6 @@ urlpatterns += [
 # payments
 urlpatterns += [
     path('payments/', views.PaymentsView.as_view(), name='payments'),
+    path('create-payment/', views.CreatePaymentView.as_view(), name='create_payment'), #noqa
     path('download-payments/', views.DownloadPaymentsView.as_view(), name='download_payments'), #noqa
 ]
