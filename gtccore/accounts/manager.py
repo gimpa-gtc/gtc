@@ -1,7 +1,6 @@
 from django.contrib.auth.models import BaseUserManager
 
 
-
 class AccountManager(BaseUserManager):
     '''manages User account creation'''
 
