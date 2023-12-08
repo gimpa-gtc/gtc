@@ -37,6 +37,8 @@ urlpatterns += [
     path('download-cohorts/', views.DownloadCohortView.as_view(), name='download_cohorts'), #noqa
     path('download-courses/', views.DownloadCoursesView.as_view(), name='download_courses'), #noqa
     path('download-categories/', views.DownloadCategoriesView.as_view(), name='download_categories'), #noqa
+    path('download-notifications/', views.DownloadNotificationView.as_view(), name='download_notifications'), #noqa
+
 ]
 
 # courses
@@ -68,9 +70,10 @@ urlpatterns += [
     path('contact-messages/', views.ContactMessagesView.as_view(), name='contact_messages'), #noqa
     path('contact-messages/reply/', views.ReplyMessageView.as_view(), name='reply_message'), #noqa
     path('download-contact-messages/', views.DownloadContactMessagesView.as_view(), name='download_contact_messages'), #noqa
+    path('download-course-requests/', views.DownloadCourseRequestsView.as_view(), name='download_course_requests'), #noqa
     path('course-requests/', views.CourseRequestsView.as_view(), name='course_requests'), #noqa
     path('course-requests/reply/', views.ReplyCourseRequestView.as_view(), name='reply_course_request'), #noqa
-    path('download-course-requests/', views.DownloadCourseRequestsView.as_view(), name='download_course_requests'), #noqa
     path('notifications/', views.NotificationsView.as_view(), name='notifications'), #noqa
     path('create-update-notification/', views.CreateUpdateNotificationView.as_view(), name='create_update_notification'), #noqa
+    path('broadcast-notification/', views.BroadcastNotificationView.as_view(), name='broadcast'), #noqa
 ]
