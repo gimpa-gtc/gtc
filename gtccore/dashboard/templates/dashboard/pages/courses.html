@@ -29,7 +29,7 @@
                         </li>
                       
                         <li>
-                            <a class="btn btn-primary" href=""><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New Course</a>
+                            <a class="btn btn-primary" href="{% url 'dashboard:create_update_course' %}"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New Course</a>
                         </li>
                     </ul>
                 </div>
@@ -67,7 +67,7 @@
                                         <td>{{forloop.counter}}</td>
                                         <td>
                                             <div class="avatar avatar-lg">
-                                                <img src="{% static 'website/images/course/course-list1.jpg' %}" alt="Course Image" class="avatar-img rounded-circle">
+                                                <img src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/course/course-list1.jpg' %} {% endif %} " alt="Course Image" class="avatar-img rounded-circle">
                                             </div>
                                         </td>
                                         <td>{{course.title}}</td>
@@ -84,7 +84,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <ul>
                                                         <li>
-                                                            <a class="dropdown-item" href=""><i class="far fa-edit me-2"></i>Edit</a>
+                                                            <a class="dropdown-item" href="{% url 'dashboard:create_update_course' %}?course_id={{course.id}}"><i class="far fa-edit me-2"></i>Edit</a>
                                                         </li>
                                                         <li>
                                                             <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="far fa-trash-alt me-2"></i>Delete</a>
@@ -97,7 +97,7 @@
                                     {% endfor %}
                                     {% else %}
                                     <tr>
-                                        <td colspan="6" class="text-center">No Courses Found</td>
+                                        <td colspan="11" class="text-center">No Courses Found</td>
                                     </tr>
                                     {% endif %}
                                 </tbody>
@@ -118,7 +118,7 @@
                 <a href="#" class="sidebar-closes"><i class="fa-regular fa-circle-xmark"></i></a>
             </div>
             <div class="sidebar-body">
-                <form action="#" autocomplete="off">
+                <form action="{% url 'dashboard:courses' %}" method="GET" autocomplete="off">
                     <!-- Product -->
                     <div class="accordion" id="accordionMain1">
                         <div class="card-header-new" id="headingOne">
@@ -136,7 +136,7 @@
                                     <div class="col-md-12">
                                         <div id="checkBoxes1">
                                             <div class="form-custom">
-                                                <input type="text" class="form-control" id="member_search1" placeholder="Search Course">
+                                                <input type="text" class="form-control" id="member_search1" name="query" placeholder="Search Course">
                                                 <span><img src="{% static 'dashboard/assets/img/icons/search.svg' %}" alt="img"></span>
                                             </div>
                                         </div>
