@@ -180,12 +180,13 @@ class Notification(models.Model):
         emails = [applicant.email for applicant in applicants]
         if btype == 'sms':
             print('Sending sms to all applicants...')
-            # send sms
-            pass
+            return
         elif btype == 'email':
             print('Sending email to all applicants...')
-            # send email
-            pass
+            return
+        else:
+            print('Invalid broadcast type.')
+            return
 
     def __str__(self) -> str:
         return self.title
