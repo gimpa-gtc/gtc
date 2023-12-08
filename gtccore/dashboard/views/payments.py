@@ -1,8 +1,10 @@
 import csv
+
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
-from django.db.models import Q
+
 from dashboard.models import Application, Payment
 
 
