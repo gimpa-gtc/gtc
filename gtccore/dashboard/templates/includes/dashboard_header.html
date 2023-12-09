@@ -62,17 +62,17 @@
                         <span class="animate-circle"></span>
                     </span>
                     <span class="user-content">
-                        <span class="user-details">Admin</span>
-                        <span class="user-name">John Smith</span>
+                        {% if request.user %}
+                        <span class="user-name">{{request.user.email}}</span>
+                        {% else %}
+                        <span class="user-name">Guest</span>
+                        {% endif %}
                     </span>
                 </a>
             <div class="dropdown-menu menu-drop-user">
                 <div class="profilemenu">
                     <div class="subscription-menu">
                         <ul>
-                            <li>
-                                <a class="dropdown-item" href="">Profile</a>
-                            </li>
                             <li>
                                 <a class="dropdown-item" href="">Settings</a>
                             </li>
