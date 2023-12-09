@@ -59,7 +59,7 @@
                                     <tr>
                                         <td>{{forloop.counter}}</td>
                                         <td>{{noti.title}}</td>
-                                        <td>{{noti.content}}</td>
+                                        <td>{{noti.content|truncatewords:10}}</td>
                                         <td>{{noti.created_at}}</td>
                                         <td class="d-flex align-items-center">
                                             <div class="dropdown dropdown-action">
