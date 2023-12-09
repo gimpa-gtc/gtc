@@ -3,9 +3,13 @@ import string
 
 from django.db import models
 from django.utils import timezone
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 from gtccore.library.constants import (ApplicationStatus, PaymentMode,  # noqa
                                        PaymentStatus)
+from gtccore.library.services import send_sms
+from gtccore.settings import SENDER_ID
 
 
 class CourseCategory(models.Model):
@@ -178,12 +182,33 @@ class Notification(models.Model):
         applicants = Applicant.objects.all()
         phones = [applicant.phone for applicant in applicants]
         emails = [applicant.email for applicant in applicants]
-        if btype == 'sms':
+        if btype.lower() == 'sms':
             print('Sending sms to all applicants...')
-            return
-        elif btype == 'email':
+            msg = f'{self.title}\n{self.content}'
+            try:
+                send_sms(sender=SENDER_ID, message=msg, recipients=phones)
+                print('SMS sent successfully.')
+            except Exception as e:
+                print(f'Error: {e}')
+                return False
+            return True
+        elif btype.lower() == 'email':
             print('Sending email to all applicants...')
-            return
+            subject = self.title
+            from_email = None
+            receipients = ["princesamuelpks@gmail.com"]
+            template = "dashboard/notifications/event-notification.html"
+            context = {"notification": self}
+            html_content = render_to_string(template, context)
+            email = EmailMultiAlternatives(subject, '', from_email, receipients)
+            email.attach_alternative(html_content, 'text/html')
+            try:
+                email.send()
+                print('Email sent successfully.')
+            except Exception as e:
+                print(f'Error: {e}')
+                return False
+            return True
         else:
             print('Invalid broadcast type.')
             return
