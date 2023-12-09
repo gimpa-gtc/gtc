@@ -1,0 +1,59 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="content-page-header">
+            <h5>Add teams</h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="form-group-item">
+                        <form action="{% url 'dashboard:create_update_team' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="team_id" value="{{team.id}}">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text" class="form-control" name="title" value="{{team.title}}" placeholder="Enter Title">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Fullname</label>
+                                    <input type="text" class="form-control" name="name" value="{{team.name}}" placeholder="Enter Fullname">
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Specialization</label>
+                                    <input type="text" class="form-control" name="specialization" value="{{team.specialization}}" placeholder="Enter Email Address">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Team Member Image</label>
+                                    <input type="file" class="form-control" name="image" accept="image/*" onchange="displayImagePreview(this)">
+                                    <span class="text-success">Use Dimensions: L = 360px H = 250px</span>
+                                    <img id="image-preview" src="{% if team.image %} {{team.image.url}} {% endif %} " alt="Image Preview" style="max-width: 100%; max-height: 150px; margin-top: 10px;">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <input type="reset"  class="btn btn-danger" value="Clear">
+                                    <input type="submit"  class="btn btn-primary" value="Submit">
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper -->
+{% endblock content %}

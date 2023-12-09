@@ -78,3 +78,17 @@ urlpatterns += [
     path('create-update-notification/', views.CreateUpdateNotificationView.as_view(), name='create_update_notification'), #noqa
     path('broadcast-notification/', views.BroadcastNotificationView.as_view(), name='broadcast'), #noqa
 ]
+
+#Content Management
+urlpatterns += [
+    path('faqs/', views.FAQsView.as_view(), name='faqs'), #noqa
+    path('create-update-faq/', views.CreateUpdateFAQView.as_view(), name='create_update_faq'), #noqa
+    path('testimonials/', views.TestimonialsView.as_view(), name='testimonials'), #noqa
+    path('create-update-testimonial/', views.CreateUpdateTestimonialView.as_view(), name='create_update_testimonial'), #noqa
+    path('delete-faq/', views.DeleteFAQView.as_view(), name='delete_faq'), #noqa
+    path('delete-testimonial/', views.DeleteTestimonialView.as_view(), name='delete_testimonial'), #noqa
+    path('teams/', views.TeamsView.as_view(), name='teams'), #noqa
+    path('create-update-team/', views.CreateUpdateTeamView.as_view(), name='create_update_team'), #noqa
+    path('delete-team/', views.DeleteTeamView.as_view(), name='delete_team'), #noqa
+    path('download-teams/', views.DownloadTeamsView.as_view(), name='download_teams'), #noqa
+]
