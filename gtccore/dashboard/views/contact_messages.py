@@ -40,8 +40,12 @@ class ReplyMessageView(View):
     def post(self, request):
         message_id = request.POST.get('message_id')
         message = Contact.objects.filter(id=message_id).first()
-        message.reply = request.POST.get('reply')
-        message.save()
+        if not message:
+            messages.error(request, 'Invalid Message.')
+            return redirect('dashboard:contact_messages')
+        reply_title = request.POST.get('reply_title')
+        reply_message = request.POST.get('reply_message')
+        message.reply_message(f"{reply_title}\n\n{reply_message}")
         messages.success(request, 'Message Replied Successfully.')
         return redirect('dashboard:contact_messages')
     
