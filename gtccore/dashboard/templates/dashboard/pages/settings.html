@@ -71,25 +71,31 @@
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" placeholder="Enter First Name">
+                                <input type="text" class="form-control" name="name" value="{{user.name}}" placeholder="Enter Name">
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="text" class="form-control" placeholder="Enter Last Name">
+                                <input type="text" class="form-control" name="name" value="{{user.email}}" placeholder="Enter Name">
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input type="text" class="form-control" placeholder="Enter Email Address">
+                                <input type="text" class="form-control" name="name" value="{{user.phone}}"  placeholder="Enter Email Address">
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
                                 <label>Role</label>
-                                <input type="text" class="form-control" placeholder="Enter Mobile Number">
+                                {% if user.is_superuser %}
+                                <input type="text" class="form-control" placeholder="Enter Mobile Number" value="SUPERUSER" readonly>
+                                {% elif user.is_staff %}
+                                <input type="text" class="form-control" placeholder="Enter Mobile Number" value="STAFF" readonly>
+                                {% else %}
+                                <input type="text" class="form-control" placeholder="Enter Mobile Number" value="GUEST" readonly>
+                                {% endif %}
                             </div>
                         </div>
                        
