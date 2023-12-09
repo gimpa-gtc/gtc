@@ -295,61 +295,35 @@
                             </div>
                         </div>
                         <div class="widget border-1px bg-silver-deep p-15">
-                            <h4 class="widget-title line-bottom-theme-colored-2">Custom Course Request</h4>
+                            <h4 class="widget-title line-bottom-theme-colored-2">Customized Course Request</h4>
                             <br>
                             <p class="primary-text-color">Request for custom training</p>
-                            <form id="quick_contact_form_sidebar" name="footer_quick_contact_form"
-                                class="quick-contact-form" action="" method="POST">
+                            <form id="quick_contact_form_sidebar"
+                                action="{% url 'website:course_details' %}" method="POST">
                                 <div class="form-group">
-                                    <input name="email" class="form-control" type="text" required=""
+                                    {% csrf_token %}
+                                    <input name="email" class="form-control" type="text" required
                                         placeholder="Enter Email">
                                 </div>
                                 <div class="form-group">
-                                    <input name="name" class="form-control" type="text" required=""
+                                    <input name="name" class="form-control" type="text" required
                                         placeholder="Enter Name">
                                 </div>
                                 <div class="form-group">
-                                    <input name="phone" class="form-control" type="text" required=""
+                                    <input name="phone" class="form-control" type="text" required
                                         placeholder="Enter Phone">
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="message" class="form-control" required=""
+                                    <textarea name="message" class="form-control" required
                                         placeholder="Enter Message" rows="3"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <input name="form_botcheck" class="form-control" type="hidden" value="" />
                                     <button type="submit"
-                                        class="btn btn-default btn-flat btn-xs btn-quick-contact text-gray pt-5 pb-5"
+                                        class="btn btn-flat btn-xs primary-color pt-5 pb-5" style="color: white;"
                                         data-loading-text="Please wait...">Send Message</button>
                                 </div>
                             </form>
 
-                            <!-- Quick Contact Form Validation-->
-                            <script type="text/javascript">
-                                $("#quick_contact_form_sidebar").validate({
-                                    submitHandler: function (form) {
-                                        var form_btn = $(form).find('button[type="submit"]');
-                                        var form_result_div = '#form-result';
-                                        $(form_result_div).remove();
-                                        form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
-                                        var form_btn_old_msg = form_btn.html();
-                                        form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
-                                        $(form).ajaxSubmit({
-                                            dataType: 'json',
-                                            success: function (data) {
-                                                if (data.status == 'true') {
-                                                    $(form).find('.form-control').val('');
-                                                }
-                                                form_btn.prop('disabled', false).html(form_btn_old_msg);
-                                                $(form_result_div).html(data.message).fadeIn('slow');
-                                                setTimeout(function () {
-                                                    $(form_result_div).fadeOut('slow')
-                                                }, 6000);
-                                            }
-                                        });
-                                    }
-                                });
-                            </script>
                         </div>
                     </div>
                 </div>
