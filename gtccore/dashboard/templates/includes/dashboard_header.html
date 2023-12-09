@@ -58,7 +58,7 @@
         <li class="nav-item dropdown">
             <a href="javascript:void(0)" class="user-link  nav-link" data-bs-toggle="dropdown">
                     <span class="user-img">
-                        <img src="{% static 'dashboard/assets/img/profiles/avatar-07.jpg' %}" alt="img" class="profilesidebar">
+                        <img src="{% if user.profile_pic %} {{user.profile_pic.url}} {% else %} {% static 'dashboard/assets/img/profiles/avatar-10.jpg' %} {% endif %}" alt="img" class="profilesidebar">
                         <span class="animate-circle"></span>
                     </span>
                     <span class="user-content">
@@ -74,7 +74,7 @@
                     <div class="subscription-menu">
                         <ul>
                             <li>
-                                <a class="dropdown-item" href="">Settings</a>
+                                <a class="dropdown-item" href="{% url 'dashboard:settings' %}">Settings</a>
                             </li>
                         </ul>
                     </div>
