@@ -111,7 +111,7 @@ def send_sms(sender: str, message: str, recipients: array.array):
         "sender": sender,
         "message": message,
         "recipients": recipients
-    }
+    } 
     response = requests.post(SEND_SMS_URL, headers=header, json=payload)
     print(response.json())
     return response.json()
