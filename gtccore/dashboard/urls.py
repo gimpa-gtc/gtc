@@ -7,6 +7,7 @@ app_name = 'dashboard'
 urlpatterns = [
     path('', views.DashboardView.as_view(), name='dashboard'),
     path('settings/', views.SettingsView.as_view(), name='settings'),
+    path('settings/preference', views.PreferenceSettingsView.as_view(), name='prefered_settings'), #noqa
     path('profile/', views.UserProfileView.as_view(), name='profile'),
 ]
 
