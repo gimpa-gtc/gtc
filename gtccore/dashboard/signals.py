@@ -30,18 +30,6 @@ def extract_applicant(sender, instance, created, **kwargs):
         return True
 
 
-@receiver(post_save, sender=Notification)
-def notify_applicants_sms(sender, instance, created, **kwargs):
-    '''Send the notification to applicants upon saving of notification'''
-    applicants = Applicant.objects.all()
-    msg = f"{instance.title} \n{instance.content}"
-    numbers = [str(applicant.phone) for applicant in applicants]
-    emails = [str(applicant.email) for applicant in applicants]
-
-    send_sms(SENDER_ID, msg, numbers)
-    return True
-
-
 @receiver(post_save, sender=CustomCourseRequest)
 def notify_custom_course_requester(sender, instance, created, **kwargs):
     '''Send the notification to applicants upon saving of notification'''
