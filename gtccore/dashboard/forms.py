@@ -1,7 +1,7 @@
 from django import forms
 
-from dashboard.models import (Application, Cohort, Comment, Course,
-                              CourseCategory, Facilitator, Notification)
+from dashboard.models import (Application, Cohort, Comment, Contact, Course,
+                              CourseCategory, CustomCourseRequest, Facilitator, Notification)
 
 
 class ApplicationForm(forms.ModelForm):
@@ -43,3 +43,15 @@ class NotificationForm(forms.ModelForm):
     class Meta:
         model = Notification
         fields = ['title', 'content']
+
+class ContactUsForm(forms.ModelForm):
+    '''Contact us form.'''
+    class Meta:
+        model = Contact
+        fields = ['name', 'email', 'phone', 'message']
+
+class CustomCourseReguestForm(forms.ModelForm):
+    '''Contact us form.'''
+    class Meta:
+        model = CustomCourseRequest
+        fields = ['name', 'email', 'phone', 'message']
