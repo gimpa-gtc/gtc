@@ -235,6 +235,25 @@ class Contact(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def reply_message(self, msg: str):
+        '''Replies the message'''
+        subject = 'GTC - Contact Message'
+        from_email = None
+        receipients = [self.email]
+        template = "dashboard/notifications/contact-reply.html"
+        context = {"instance": self, "message": msg}
+        html_content = render_to_string(template, context)
+        email = EmailMultiAlternatives(subject, '', from_email, receipients)
+        email.attach_alternative(html_content, 'text/html')
+        try:
+            email.send()
+            print('Email sent successfully.')
+        except Exception as e:
+            print(f'Error: {e}')
+            return False
+        return True
+
+
     def __str__(self) -> str:
         return self.name
 
@@ -246,6 +265,24 @@ class CustomCourseRequest(models.Model):
     phone = models.CharField(max_length=20)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def reply_message(self, msg: str):
+        '''Replies the message'''
+        subject = 'GTC - Course Request'
+        from_email = None
+        receipients = [self.email]
+        template = "dashboard/notifications/contact-reply.html"
+        context = {"instance": self, "message": msg}
+        html_content = render_to_string(template, context)
+        email = EmailMultiAlternatives(subject, '', from_email, receipients)
+        email.attach_alternative(html_content, 'text/html')
+        try:
+            email.send()
+            print('Email sent successfully.')
+        except Exception as e:
+            print(f'Error: {e}')
+            return False
+        return True
 
     def __str__(self) -> str:
         return self.name
