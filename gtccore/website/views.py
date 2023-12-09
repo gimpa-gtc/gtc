@@ -5,7 +5,7 @@ from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
 
-from dashboard.forms import ApplicationForm
+from dashboard.forms import ApplicationForm, ContactUsForm, CustomCourseReguestForm
 from dashboard.models import (Application, Comment, Course, CourseCategory,
                               Facilitator, Faq, Image, Testimonial)
 from gtccore.library.constants import PaymentStatus
@@ -36,6 +36,14 @@ class ContactView(View):
     template = 'website/contact.html'
 
     def get(self, request):
+        context = {}
+        return render(request, self.template, context)
+    
+    def post(self, request):
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('website:contact')
         context = {}
         return render(request, self.template, context)
     
@@ -152,6 +160,12 @@ class CourseDetailsView(View):
             'categories': categories
         }
         return render(request, self.template, context)
+    
+    def post(self, request):
+        form = CustomCourseReguestForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 
@@ -203,6 +217,9 @@ class EnrollSuccessView(View):
     def get(self, request):
         context = {}
         return render(request, self.template, context)
+
+
+
 
 
 class DownloadAdmissionLetterView(View):
