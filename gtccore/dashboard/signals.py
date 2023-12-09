@@ -38,6 +38,15 @@ def notify_custom_course_requester(sender, instance, created, **kwargs):
     return True
 
 
+@receiver(post_save, sender=Application)
+def notify_applicant(sender, instance, created, **kwargs):
+    '''Send the notification to applicants when they start an application'''
+    msg = f"Hello {instance.name}, \nYour Application has been received. We will get back to you shortly.\n\nApplication ID: {instance.application_id}\n\nThank you for choosing Gimpa Training & Consulting."
+    send_sms(SENDER_ID, msg, [str(instance.phone)])
+    return True
+
+
+
 @receiver(post_save, sender=CustomCourseRequest)
 def notify_custom_course_admin(sender, instance, created, **kwargs):
     '''Send the notification to applicants upon saving of notification'''
