@@ -10,8 +10,9 @@
             <div class="col-md-12">
                 <div class="card-body">
                     <div class="form-group-item">
-                        <form action="{% url 'dashboard:reply_message' %}" method="POST">
+                        <form action="{% url 'dashboard:reply_course_request' %}" method="POST">
                             {% csrf_token %}
+                            <input type="hidden" name="request_id" value="{{course_request.id}}">
                         <div class="row">
                             <p>Course Request Details</p>
                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -50,7 +51,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="form-group">
                                 <label>Reply Message</label>
-                                <textarea class="form-control" name="reply_message" placeholder="Please type your reply"></textarea>
+                                <textarea class="form-control" name="reply_message" cols="30" rows="5" placeholder="Please type your reply"></textarea>
                             </div>
                         </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
