@@ -38,9 +38,13 @@ class ReplyCourseRequestView(View):
     
     def post(self, request):
         request_id = request.POST.get('request_id')
-        request = CustomCourseRequest.objects.filter(id=request_id).first()
-        # reply message
-        
+        custom_request = CustomCourseRequest.objects.filter(id=request_id).first()
+        title = request.POST.get('reply_title')
+        message = request.POST.get('reply_message')
+        if not custom_request:
+            messages.error(request, 'Invalid Request.')
+            return redirect('dashboard:course_requests')
+        custom_request.reply_message(f"{title}\n\n{message}")
         messages.success(request, 'Message Replied Successfully.')
         return redirect('dashboard:course_requests')
     
