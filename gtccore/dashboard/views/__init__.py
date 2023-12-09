@@ -11,3 +11,6 @@ from .users import *
 from .contact_messages import *
 from .course_requests import *
 from .notifications import *
+from .faqs import *
+from .testimonials import *
+from .teams import *

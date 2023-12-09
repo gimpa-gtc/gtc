@@ -1,0 +1,77 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="content-page-header">
+            <h5>Add Testimonial</h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="form-group-item">
+                        <h5 class="form-title">Testimonial Form</h5>
+                        <form action="{% url 'dashboard:create_update_testimonial' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="testimonial_id" value="{{testimonial.id}}">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <input type="file" class="form-control" name="image" accept="image/*" onchange="displayImagePreview(this)">
+                                    <span class="text-success">Use Dimensions: L = 360px H = 250px</span>
+                                    <img id="image-preview" src="{% if testimonial.image %} {{testimonial.image.url}} {% endif %} " alt="Image Preview" style="max-width: 100%; max-height: 150px; margin-top: 10px;">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" value="{{testimonial.name}}" placeholder="Testimonial title" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <input type="text" class="form-control" name="company" value="{{testimonial.company}}" placeholder="testimonial title" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Content</label>
+                                    <textarea class="form-control" name="content" cols="30" rows="5" placeholder="Testimonial answer" required>{{testimonial.answer}}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <input type="reset"  class="btn btn-danger" value="Clear">
+                                    <input type="submit"  class="btn btn-primary" value="Submit">
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function displayImagePreview(input) {
+    var preview = document.getElementById('image-preview');
+    var file = input.files[0];
+    
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = "";
+    }
+}
+</script>
+<!-- /Page Wrapper -->
+{% endblock content %}
