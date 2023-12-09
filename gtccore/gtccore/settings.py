@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from gtccore.cred import GtcCred
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -124,7 +126,18 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = GtcCred().get_email_host_user()
+EMAIL_HOST_PASSWORD = GtcCred().get_email_host_password()
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = "GTC Admissions"
+ 
+
 
 # KEYS
-SENDER_ID = "GTC-ADMIN" # 11 characters max
-ARKESEL_API_KEY = "b6c7f7a4-1d5a-11ec-9a5a-0200cd936042"
+SENDER_ID = GtcCred().get_sms_sender_id() # 11 characters max
+ARKESEL_API_KEY =  GtcCred().get_sms_api_key()
