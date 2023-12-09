@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
+from django.core.mail import send_mail, EmailMultiAlternatives
 
 from dashboard.models import Notification
 from dashboard.forms import NotificationForm
@@ -77,8 +78,11 @@ class BroadcastNotificationView(View):
         notification_type = request.POST.get('type')
         notification = Notification.objects.filter(id=notification_id).first()
         if notification:
-            notification.broadcast(notification_type)
-            messages.success(request, f'{notification_type.upper()} Notification Broadcasted Successfully.')
+            sent = notification.broadcast(notification_type)
+            if sent:
+                messages.success(request, f'{notification_type.upper()} Notification Broadcasted Successfully.')
+            else:
+                messages.error(request, f'Error Broadcasting {notification_type.upper()} Notification.')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         messages.error(request, 'Notification Not Found.')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
