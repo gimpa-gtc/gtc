@@ -9,6 +9,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255, blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
 
+    prefered_notification_email = models.EmailField(max_length=255, blank=True, null=True)  # noqa
+    prefered_notification_phone = models.CharField(max_length=20, blank=True, null=True)  # noqa
+
     profile_pic = models.ImageField(upload_to='profile', blank=True, null=True)  # noqa
 
     is_active = models.BooleanField(default=True)
