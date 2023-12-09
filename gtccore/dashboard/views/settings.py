@@ -18,3 +18,11 @@ class PreferenceSettingsView(View):
         return render(request, self.template, context)
     
 
+class PasswordResetView(View):
+    template = 'dashboard/pages/password-reset.html'
+
+    def get(self, request):
+        context ={}
+        return render(request, self.template, context)
+    
+
