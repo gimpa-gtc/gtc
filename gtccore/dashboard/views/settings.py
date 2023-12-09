@@ -8,3 +8,13 @@ class SettingsView(View):
     def get(self, request):
         context ={}
         return render(request, self.template, context)
+    
+
+class PreferenceSettingsView(View):
+    template = 'dashboard/pages/preference-settings.html'
+
+    def get(self, request):
+        context ={}
+        return render(request, self.template, context)
+    
+
