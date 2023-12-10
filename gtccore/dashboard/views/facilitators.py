@@ -53,8 +53,8 @@ class CreateUpdateFacilitatorView(View):
         if form.is_valid():
             facilitator = form.save()
             if facilitator_id is not None:
-                messages.success(request, 'Facilitator Updated Successfully')
-            messages.success(request, 'Facilitator Created Successfully')
+                messages.success(request, 'Team Member Updated Successfully')
+            messages.success(request, 'Team Member Created Successfully')
         redirect_url = reverse('dashboard:create_update_facilitator') + '?facilitator_id=' + str(facilitator.id)
         return redirect(redirect_url)
 
@@ -64,7 +64,7 @@ class DownloadFacilitatorsView(View):
     def get(self, request):
         facilitators = Facilitator.objects.all()
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="facilitators.csv"'
+        response['Content-Disposition'] = 'attachment; filename="gtc-team.csv"'
         writer = csv.writer(response)
         writer.writerow(['name', 'title', 'image', 'specialization', 'created_at']) # noqa
         for facilitator in facilitators:
