@@ -151,6 +151,7 @@ class Payment(models.Model):
     amount = models.IntegerField(default=0)
     network = models.CharField(max_length=5)
     number = models.CharField(max_length=10)
+    receipt = models.ImageField(upload_to='receipts', null=True, blank=True) #noqa
     status_code = models.CharField(max_length=20)
     status_message = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
