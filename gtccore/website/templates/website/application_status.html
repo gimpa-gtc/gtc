@@ -61,7 +61,11 @@
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Application Status</b> <br>
-                                    <p class="badge bg-{{application.status_color}}">{{application.application_status}}</p>
+                                    {% if application.application_status == "APPROVED" %}
+                                    <p class="badge" style="background-color: green;">{{application.application_status}}</p>
+                                    {% else %}
+                                    <p class="badge bg-danger">{{application.application_status}}</p>
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Course</b>
@@ -73,7 +77,11 @@
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Payment Status</b> <br>
-                                    <p class="badge bg-{{application.payment_color}}">{{application.payment_status}}</p>
+                                    {% if application.payment_status == "PAID" %}
+                                    <p class="badge" style="background-color: green;">{{application.payment_status}}</p>
+                                    {% else %}
+                                    <p class="badge bg-danger">{{application.payment_status}}</p>
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Date</b>
