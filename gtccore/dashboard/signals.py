@@ -1,5 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from accounts.models import User
 
 from gtccore.library.services import send_sms
 from gtccore.settings import SENDER_ID
@@ -41,6 +42,8 @@ def notify_custom_course_requester(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Application)
 def notify_applicant(sender, instance, created, **kwargs):
     '''Send the notification to applicants when they start an application'''
+    if not(created):
+        return
     msg = f"Hello {instance.name}, \nYour Application has been received. We will get back to you shortly.\n\nApplication ID: {instance.application_id}\n\nThank you for choosing Gimpa Training & Consulting."
     send_sms(SENDER_ID, msg, [str(instance.phone)])
     return True
@@ -51,7 +54,9 @@ def notify_applicant(sender, instance, created, **kwargs):
 def notify_custom_course_admin(sender, instance, created, **kwargs):
     '''Send the notification to applicants upon saving of notification'''
     msg = f"Hello Admin, \nA new request for a custom course has been received. Please check the admin panel for details."
-    send_sms(SENDER_ID, msg, ["0558366133"])
+    admins = User.objects.filter(is_staff=True)
+    receivers = [str(admin.prefered_notification_phone) if admin.prefered_notification_phone else admin.phone for admin in admins]
+    send_sms(SENDER_ID, msg, receivers)
     return True
 
 
