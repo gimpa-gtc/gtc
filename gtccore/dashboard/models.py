@@ -63,6 +63,9 @@ class Course(models.Model):
     requirements = models.TextField(default='None')
     syllabus = models.TextField(default='None')
     thumbnail = models.ImageField(upload_to='courses', null=True, blank=True) #noqa
+    allows_part_payment = models.BooleanField(default=False)
+    requires_certificate = models.BooleanField(default=False)
+    certificate = models.FileField(upload_to='certificates', null=True, blank=True) #noqa
     created_at = models.DateTimeField(auto_now_add=True)
 
     def is_active(self):
