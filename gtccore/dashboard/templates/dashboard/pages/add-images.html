@@ -1,0 +1,50 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="content-page-header">
+            <h5>Add Images</h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="form-group-item">
+                        <h5 class="form-title">Cohort Form</h5>
+                        <form action="{% url 'dashboard:add_images' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="cohort_id" value="{{cohort.id}}">
+                        <div class="row">                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Image Category</label>
+                                    <select class="form-control" name="category_id">
+                                        {% for category in categories %}
+                                            <option value="{{category.id}}">{{category.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Images</label>
+                                    <input type="file" class="form-control" name="images" accept="images/*" multiple>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <input type="reset"  class="btn btn-danger" value="Clear">
+                                    <input type="submit"  class="btn btn-primary" value="Submit">
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper -->
+{% endblock content %}
