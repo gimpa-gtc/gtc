@@ -94,3 +94,13 @@ urlpatterns += [
     path('delete-team/', views.DeleteTeamView.as_view(), name='delete_team'), #noqa
     path('download-teams/', views.DownloadTeamsView.as_view(), name='download_teams'), #noqa
 ]
+
+# gallery
+urlpatterns += [
+    path('image-categories/', views.ImageCategoriesView.as_view(), name='img_category'), #noqa
+    path('create-update-img-cat/', views.CreateUpdateImageCategoryView.as_view(), name='create_update_img_cat'), #noqa
+    path('images/', views.ImagesView.as_view(), name='images'), #noqa
+    path('add-images/', views.AddImages.as_view(), name='add_images'), #noqa
+    path('delete-image/', views.DeleteImageView.as_view(), name='delete_image'), #noqa
+    path('delete-image-category/', views.DeleteImageCategoryView.as_view(), name='delete_img_cat'), #noqa
+]
