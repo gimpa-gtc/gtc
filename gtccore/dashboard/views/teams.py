@@ -83,3 +83,16 @@ class DeleteTeamView(View):
         facilitator.delete()
         messages.success(request, 'Facilitator deleted successfully')
         return redirect(reverse('dashboard:teams'))
+    
+
+
+class DeleteTeamView(View):
+    def get(self, request):
+        member_id = request.GET.get('member_id')
+        member = Facilitator.objects.filter(id=member_id).first()
+        if member:
+            member.delete()
+            messages.success(request, 'Member Deleted Successfully.')
+            return redirect('dashboard:teams')
+        messages.error(request, 'Member Does Not Exist.')
+        return redirect('dashboard:teams')
