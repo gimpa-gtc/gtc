@@ -3,10 +3,10 @@
 <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <div class="sidebar-logo">
-            <a href="">
+            <a href="{% url 'dashboard:dashboard' %}">
                     <img src="{% static 'dashboard/assets/img/gtc-logo.jpg' %}" class="img-fluid logo" alt="">
                 </a>
-            <a href="">
+            <a href="{% url 'dashboard:dashboard' %}">
                     <img src="{% static 'website/images/gimpa-round-logo.jpg' %}" class="img-fluid logo-small" alt="">
                 </a>
         </div>
@@ -81,8 +81,8 @@
                 <li class="submenu">
                     <a href="#"><i class="fe fe-folder"></i> <span> Gallery</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="">Images</a></li>
-                        <li><a href="">Image Category</a></li>
+                        <li><a href="{% url 'dashboard:images' %}">Images</a></li>
+                        <li><a href="{% url 'dashboard:img_category' %}">Image Category</a></li>
                     </ul>
                 </li>
                 <li>
