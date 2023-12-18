@@ -7,7 +7,7 @@ from django.views import View
 
 from dashboard.forms import ApplicationForm, ContactUsForm, CustomCourseReguestForm
 from dashboard.models import (Application, Comment, Course, CourseCategory,
-                              Facilitator, Faq, Image, Testimonial)
+                              Facilitator, Faq, Image, ImageCategory, Testimonial)
 from gtccore.library.constants import PaymentStatus
 from gtccore.library.services import generate_admission_letter
 
@@ -21,11 +21,14 @@ class HomeView(View):
         team = Facilitator.objects.all()
         testimonials = Testimonial.objects.all()
         images = Image.objects.all()
+
+        gallery_categories = ImageCategory.objects.all()
         context = {
             'team': team,
             'testimonials': testimonials,
             'images': images,
-            'popular_courses': popular_courses
+            'popular_courses': popular_courses,
+            'gallery_categories': gallery_categories
 
         }
         return render(request, self.template, context)
