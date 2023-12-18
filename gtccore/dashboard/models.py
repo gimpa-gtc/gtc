@@ -340,6 +340,10 @@ class ImageCategory(models.Model):
     name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_total_images(self):
+        '''Returns the total number of images in this category'''
+        return Image.objects.filter(category=self).count()
+
     def __str__(self) -> str:
         return self.name
     
