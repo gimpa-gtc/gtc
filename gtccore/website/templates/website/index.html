@@ -573,112 +573,6 @@
                 </div>
                 {% endfor %}
 
-                {% comment %}
-                <!-- dr. emmanuel abokyi -->
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <div class="team-members border-bottom-theme-colored2px text-center maxwidth400 mb-30">
-                        <div class="team-thumb">
-                            <img class="img-fullwidth" alt="" src="{% static 'website/images/team/3.jpg' %}" />
-                            <div class="team-overlay"></div>
-                            <ul class="styled-icons team-social icon-sm">
-                                <li>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-skype"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="team-details">
-                            <h4 class="text-uppercase text-theme-colored font-weight-600 m-5">
-                                Dr. Emmanuel Abokyi
-                            </h4>
-                            <h6 class="text-gray font-13 font-weight-400 line-bottom-centered mt-0">
-                                Consultant
-                            </h6>
-                            <p class="hidden-md">
-                                Specializes in the areas of Business Management, Human Resource, and Project Management.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- mr. george pentem -->
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <div class="team-members border-bottom-theme-colored2px text-center maxwidth400 mb-30">
-                        <div class="team-thumb">
-                            <img class="img-fullwidth" alt="" src="{% static 'website/images/team/3.jpg' %}" />
-                            <div class="team-overlay"></div>
-                            <ul class="styled-icons team-social icon-sm">
-                                <li>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-skype"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="team-details">
-                            <h4 class="text-uppercase text-theme-colored font-weight-600 m-5">
-                                Mr. George Pentem
-                            </h4>
-                            <h6 class="text-gray font-13 font-weight-400 line-bottom-centered mt-0">
-                                Snr. Programmes Advisor
-                            </h6>
-                            <p class="hidden-md">
-                                Specializes in the areas of Business Management, Human Resource, and Project Management.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- mr. paul rex danquah -->
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <div class="team-members border-bottom-theme-colored2px text-center maxwidth400 mb-30">
-                        <div class="team-thumb">
-                            <img class="img-fullwidth" alt="" src="{% static 'website/images/team/3.jpg' %}" />
-                            <div class="team-overlay"></div>
-                            <ul class="styled-icons team-social icon-sm">
-                                <li>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-skype"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="team-details">
-                            <h4 class="text-uppercase text-theme-colored font-weight-600 m-5">
-                                Mr. Paul Rex
-                            </h4>
-                            <h6 class="text-gray font-13 font-weight-400 line-bottom-centered mt-0">
-                                Senior Consultant
-                            </h6>
-                            <p class="hidden-md">
-                                Specializes in the areas of Business Management, Human Resource, and Project Management.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                {% endcomment %}
 
             </div>
         </div>
@@ -691,7 +585,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="text-uppercase title">
-                            Campus <span class="text-theme-colored2">Gallery</span>
+                            Our <span class="text-theme-colored2">Gallery</span>
                         </h2>
                         <p class="text-uppercase mb-0">See our gallery pictures</p>
                         <div class="double-line-bottom-theme-colored-2"></div>
@@ -704,35 +598,46 @@
                         <!-- Works Filter -->
                         <div class="portfolio-filter font-alt align-center">
                             <a href="#" class="active" data-filter="*">All</a>
+
+                            {% for category in gallery_categories %}
+                            <a href="#category{{category.id}}" class="" data-filter=".category{{category.id}}">{{category.name}}</a>
+                            {% endfor %}
+
+                            <!-- 
                             <a href="#select1" class="" data-filter=".select1">Photos</a>
                             <a href="#select2" class="" data-filter=".select2">Campus</a>
-                            <a href="#select3" class="" data-filter=".select3">Students</a>
+                            <a href="#select3" class="" data-filter=".select3">Students</a> 
+                            -->
                         </div>
                         <!-- End Works Filter -->
 
                         <!-- Portfolio Gallery Grid -->
                         <div id="grid" class="gallery-isotope default-animation-effect grid-4 gutter clearfix">
+
+                            {% for image in images %}
                             <!-- Portfolio Item Start -->
-                            <div class="gallery-item select1">
+                            <div class="gallery-item category{{image.category.id}}">
                                 <div class="thumb">
-                                    <img class="img-fullwidth" src="{% static 'website/images/gallery/s1.jpg' %}" alt="project" />
+                                    <img class="img-fullwidth" src="{% if image.image %} {{image.image.url}} {% else %} {% static 'website/images/gallery/s1.jpg' %} {% endif %}" alt="project" />
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div
                                                 class="styled-icons icon-sm icon-bordered icon-circled icon-theme-colored2">
-                                                <a data-lightbox="image" href="{% static 'website/images/gallery/s1.jpg' %}"><i
+                                                <a data-lightbox="image" href="{% if image.image %} {{image.image.url}} {% else %} {% static 'website/images/gallery/s1.jpg' %} {% endif %}"><i
                                                         class="fa fa-plus"></i></a>
                                                 <a href="#"><i class="fa fa-link"></i></a>
                                             </div>
                                         </div>
                                     </div>
-                                    <a class="hover-link" data-lightbox="image" href="{% static 'website/images/gallery/s1.jpg' %}">View
+                                    <a class="hover-link" data-lightbox="image" href="{% if image.image %} {{image.image.url}} {% else %} {% static 'website/images/gallery/s1.jpg' %} {% endif %}">View
                                         more</a>
                                 </div>
                             </div>
                             <!-- Portfolio Item End -->
+                            {% endfor %}
 
+                            {% comment %}
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item select1">
                                 <div class="thumb">
@@ -969,6 +874,7 @@
                                 </div>
                             </div>
                             <!-- Portfolio Item End -->
+                            {% endcomment %}
                         </div>
                         <!-- End Portfolio Gallery Grid -->
                     </div>
