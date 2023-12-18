@@ -18,11 +18,11 @@ class HomeView(View):
 
     def get(self, request):
         popular_courses = Course.objects.all().order_by('-id')[:5]
-        facilitators = Facilitator.objects.all()
+        team = Facilitator.objects.all()
         testimonials = Testimonial.objects.all()
         images = Image.objects.all()
         context = {
-            'facilitators': facilitators,
+            'team': team,
             'testimonials': testimonials,
             'images': images,
             'popular_courses': popular_courses
@@ -100,6 +100,25 @@ class CoursesView(View):
         category = None
         # recently added courses: 5
         latst_courses = Course.objects.all().order_by('-id')[:5]
+        query = request.GET.get('query')
+        if query:
+            categories = CourseCategory.objects.all()
+            courses = Course.objects.filter(
+                Q(title__icontains=query) |
+                Q(description__icontains=query) |
+                Q(details__icontains=query) |
+                Q(cohort__name__icontains=query) |
+                Q(requirements__icontains=query) |
+                Q(syllabus__icontains=query) |
+                Q(category__name__icontains=query) 
+            )
+            context = {
+                'category_name': query,
+                'courses': courses,
+                'categories': categories,
+                'latst_courses': latst_courses
+            }
+            return render(request, self.template, context)
         # set all courses as default
         courses = Course.objects.all()
         if category_id:
