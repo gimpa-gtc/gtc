@@ -59,6 +59,8 @@ class CreateUpdateCourseView(View):
         course_id = request.POST.get('course_id')
         cohort_id = request.POST.get('cohort_id')
         category_id = request.POST.get('category_id')
+        requires_certificate = request.POST.get('requires_certificate') == 'on'
+        allows_part_payment = request.POST.get('allows_part_payment') == 'on'
         category = CourseCategory.objects.filter(id=category_id).first()
         cohort = Cohort.objects.filter(id=cohort_id).first()
         if not category:
@@ -70,9 +72,13 @@ class CreateUpdateCourseView(View):
             course = Course.objects.filter(id=course_id).first()
         form = CourseForm(request.POST, request.FILES, instance=course)
         if form.is_valid():
+            print(f"Requires Certificate: {requires_certificate}")
+            print(f"Allows Part Payment: {allows_part_payment}")
             item = form.save(commit=False)
             item.category = category
             item.cohort = cohort
+            item.requires_certificate = requires_certificate
+            item.allows_part_payment = allows_part_payment
             item.save()
             if course is not None:
                 messages.success(request, 'Course Updated successfully')
