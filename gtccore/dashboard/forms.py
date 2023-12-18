@@ -1,7 +1,7 @@
 from django import forms
 
 from dashboard.models import (Application, Cohort, Comment, Contact, Course,
-                              CourseCategory, CustomCourseRequest, Facilitator, Notification)
+                              CourseCategory, CustomCourseRequest, Facilitator, ImageCategory, Notification)
 
 
 class ApplicationForm(forms.ModelForm):
@@ -55,3 +55,10 @@ class CustomCourseReguestForm(forms.ModelForm):
     class Meta:
         model = CustomCourseRequest
         fields = ['name', 'email', 'phone', 'message']
+
+
+class ImageCategoryForm(forms.ModelForm):
+    '''Image category form.'''
+    class Meta:
+        model = ImageCategory
+        fields = ['name']
