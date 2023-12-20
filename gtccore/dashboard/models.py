@@ -159,6 +159,9 @@ class Payment(models.Model):
     status_message = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_payment_status(self):
+        '''Not paid, part payment, full payment'''
+
     def __str__(self):
         return self.name
 
