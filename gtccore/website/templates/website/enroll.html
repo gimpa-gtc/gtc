@@ -82,7 +82,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group mb-30">
                                     <input id="form_email" name="certificate" class="form-control"
-                                        type="file" accept="image/*">
+                                        type="file" {% if course.requires_certificate %} required {% endif %} accept="image/*">
                                 </div>
                             </div>
                         </div>
