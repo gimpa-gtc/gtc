@@ -90,10 +90,13 @@ class PasswordResetView(View):
             user.set_password(password1)
             user.save()
             # re-authenticate user
-            authenticated_user = authenticate(request, username=user.username, password=password1)
+            authenticated_user = authenticate(request, username=user.email, password=password1)
             if authenticated_user:
                 login(request, authenticated_user)
-            messages.success(request, 'Password Reset Successfully')
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                messages.success(request, 'Password Reset Successfully')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            else:
+                messages.error(request, 'Password Reset Failed')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     
 
