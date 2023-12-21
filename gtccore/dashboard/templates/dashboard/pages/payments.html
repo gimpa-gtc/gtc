@@ -53,6 +53,7 @@
                                         <th>Number</th>
                                         <th>Network</th>
                                         <th>Amount</th>
+                                        <th>Payment Status</th>
                                         <th>Status Code</th>
                                         <th>Status Message</th>
                                         <th>Created At</th>
@@ -63,11 +64,12 @@
                                     {% for payment in payments %}
                                     <tr>
                                         <td>{{forloop.counter}}</td>
-                                        <td>{{payment.payment_id}}</td>
+                                        <td>{{payment.transaction_id}}</td>
                                         <td>{{payment.application.application_id}}</td>
                                         <td>{{payment.number}}</td>
                                         <td>{{payment.network}}</td>
                                         <td>{{payment.amount}}</td>
+                                        <td>{{payment.get_payment_status}}</td>
                                         <td>{{payment.status_code}}</td>
                                         <td>{{payment.status_message}}</td>
                                         <td>{{payment.created_at}}</td>
@@ -75,7 +77,7 @@
                                     {% endfor %}
                                     {% else %}
                                     <tr>
-                                        <td colspan="9" class="text-center">No Payments Found</td>
+                                        <td colspan="10" class="text-center">No Payments Found</td>
                                     </tr>
                                     {% endif %}
                                 </tbody>
