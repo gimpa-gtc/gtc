@@ -95,13 +95,13 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group mb-30">
-                                    <label for="phone">Phone Number</label>
+                                    <!-- <label for="phone">Phone Number</label> -->
                                     <input id="phone" name="phone" class="form-control" type="text" placeholder="Phone Number" required>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group mb-30">
-                                    <label for="network">Network</label>
+                                    <!-- <label for="network">Network</label> -->
                                     <select name="network" id="network" class="form-control">
                                         <option value="MTN">MTN</option>
                                         <option value="VOD">Vodafone</option>
@@ -111,8 +111,8 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group mb-30">
-                                    <label for="amount">Amount</label>
-                                    <input id="amount" name="amount" value="{{application.course.price}}" class="form-control required" type="text" placeholder="Amount" required readonly>
+                                    <!-- <label for="amount">Amount</label> -->
+                                    <input id="amount" name="amount" value="{{application.course.price}}" class="form-control required" type="text" placeholder="Amount" required {% if application.course.allows_part_payment %} readonly {% endif %}>
                                 </div>
                             </div>
                         </div>
