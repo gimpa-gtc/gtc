@@ -52,6 +52,7 @@ urlpatterns += [
     path('course-categories/', views.CourseCategoriesView.as_view(), name='course_categories'), #noqa
     path('cohorts/', views.CohortsView.as_view(), name='cohorts'), #noqa
     path('create-update-cohort/', views.CreateUpdateCohortView.as_view(), name='create_update_cohort'), #noqa
+    path('delete-course/', views.DeleteCourseView.as_view(), name='delete_course'), #noqa
 ]
 
 
