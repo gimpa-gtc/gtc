@@ -114,7 +114,7 @@ class CoursesView(View):
                 Q(requirements__icontains=query) |
                 Q(syllabus__icontains=query) |
                 Q(category__name__icontains=query) 
-            )
+            ).order_by('start_date')
             context = {
                 'category_name': query,
                 'courses': courses,
@@ -123,13 +123,13 @@ class CoursesView(View):
             }
             return render(request, self.template, context)
         # set all courses as default
-        courses = Course.objects.all()
+        courses = Course.objects.all().order_by('start_date')
         if category_id:
             category_id = int(category_id)
             category = CourseCategory.objects.filter(id=category_id).first()
 
         if category:
-            courses = Course.objects.filter(category=category)
+            courses = Course.objects.filter(category=category).order_by('start_date')
 
         categories = CourseCategory.objects.all()
         context = {
