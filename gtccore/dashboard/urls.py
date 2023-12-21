@@ -54,12 +54,6 @@ urlpatterns += [
     path('create-update-cohort/', views.CreateUpdateCohortView.as_view(), name='create_update_cohort'), #noqa
 ]
 
-# facilitators
-# urlpatterns += [
-#     path('facilitators/', views.FacilitorsView.as_view(), name='facilitators'),
-#     path('download-facilitators/', views.DownloadFacilitatorsView.as_view(), name='download_facilitators'), #noqa
-#     path('create-update-facilitator/', views.CreateUpdateFacilitatorView.as_view(), name='create_update_facilitator'), #noqa
-# ]
 
 # payments
 urlpatterns += [
