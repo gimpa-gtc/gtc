@@ -1,9 +1,11 @@
 import csv
 
 from django.db.models import Q
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.views import View
+from dashboard.forms import PaymentForm
+from django.contrib import messages
 
 from dashboard.models import Application, Payment
 
@@ -38,6 +40,21 @@ class CreatePaymentView(View):
             'application': application
         }
         return render(request, self.template, context)
+    
+    def post(self, request):
+        application_id = request.POST.get('application_id')
+        application = Application.objects.filter(application_id=application_id).first()
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            payment = form.save(commit=False)
+            payment.application = application
+            payment.save()
+            messages.success(request, 'Payment Created Successfully')
+            return redirect('dashboard:payments')
+        else:
+            for k, v in form.errors.items():
+                messages.error(request, f"{k}: {v}")
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
    
 
@@ -48,7 +65,7 @@ class DownloadPaymentsView(View):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="payments.csv"'
         writer = csv.writer(response)
-        writer.writerow(['transaction_id', 'application', 'amount', 'network', 'number', 'status_code', 'status_message', 'created_at']) # noqa
+        writer.writerow(['transaction_id', 'application_id', 'applicant', 'amount', 'network', 'number', 'payment_status' ,'status_code', 'status_message', 'created_at']) # noqa
         for payment in payments:
-            writer.writerow([payment.transaction_id, payment.application, payment.amount, payment.network, payment.number, payment.status_code, payment.status_message, payment.created_at]) # noqa
+            writer.writerow([payment.transaction_id, payment.application.application_id,payment.application, payment.amount, payment.network, payment.number, payment.get_payment_status(), '_' +payment.status_code, payment.status_message, payment.created_at]) # noqa
         return response
