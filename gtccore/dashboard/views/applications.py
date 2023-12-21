@@ -177,7 +177,7 @@ class DownloadApplicationsView(View):
         writer = csv.writer(response)
         writer.writerow(['application_id', 'name', 'email', 'phone', 'course', 'application_status', 'payment_mode', 'payment_status','created_at']) # noqa
         for application in applications:
-            writer.writerow([application.application_id, application.name, application.email, application.phone, application.course, application.application_status, application.payment_mode, application.payment_status, application.created_at]) # noqa
+            writer.writerow([application.application_id, application.name, application.email, application.phone, application.course, application.application_status, application.payment_mode, application.get_payment_status(), application.created_at]) # noqa
         return response
     
 class DownloadApplicantsView(View):
