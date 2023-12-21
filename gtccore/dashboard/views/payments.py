@@ -35,6 +35,8 @@ class CreatePaymentView(View):
 
     def get(self, request):
         application_id = request.GET.get('application_id')
+        if application_id:
+            application_id = application_id.strip()
         application = Application.objects.filter(application_id=application_id).first() # noqa
         context = {
             'application': application
