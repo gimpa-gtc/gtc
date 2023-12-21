@@ -128,6 +128,24 @@ class Application(models.Model):
             return 'PART PAYMENT'
         else:
             return 'OVER PAYMENT'
+        
+    
+    def get_payment_history(self):
+        '''Returns the payment history'''
+        payments = Payment.objects.filter(application=self, status_code='000')
+        history = [] # list of dictionaries
+        for payment in payments:
+            history.append({
+                'amount': payment.amount,
+                'status': payment.status_code,
+                'date': payment.created_at
+            })
+        return history
+    
+    def get_total_payments(self):
+        '''Returns the total amount paid'''
+        payments = Payment.objects.filter(application=self, status_code='000')
+        return sum([payment.amount for payment in payments])
 
         
     def payment_color(self):
@@ -166,9 +184,9 @@ class Payment(models.Model):
     def generate_transaction_id() -> str:
         '''Generates a unique transaction id'''
         sub = 'GTC-TR-'
-        return sub + ''.join(random.choices(string.digits, k=7))
-    transaction_id = models.CharField(max_length=15, default=generate_transaction_id, unique=True) #noqa
-    application = models.OneToOneField(Application, on_delete=models.CASCADE, blank=True, null=True) #noqa
+        return sub + ''.join(random.choices(string.digits, k=8))
+    transaction_id = models.CharField(max_length=20, default=generate_transaction_id, unique=True) #noqa
+    application = models.ForeignKey(Application, on_delete=models.CASCADE, null=True, blank=True) #noqa
     amount = models.IntegerField(default=0)
     network = models.CharField(max_length=10)
     number = models.CharField(max_length=15)
@@ -190,7 +208,7 @@ class Payment(models.Model):
             return 'NOT PAID'
 
     def __str__(self):
-        return self.name
+        return self.transaction_id
 
 
 class Applicant(models.Model):
