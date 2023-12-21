@@ -116,7 +116,20 @@ class Application(models.Model):
     payment_status = models.CharField(max_length=20, default='PENDING', choices=PAYMENT_STATUS) #noqa
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_payment_status(self):
+        '''Returns the payment status'''
+        payments = Payment.objects.filter(application=self)
+        amount_paid = sum([payment.amount for payment in payments if payment.status_code == '000']) #noqa
+        if amount_paid == 0:
+            return 'NOT PAID'
+        if amount_paid == self.course.price:
+            return 'FULL PAYMENT'
+        elif amount_paid < self.course.price:
+            return 'PART PAYMENT'
+        else:
+            return 'OVER PAYMENT'
 
+        
     def payment_color(self):
         '''Returns the color for the payment status'''
         if self.payment_status == 'PENDING':
@@ -150,11 +163,15 @@ class Admission(models.Model):
 
 class Payment(models.Model):
     '''Payment model'''
-    transaction_id = models.CharField(max_length=100)
+    def generate_transaction_id() -> str:
+        '''Generates a unique transaction id'''
+        sub = 'GTC-TR-'
+        return sub + ''.join(random.choices(string.digits, k=7))
+    transaction_id = models.CharField(max_length=15, default=generate_transaction_id, unique=True) #noqa
     application = models.OneToOneField(Application, on_delete=models.CASCADE, blank=True, null=True) #noqa
     amount = models.IntegerField(default=0)
-    network = models.CharField(max_length=5)
-    number = models.CharField(max_length=10)
+    network = models.CharField(max_length=10)
+    number = models.CharField(max_length=15)
     receipt = models.ImageField(upload_to='receipts', null=True, blank=True) #noqa
     status_code = models.CharField(max_length=20)
     status_message = models.CharField(max_length=100)
@@ -162,6 +179,15 @@ class Payment(models.Model):
 
     def get_payment_status(self):
         '''Not paid, part payment, full payment'''
+        if self.application and self.status_code == '000':
+            if self.application.course.price == self.amount:
+                return 'FULL PAYMENT'
+            elif self.application.course.price > self.amount:
+                return 'PART PAYMENT'
+            else:
+                return 'OVER PAYMENT'
+        else:
+            return 'NOT PAID'
 
     def __str__(self):
         return self.name
