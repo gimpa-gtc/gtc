@@ -2,7 +2,7 @@ import csv
 
 from django.contrib import messages
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
 
@@ -63,6 +63,10 @@ class CreateUpdateApplicationView(View):
             return redirect('dashboard:create_update_application')
         
         form = ApplicationForm(request.POST, instance=application)
+        if not form.is_valid():
+            for k, v in form.errors.items():
+                messages.error(request, f"{k}: {v}")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         new_application = form.save(commit=False)
         new_application.course = course                
         new_application.save()
