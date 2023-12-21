@@ -77,16 +77,27 @@
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Payment Status</b> <br>
-                                    {% if application.payment_status == "PAID" %}
-                                    <p class="badge" style="background-color: green;">{{application.payment_status}}</p>
+                                    {% if application.get_payment_status == "FULL PAYMENT" %}
+                                    <p class="badge" style="background-color: green;">{{application.get_payment_status}}</p>
+                                    {% elif application.payment_status == "PART PAYMENT" %}
                                     {% else %}
-                                    <p class="badge bg-danger">{{application.payment_status}}</p>
+                                    <p class="badge bg-danger">{{application.get_payment_status}}</p>
                                     {% endif %}
                                 </div>
                                 <div class="col-md-4 col-xs-12 text-left mb-5">
                                     <b>Date</b>
                                     <p>{{application.created_at}}</p>
                                 </div>
+                                <div class="col-md-4 col-xs-12 text-left mb-5">
+                                    <b>Total Paid</b>
+                                    <p>GHC{{application.get_total_payments}}</p>
+                                </div>
+                                <div class="col-md-4 col-xs-12 text-left mb-5">
+                                    <b>Payment History</b>
+                                    {% for history in application.get_payment_history %}
+                                    <p>GHC{{history.amount}} | {{history.date}}</p>
+                                    {% endfor %}
+                                </div>                                
 
                                 <br>
                                 {% if application.application_status == 'APPROVED' %}
@@ -94,7 +105,7 @@
                                     <a href="{% url 'website:download_letter' %}?application_id={{application.application_id}}?email={{application.email}}?phone={{application.phone}}" class="btn btn-primary btn-sm">Download Admission Letter</a>
                                 </div>
                                 {% endif %}
-                                {% if application.payment_status != 'PAID' %}
+                                {% if application.get_payment_status != "FULL PAYMENT" %}
                                 <div class="col-12 mt-5">
                                     <a href="{% url 'website:make_payment' %}?application_id={{application.application_id}}" class="btn btn-primary btn-sm">Pay For Application</a>
                                 </div>
