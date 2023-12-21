@@ -1,7 +1,7 @@
 from django import forms
 
 from dashboard.models import (Application, Cohort, Comment, Contact, Course,
-                              CourseCategory, CustomCourseRequest, Facilitator, ImageCategory, Notification)
+                              CourseCategory, CustomCourseRequest, Facilitator, ImageCategory, Notification, Payment)
 
 
 class ApplicationForm(forms.ModelForm):
@@ -62,3 +62,11 @@ class ImageCategoryForm(forms.ModelForm):
     class Meta:
         model = ImageCategory
         fields = ['name']
+
+
+class PaymentForm(forms.ModelForm):
+    '''Payment form.'''
+    class Meta:
+        model = Payment
+        exclude = ['created_at', 'transaction_id']
+    
