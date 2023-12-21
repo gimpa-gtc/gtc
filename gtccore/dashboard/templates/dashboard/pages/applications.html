@@ -70,6 +70,7 @@
                                         <th>Course</th>
                                         <th>Status</th>
                                         <th>Fees(GHC)</th>
+                                        <th>Amount Paid(GHC)</th>
                                         <th>Payment Mode</th>
                                         <th>Payment Status</th>
                                         <th>Created At</th>
@@ -88,6 +89,7 @@
                                         <td>{{application.course.title}}</td>
                                         <td>{{application.application_status}}</td>
                                         <td>{{application.course.price}}</td>
+                                        <td>{{application.get_total_payments}}</td>
                                         <td>{{application.payment_mode}}</td>
                                         <td>{{application.get_payment_status}}</td>
                                         <td>{{application.created_at}}</td>
