@@ -104,3 +104,15 @@ class DownloadCoursesView(View):
             cohort = course.cohort.name if course.cohort else ''
             writer.writerow([course.title, course.description, course.details, course.category, cohort ,course.start_date, course.end_date, course.price, course.duration, course.class_days, course.class_time, course.location, course.student_capacity, course.requirements, course.syllabus, course.thumbnail, course.created_at]) # noqa
         return response
+    
+
+class DeleteCourseView(View):
+    def get(self, request):
+        course_id = request.GET.get('course_id')
+        course = Course.objects.filter(id=course_id).first()
+        if not course:
+            messages.error(request, 'Course Not Found')
+            return redirect('dashboard:courses')
+        course.delete()
+        messages.success(request, 'Course Deleted successfully')
+        return redirect('dashboard:courses')
