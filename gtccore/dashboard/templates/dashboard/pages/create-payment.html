@@ -92,6 +92,17 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <div class="col-6">
+                                    <p> <b>Total Paid</b></p>
+                                    <p>GHC{{application.get_total_payments}}</p>
+                                </div>
+                                <div class="col-6">
+                                    <p> <b>Payment History</b></p>
+                                    {% for history in application.get_payment_history %}
+                                    <p>GHC{{history.amount}} | {{history.date}}</p>
+                                    {% endfor %}
+                                </div>
+                                <hr>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label>Payment Amount</label>
