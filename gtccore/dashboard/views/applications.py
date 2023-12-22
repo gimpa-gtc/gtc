@@ -207,3 +207,29 @@ class DownloadAdmissionsView(View):
         for admission in admissions:
             writer.writerow([admission.application.application_id, admission.application.name, admission.application.email, admission.application.phone, admission.application.course, admission.created_at]) # noqa
         return response
+    
+
+class DeleteApplicationView(View):
+    '''Delete application'''
+    def get(self, request):
+        application_id = request.GET.get('application_id')
+        application = Application.objects.filter(application_id=application_id).first() # noqa
+        if application:
+            application.delete()
+            messages.success(request, 'Application Deleted Successfully')
+        else:
+            messages.error(request, 'Application Not Found')
+        return redirect('dashboard:applications')
+    
+
+class DeleteApplicantView(View):
+    '''Delete applicant'''
+    def get(self, request):
+        applicant_id = request.GET.get('applicant_id')
+        applicant = Applicant.objects.filter(id=applicant_id).first() # noqa
+        if applicant:
+            applicant.delete()
+            messages.success(request, 'Applicant Deleted Successfully')
+        else:
+            messages.error(request, 'Applicant Not Found')
+        return redirect('dashboard:applicants')
