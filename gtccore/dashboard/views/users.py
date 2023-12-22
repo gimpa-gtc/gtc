@@ -6,13 +6,16 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
+from django.utils.decorators import method_decorator
 
 from accounts.models import User
+from gtccore.library.decorators import StaffLoginRequired
 
 
 class UsersView(View):
     template = 'dashboard/pages/users.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         if query:
@@ -32,6 +35,7 @@ class CreateUpdateUser(View):
     '''Create or update user'''
     template = 'dashboard/pages/create-update-user.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         user_id = request.GET.get('user_id')
         user = User.objects.filter(id=user_id).first()
@@ -40,6 +44,7 @@ class CreateUpdateUser(View):
         }
         return render(request, self.template, context)
 
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         user_id = request.POST.get('user_id')
         name = request.POST.get('name')
@@ -82,9 +87,12 @@ class CreateUpdateUser(View):
 
 class UpdateUserProfilePicView(View):
     '''Update user profile picture'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         return redirect('dashboard:users')
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         user_id = request.POST.get('user_id')
         profile_pic = request.FILES.get('profile_pic')
@@ -101,6 +109,8 @@ class UpdateUserProfilePicView(View):
 
 class DownloadUsersView(View):
     '''Download users as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         users = User.objects.all()
         response = HttpResponse(content_type='text/csv')
