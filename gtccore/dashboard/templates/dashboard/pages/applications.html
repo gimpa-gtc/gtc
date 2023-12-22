@@ -102,7 +102,10 @@
                                                             <a class="dropdown-item" href="{% url 'dashboard:create_update_application' %}?application_id={{application.application_id}}"><i class="far fa-edit me-2"></i>Edit</a>
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                                            <a class="dropdown-item" href="#"
+                                                                onclick="confirmDelete('{{ application.application_id }}')">
+                                                                <i class="far fa-trash-alt me-2"></i>Delete
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -180,30 +183,17 @@
     </div>
     <!-- /Add Asset -->
 
-    <!-- Delete Items Modal -->
-    <div class="modal custom-modal fade" id="delete_modal" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-md">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="form-header">
-                        <h3>Delete Application</h3>
-                        <p>Are you sure want to delete?</p>
-                    </div>
-                    <div class="modal-btn delete-action">
-                        <div class="row">
-                            <div class="col-6">
-                                <button type="reset" data-bs-dismiss="modal" class="w-100 btn btn-primary paid-continue-btn">Delete</button>
-                            </div>
-                            <div class="col-6">
-                                <button type="submit" data-bs-dismiss="modal" class="w-100 btn btn-primary paid-cancel-btn">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Delete Items Modal -->
+       <!-- Delete Items alert confirmation -->
+   <script>
+    function confirmDelete(applicationId) {
+        if (confirm("Are you sure you want to delete this application?")) {
+            // Redirect to the delete URL
+            window.location.href = "{% url 'dashboard:delete_application' %}?application_id=" + applicationId;
+        }
+    }
+</script>
+<!-- /Delete Items alert confirmation -->
+   
 </div>
 <!-- /Page Wrapper -->
 {% endblock %}
