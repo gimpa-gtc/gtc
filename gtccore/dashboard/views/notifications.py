@@ -6,14 +6,17 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
 from django.core.mail import send_mail, EmailMultiAlternatives
+from django.utils.decorators import method_decorator
 
 from dashboard.models import Notification
 from dashboard.forms import NotificationForm
+from gtccore.library.decorators import StaffLoginRequired
 
 class NotificationsView(View):
     '''Notifications view'''
     template = 'dashboard/pages/notifications.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         notifications = Notification.objects.all().order_by('-id')
@@ -31,6 +34,7 @@ class CreateUpdateNotificationView(View):
     '''Create and update notification view'''
     template = 'dashboard/pages/create-update-notification.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         notification_id = request.GET.get('notification_id')
         notification = None
@@ -41,6 +45,7 @@ class CreateUpdateNotificationView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         notification_id = request.POST.get('notification_id')
         notification = None
@@ -65,6 +70,7 @@ class BroadcastNotificationView(View):
 
     template = 'dashboard/pages/broadcast-notification.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         notification_id = request.GET.get('notification_id')
         notification = Notification.objects.filter(id=notification_id).first()
@@ -73,6 +79,7 @@ class BroadcastNotificationView(View):
         }
         return render(request, self.template, context)
 
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         notification_id = request.POST.get('notification_id')
         notification_type = request.POST.get('type')
@@ -90,6 +97,8 @@ class BroadcastNotificationView(View):
 
 class DownloadNotificationView(View):
     '''Download notifications as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         notifications = Notification.objects.all()
         response = HttpResponse(content_type='text/csv')
