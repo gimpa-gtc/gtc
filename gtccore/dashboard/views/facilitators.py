@@ -6,14 +6,17 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
+from django.utils.decorators import method_decorator
 
 from dashboard.forms import FacilitatorForm
 from dashboard.models import Facilitator
+from gtccore.library.decorators import StaffLoginRequired
 
 
 class FacilitorsView(View):
     template = 'dashboard/pages/facilitors.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         if query:
@@ -33,6 +36,7 @@ class CreateUpdateFacilitatorView(View):
     '''Create or update facilitator'''
     template = 'dashboard/pages/create-update-facilitator.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         facilitator_id = request.GET.get('facilitator_id')
         facilitator = Facilitator.objects.filter(id=facilitator_id).first()
@@ -41,6 +45,7 @@ class CreateUpdateFacilitatorView(View):
         }
         return render(request, self.template, context)
 
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         facilitator_id = request.POST.get('facilitator_id')
         try:
@@ -61,6 +66,8 @@ class CreateUpdateFacilitatorView(View):
 
 class DownloadFacilitatorsView(View):
     '''Download facilitators as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         facilitators = Facilitator.objects.all()
         response = HttpResponse(content_type='text/csv')
