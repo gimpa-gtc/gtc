@@ -3,11 +3,16 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.utils.decorators import method_decorator
+
+from gtccore.library.decorators import StaffLoginRequired
 
 
 class SettingsView(View):
+    '''Settings view'''
     template = 'dashboard/pages/settings.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         user = request.user
         context ={
@@ -15,6 +20,7 @@ class SettingsView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         user = request.user
         name = request.POST.get('name')
@@ -32,8 +38,10 @@ class SettingsView(View):
     
 
 class PreferenceSettingsView(View):
+    '''Preference settings view'''
     template = 'dashboard/pages/preference-settings.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         user = request.user
         context = {
@@ -41,6 +49,7 @@ class PreferenceSettingsView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         user = request.user
         prefered_email = request.POST.get('prefered_email')
@@ -53,10 +62,13 @@ class PreferenceSettingsView(View):
 
 
 class ChangeProfilePicView(View):
+    '''Change profile picture view'''
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         return redirect('dashboard:settings')
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         user = request.user
         profile_pic = request.FILES.get('profile_pic')
@@ -70,8 +82,10 @@ class ChangeProfilePicView(View):
 
 
 class PasswordResetView(View):
+    '''Password reset view'''
     template = 'dashboard/pages/password-reset.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         user = request.user
         context ={
@@ -79,6 +93,7 @@ class PasswordResetView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         user = request.user
         password1 = request.POST.get('password1')
