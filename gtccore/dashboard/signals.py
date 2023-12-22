@@ -1,3 +1,4 @@
+import random
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from accounts.models import User
@@ -78,3 +79,17 @@ def generate_admission(sender, instance, created, **kwargs):
     if not(approved) and admission is not None:
         admission.delete()
         return True
+    
+
+@receiver(post_save, sender=User)
+def send_user_password(sender, instance, created, **kwargs):
+    '''Send user's password to them upon account creation'''
+    if not(created):
+        return
+    # generate password
+    password = random.randint(100000, 999999)
+    instance.set_password(password)
+    instance.save()
+    msg = f"Hello {instance.name}, \nYour GTC staff account has been created. \n\Kindly login with the password {password}. "
+    send_sms(SENDER_ID, msg, [str(instance.phone)])
+    return True
