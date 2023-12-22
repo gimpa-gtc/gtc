@@ -5,16 +5,19 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
+from django.utils.decorators import method_decorator
 
 from dashboard.forms import ApplicationForm
 from dashboard.models import Admission, Applicant, Application, Course
 from gtccore.library.constants import ApplicationStatus
+from gtccore.library.decorators import StaffLoginRequired
 
 
 class ApplicationsView(View):
     '''Applications view'''
     template = 'dashboard/pages/applications.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         applications = Application.objects.all().order_by('-created_at')
@@ -41,6 +44,7 @@ class CreateUpdateApplicationView(View):
     '''Create or update application view'''
     template = 'dashboard/pages/create-update-application.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         courses = Course.objects.all().order_by('title')
         application_id = request.GET.get('application_id')
@@ -52,6 +56,7 @@ class CreateUpdateApplicationView(View):
         return render(request, self.template, context)
     
 
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         application_id = request.POST.get('application_id')
         course_id = request.POST.get('course_id')
@@ -81,6 +86,7 @@ class AdmissionsView(View):
     '''Admissions view'''
     template = 'dashboard/pages/admissions.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         admissions = Admission.objects.all().order_by('-created_at')
@@ -102,6 +108,7 @@ class GiveAdmissionView(View):
     '''Give admission to applicant'''
     template = 'dashboard/pages/give-admission.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         pending_applications = Application.objects.filter(
             application_status=ApplicationStatus.PENDING.name
@@ -120,6 +127,7 @@ class GiveAdmissionView(View):
         }
         return render(request, self.template, context)
 
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         admission_type = request.POST.get('admission_type')
 
@@ -157,6 +165,7 @@ class ApplicantsView(View):
     '''applicants view'''
     template = 'dashboard/pages/applicants.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         applicants = Applicant.objects.all().order_by('-created_at')
@@ -174,6 +183,8 @@ class ApplicantsView(View):
     
 class DownloadApplicationsView(View):
     '''Download applications as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         applications = Application.objects.all().order_by('-created_at')
         response = HttpResponse(content_type='text/csv')
@@ -186,6 +197,8 @@ class DownloadApplicationsView(View):
     
 class DownloadApplicantsView(View):
     '''Download applicants as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         applicants = Applicant.objects.all().order_by('-created_at')
         response = HttpResponse(content_type='text/csv')
@@ -198,6 +211,8 @@ class DownloadApplicantsView(View):
     
 class DownloadAdmissionsView(View):
     '''Download admissions as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         admissions = Admission.objects.all().order_by('-created_at')
         response = HttpResponse(content_type='text/csv')
@@ -211,6 +226,8 @@ class DownloadAdmissionsView(View):
 
 class DeleteApplicationView(View):
     '''Delete application'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         application_id = request.GET.get('application_id')
         application = Application.objects.filter(application_id=application_id).first() # noqa
@@ -224,6 +241,8 @@ class DeleteApplicationView(View):
 
 class DeleteApplicantView(View):
     '''Delete applicant'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         applicant_id = request.GET.get('applicant_id')
         applicant = Applicant.objects.filter(id=applicant_id).first() # noqa
