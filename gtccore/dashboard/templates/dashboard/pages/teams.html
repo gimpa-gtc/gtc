@@ -81,7 +81,8 @@
                                                         <li>
                                                             <a class="dropdown-item" href="#" onclick="confirmDelete('{{ team.id }}')">
                                                                 <i class="far fa-trash-alt me-2"></i>Delete
-                                                              </a>                                                        </li>
+                                                              </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -164,7 +165,8 @@
             window.location.href = "{% url 'dashboard:delete_team' %}?member_id=" + teamId;
           }
         }
-        </script>
+    </script>
+    
 </div>
 <!-- /Page Wrapper -->
 {% endblock %}
