@@ -14,7 +14,8 @@ class DashboardView(View):
         total_admissions = Admission.objects.all().count()
         total_courses = Course.objects.all().count()
         total_categories = CourseCategory.objects.all().count()
-        payment_accrued = Payment.objects.all().aggregate(Sum('amount'))['amount__sum']
+        successful_payments = Payment.objects.filter(status_code='000')
+        payements_received = successful_payments.aggregate(Sum('amount'))
         context ={
             'total_applications': total_applications,
             'total_applicants': total_applicants,
@@ -22,5 +23,6 @@ class DashboardView(View):
             'total_admissions': total_admissions,
             'total_courses': total_courses,
             'total_categories': total_categories,
+            'payements_received': payements_received['amount__sum'],
         }
         return render(request, self.template, context)
