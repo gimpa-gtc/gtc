@@ -116,3 +116,15 @@ class DeleteCourseView(View):
         course.delete()
         messages.success(request, 'Course Deleted successfully')
         return redirect('dashboard:courses')
+    
+
+class DeleteCohortView(View):
+    def get(self, request):
+        cohort_id = request.GET.get('cohort_id')
+        cohort = Cohort.objects.filter(id=cohort_id).first()
+        if not cohort:
+            messages.error(request, 'Cohort Not Found')
+            return redirect('dashboard:cohorts')
+        cohort.delete()
+        messages.success(request, 'Cohort Deleted successfully')
+        return redirect('dashboard:cohorts')
