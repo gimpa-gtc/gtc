@@ -6,13 +6,16 @@ from django.shortcuts import redirect, render
 from django.views import View
 from dashboard.forms import PaymentForm
 from django.contrib import messages
+from django.utils.decorators import method_decorator
 
 from dashboard.models import Application, Payment
+from gtccore.library.decorators import StaffLoginRequired
 
 
 class PaymentsView(View):
     template = 'dashboard/pages/payments.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         payments = Payment.objects.all().order_by('-id')
         query = request.GET.get('query')
@@ -33,6 +36,7 @@ class CreatePaymentView(View):
     '''Create payment'''
     template = 'dashboard/pages/create-payment.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         application_id = request.GET.get('application_id')
         if application_id:
@@ -43,6 +47,7 @@ class CreatePaymentView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         application_id = request.POST.get('application_id')
         application = Application.objects.filter(application_id=application_id).first()
@@ -62,6 +67,8 @@ class CreatePaymentView(View):
 
 class DownloadPaymentsView(View):
     '''Download payments as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         payments = Payment.objects.all().order_by('-id')
         response = HttpResponse(content_type='text/csv')
