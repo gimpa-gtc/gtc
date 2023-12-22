@@ -5,13 +5,16 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
+from django.utils.decorators import method_decorator
 
 from dashboard.models import CustomCourseRequest
+from gtccore.library.decorators import StaffLoginRequired
 
 class CourseRequestsView(View):
     '''Contact messages view'''
     template = 'dashboard/pages/course_requests.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         course_requests = CustomCourseRequest.objects.all().order_by('-id')
@@ -28,6 +31,7 @@ class ReplyCourseRequestView(View):
     '''Reply message view'''
     template = 'dashboard/pages/reply_course_request.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         request_id = request.GET.get('request_id')
         course_request = CustomCourseRequest.objects.filter(id=request_id).first()
@@ -36,6 +40,7 @@ class ReplyCourseRequestView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         request_id = request.POST.get('request_id')
         custom_request = CustomCourseRequest.objects.filter(id=request_id).first()
@@ -50,6 +55,8 @@ class ReplyCourseRequestView(View):
     
 class DownloadCourseRequestsView(View):
     '''Download contact messages view'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="course_requests.csv"'
