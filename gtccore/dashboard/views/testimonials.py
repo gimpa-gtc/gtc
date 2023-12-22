@@ -1,17 +1,17 @@
-import csv
 
 from django.contrib import messages
 from django.db.models import Q
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
-
+from django.utils.decorators import method_decorator
 from dashboard.models import Testimonial
+from gtccore.library.decorators import StaffLoginRequired
 
 class TestimonialsView(View):
     template = 'dashboard/pages/testimonials.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         if query:
@@ -29,6 +29,7 @@ class TestimonialsView(View):
 class CreateUpdateTestimonialView(View):
     template = 'dashboard/pages/create-update-testimonial.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         testimonial_id = request.GET.get('testimonial_id')
         testimonial = None
@@ -39,6 +40,7 @@ class CreateUpdateTestimonialView(View):
             }
         return render(request, self.template, context)
 
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         name = request.POST.get('name')
         company = request.POST.get('company')
@@ -65,6 +67,9 @@ class CreateUpdateTestimonialView(View):
         return redirect(reverse('dashboard:testimonials'))
     
 class DeleteTestimonialView(View):
+    '''Delete testimonial view'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         testimonial_id = request.GET.get('testimonial_id')
         testimonial = Testimonial.objects.get(pk=testimonial_id)
