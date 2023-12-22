@@ -5,14 +5,17 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
+from django.utils.decorators import method_decorator
 
 from dashboard.forms import CourseForm
 from dashboard.models import Cohort, Course, CourseCategory
+from gtccore.library.decorators import StaffLoginRequired
 
 
 class CoursesView(View):
     template = 'dashboard/pages/courses.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         courses = Course.objects.all().order_by('-id')
@@ -41,6 +44,7 @@ class CoursesView(View):
 class CreateUpdateCourseView(View):
     template = 'dashboard/pages/create-update-course.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         course_id = request.GET.get('course_id')
         course = None
@@ -55,6 +59,7 @@ class CreateUpdateCourseView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         course_id = request.POST.get('course_id')
         cohort_id = request.POST.get('cohort_id')
@@ -94,6 +99,8 @@ class CreateUpdateCourseView(View):
     
 class DownloadCoursesView(View):
     '''Download courses as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         courses = Course.objects.all().order_by('-id')
         response = HttpResponse(content_type='text/csv')
@@ -107,6 +114,9 @@ class DownloadCoursesView(View):
     
 
 class DeleteCourseView(View):
+    '''Delete course view'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         course_id = request.GET.get('course_id')
         course = Course.objects.filter(id=course_id).first()
@@ -119,6 +129,9 @@ class DeleteCourseView(View):
     
 
 class DeleteCohortView(View):
+    '''Delete cohort view'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         cohort_id = request.GET.get('cohort_id')
         cohort = Cohort.objects.filter(id=cohort_id).first()
