@@ -6,12 +6,15 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
+from django.utils.decorators import method_decorator
 
 from dashboard.models import Faq
+from gtccore.library.decorators import StaffLoginRequired
 
 class FAQsView(View):
     template = 'dashboard/pages/faqs.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         if query:
@@ -28,6 +31,7 @@ class FAQsView(View):
 class CreateUpdateFAQView(View):
     template = 'dashboard/pages/create-update-faq.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         faq_id = request.GET.get('faq_id')
         faq = None
@@ -38,6 +42,7 @@ class CreateUpdateFAQView(View):
             }
         return render(request, self.template, context)
 
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         question = request.POST.get('question')
         answer = request.POST.get('answer')
@@ -57,6 +62,9 @@ class CreateUpdateFAQView(View):
         return redirect(reverse('dashboard:faqs'))
     
 class DeleteFAQView(View):
+    '''Delete FAQ view'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         faq_id = request.GET.get('faq_id')
         faq = Faq.objects.filter(id=faq_id).first()
