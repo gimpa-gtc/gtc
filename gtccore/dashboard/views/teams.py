@@ -6,12 +6,15 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
+from django.utils.decorators import method_decorator
 
 from dashboard.models import Facilitator
+from gtccore.library.decorators import StaffLoginRequired
 
 class TeamsView(View):
     template = 'dashboard/pages/teams.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         if query:
@@ -27,8 +30,10 @@ class TeamsView(View):
         return render(request, self.template, context)
     
 class CreateUpdateTeamView(View):
+    '''Create or update team'''
     template = 'dashboard/pages/create-update-team.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         team_id = request.GET.get('team_id')
         team = None
@@ -39,6 +44,7 @@ class CreateUpdateTeamView(View):
             }
         return render(request, self.template, context)
 
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         name = request.POST.get('name')
         title = request.POST.get('title')
@@ -66,6 +72,9 @@ class CreateUpdateTeamView(View):
         return redirect(reverse('dashboard:teams'))
     
 class DownloadTeamsView(View):
+    ''' Download teams as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="teams.csv"'
@@ -77,6 +86,9 @@ class DownloadTeamsView(View):
         return response
     
 class DeleteTeamView(View):
+    '''Delete team'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         team_id = request.GET.get('team_id')
         facilitator = Facilitator.objects.get(pk=team_id)
@@ -87,6 +99,9 @@ class DeleteTeamView(View):
 
 
 class DeleteTeamView(View):
+    '''Delete team'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         member_id = request.GET.get('member_id')
         member = Facilitator.objects.filter(id=member_id).first()
