@@ -59,7 +59,11 @@ class CreateUpdateFAQView(View):
 class DeleteFAQView(View):
     def get(self, request):
         faq_id = request.GET.get('faq_id')
-        faq = Faq.objects.get(pk=faq_id)
-        faq.delete()
-        messages.success(request, 'FAQ deleted successfully')
-        return redirect(reverse('dashboard:faqs'))
+        faq = Faq.objects.filter(id=faq_id).first()
+        if faq:
+            faq.delete()
+            messages.success(request, 'FAQ Deleted Successfully')
+            return redirect(reverse('dashboard:faqs'))
+        else:
+            messages.error(request, 'FAQ Not Found')
+            return redirect(reverse('dashboard:faqs'))
