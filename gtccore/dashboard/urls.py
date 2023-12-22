@@ -29,6 +29,9 @@ urlpatterns += [
     path('admissions/', views.AdmissionsView.as_view(), name='admissions'),
     path('give-admission/', views.GiveAdmissionView.as_view(), name='give_admission'), #noqa
     path('applicants/', views.ApplicantsView.as_view(), name='applicants'),
+    path('delete-application/', views.DeleteApplicationView.as_view(), name='delete_application'), #noqa
+    path('delete-applicant/', views.DeleteApplicantView.as_view(), name='delete_applicant'), #noqa
+
 ]
 
 
