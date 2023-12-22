@@ -5,13 +5,16 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
+from django.utils.decorators import method_decorator
 
 from dashboard.models import Contact
+from gtccore.library.decorators import StaffLoginRequired
 
 class ContactMessagesView(View):
     '''Contact messages view'''
     template = 'dashboard/pages/contact_messages.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         contact_messages = Contact.objects.all().order_by('-id')
@@ -29,6 +32,7 @@ class ReplyMessageView(View):
     '''Reply message view'''
     template = 'dashboard/pages/reply_message.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         message_id = request.GET.get('message_id')
         message = Contact.objects.filter(id=message_id).first()
@@ -37,6 +41,7 @@ class ReplyMessageView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         message_id = request.POST.get('message_id')
         message = Contact.objects.filter(id=message_id).first()
@@ -51,6 +56,8 @@ class ReplyMessageView(View):
     
 class DownloadContactMessagesView(View):
     '''Download contact messages view'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="contact_messages.csv"'
