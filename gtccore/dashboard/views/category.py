@@ -5,15 +5,18 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
+from django.utils.decorators import method_decorator
 
 from dashboard.forms import CohortForm, CourseCategoryForm
 from dashboard.models import Cohort, CourseCategory
+from gtccore.library.decorators import StaffLoginRequired
 
 
 class CourseCategoriesView(View):
     '''Course categories view'''
     template = 'dashboard/pages/course_categories.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         categories = CourseCategory.objects.all().order_by('-id')
@@ -31,6 +34,7 @@ class CreateUpdateCourseCategoryView(View):
     '''Create and update course category view'''
     template = 'dashboard/pages/create-update-course-category.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         category_id = request.GET.get('category_id')
         category = None
@@ -41,6 +45,7 @@ class CreateUpdateCourseCategoryView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         category_id = request.POST.get('category_id')
         category = None
@@ -61,6 +66,8 @@ class CreateUpdateCourseCategoryView(View):
     
 class DownloadCategoriesView(View):
     '''Download categories as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         categories = CourseCategory.objects.all().order_by('-id')
         response = HttpResponse(content_type='text/csv')
@@ -75,6 +82,7 @@ class DownloadCategoriesView(View):
 class CohortsView(View):
     template = 'dashboard/pages/cohorts.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         cohorts = Cohort.objects.all().order_by('-id')
         query = request.GET.get('query')
@@ -92,6 +100,7 @@ class CohortsView(View):
 class CreateUpdateCohortView(View):
     template = 'dashboard/pages/create-update-cohort.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         cohort_id = request.GET.get('cohort_id')
         cohort = None
@@ -105,6 +114,7 @@ class CreateUpdateCohortView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         cohort_id = request.POST.get('cohort_id')
         cohort = None
@@ -125,6 +135,8 @@ class CreateUpdateCohortView(View):
     
 class DownloadCohortView(View):
     '''Download cohorts as csv'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         cohorts = Cohort.objects.all().order_by('-id')
         response = HttpResponse(content_type='text/csv')
