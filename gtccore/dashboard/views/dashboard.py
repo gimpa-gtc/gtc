@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from django.views import View
+from django.utils.decorators import method_decorator
 from dashboard.models import Application, Applicant, Payment, Admission, Course, CourseCategory
-from django.db.models import Avg, Max, Min, Sum, Count
+from django.db.models import Sum
+
+from gtccore.library.decorators import StaffLoginRequired
 
 class DashboardView(View):
     template = 'dashboard/pages/dashboard.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         # totals
         total_applications = Application.objects.all().count()
