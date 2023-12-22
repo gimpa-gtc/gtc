@@ -3,7 +3,6 @@ from .category import *
 from .courses import *
 from .dashboard import *
 from .facilitators import *
-from .invoice import *
 from .payments import *
 from .profile import *
 from .settings import *
