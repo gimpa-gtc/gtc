@@ -6,8 +6,7 @@ from accounts.models import User
 from gtccore.library.services import send_sms
 from gtccore.settings import SENDER_ID
 
-from .models import (Admission, Applicant, Application, CustomCourseRequest,
-                     Notification)
+from .models import (Admission, Applicant, Application, CustomCourseRequest)
 
 
 @receiver(post_save, sender=Application)
