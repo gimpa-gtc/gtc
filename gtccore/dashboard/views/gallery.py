@@ -5,15 +5,18 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
+from django.utils.decorators import method_decorator
 from dashboard.forms import ImageCategoryForm
 
 from dashboard.models import Image, ImageCategory
+from gtccore.library.decorators import StaffLoginRequired
 
 
 class ImageCategoriesView(View):
     '''Course categories view'''
     template = 'dashboard/pages/image_categories.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
         categories = ImageCategory.objects.all().order_by('-id')
@@ -31,6 +34,7 @@ class CreateUpdateImageCategoryView(View):
     '''Create and update course category view'''
     template = 'dashboard/pages/create-update-image-category.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         category_id = request.GET.get('category_id')
         category = None
@@ -41,6 +45,7 @@ class CreateUpdateImageCategoryView(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         category_id = request.POST.get('category_id')
         category = None
@@ -63,6 +68,7 @@ class CreateUpdateImageCategoryView(View):
 class ImagesView(View):
     template = 'dashboard/pages/images.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         images = Image.objects.all().order_by('-id')
         query = request.GET.get('query')
@@ -79,6 +85,7 @@ class ImagesView(View):
 class AddImages(View):
     template = 'dashboard/pages/add-images.html'
 
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         categories = ImageCategory.objects.all().order_by('-id')
 
@@ -87,6 +94,7 @@ class AddImages(View):
         }
         return render(request, self.template, context)
     
+    @method_decorator(StaffLoginRequired)
     def post(self, request):
         category_id = request.POST.get('category_id')
         category = None
@@ -106,6 +114,9 @@ class AddImages(View):
         return redirect('dashboard:images')
     
 class DeleteImageCategoryView(View):
+    '''Delete course category view'''
+
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         category_id = request.GET.get('category_id')
         category = ImageCategory.objects.filter(id=category_id).first()
@@ -117,6 +128,9 @@ class DeleteImageCategoryView(View):
         return redirect('dashboard:img_category')
     
 class DeleteImageView(View):
+    '''Delete course view'''
+    
+    @method_decorator(StaffLoginRequired)
     def get(self, request):
         image_id = request.GET.get('image_id')
         image = Image.objects.filter(id=image_id).first()
