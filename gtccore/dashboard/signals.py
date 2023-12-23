@@ -86,9 +86,9 @@ def send_user_password(sender, instance, created, **kwargs):
     if not(created):
         return
     # generate password
-    password = random.randint(100000, 999999)
+    password = str(random.randint(100000, 999999))
     instance.set_password(password)
     instance.save()
-    msg = f"Hello {instance.name}, \nYour GTC staff account has been created. \n\Kindly login with the password {password}. "
+    msg = f"Hello {instance.name}, \nYour GTC staff account has been created. \n\nKindly login with the password {password}. "
     send_sms(SENDER_ID, msg, [str(instance.phone)])
     return True
