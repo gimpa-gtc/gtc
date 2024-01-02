@@ -67,7 +67,7 @@ class CreateUpdateApplicationView(View):
             messages.error(request, 'Invalid Course')
             return redirect('dashboard:create_update_application')
         
-        form = ApplicationForm(request.POST, instance=application)
+        form = ApplicationForm(request.POST, request.FILES, instance=application)
         if not form.is_valid():
             for k, v in form.errors.items():
                 messages.error(request, f"{k}: {v}")
