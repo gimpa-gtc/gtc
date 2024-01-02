@@ -5,7 +5,7 @@ from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
 
-from dashboard.forms import ApplicationForm, ContactUsForm, CustomCourseReguestForm
+from dashboard.forms import ApplicationForm, ContactUsForm, CustomCourseReguestForm, PaymentForm
 from dashboard.models import (Application, Comment, Course, CourseCategory,
                               Facilitator, Faq, Image, ImageCategory, Testimonial)
 from gtccore.library.constants import PaymentStatus
@@ -82,9 +82,9 @@ class ApplicationStatusView(View):
         phone = request.GET.get('phone')
 
         application = Application.objects.filter(
-            Q(application_id=application_id) &
-            Q(email=email) &
-            Q(phone=phone)
+            Q(application_id=application_id.strip()) &
+            Q(email=email.strip()) &
+            Q(phone=phone.strip())
         ).first()
 
         context = {
@@ -206,7 +206,7 @@ class EnrollView(View):
         return render(request, self.template, context)
     
     def post(self, request):
-        form = ApplicationForm(request.POST)
+        form = ApplicationForm(request.POST, request.FILES)
         course_id = request.POST.get('course_id')
         pay_now = request.POST.get('pay_now')
         course_id = int(course_id)
@@ -242,6 +242,29 @@ class EnrollSuccessView(View):
 
 
 
+class UploadPaymentReceiptView(View):
+    '''Upload Payment Receipt view.'''
+    template = 'website/online-payment.html'
+
+    def get(self, request):
+        application_id = request.GET.get('application_id')
+        application = Application.objects.filter(application_id=application_id).first() # noqa
+        context = {
+            'application': application
+        }
+        return render(request, self.template, context)
+    
+    def post(self, request):
+        application_id = request.POST.get('application_id')
+        application = Application.objects.filter(application_id=application_id).first() # noqa
+        if application:
+            form = PaymentForm(request.POST, request.FILES)
+            if form.is_valid():
+                payment = form.save(commit=False)
+                payment.application = application
+                payment.save()
+            return redirect('website:enroll_success')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class DownloadAdmissionLetterView(View):
