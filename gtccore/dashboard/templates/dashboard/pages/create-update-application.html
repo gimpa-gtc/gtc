@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="form-group-item">
                         <h5 class="form-title">Application Form</h5>
-                        <form action="{% url 'dashboard:create_update_application' %}" method="POST">
+                        <form action="{% url 'dashboard:create_update_application' %}" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <input type="hidden" name="application_id" value="{{application.application_id}}">
                         <div class="row">
