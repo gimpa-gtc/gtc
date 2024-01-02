@@ -27,4 +27,5 @@ urlpatterns += [
 # payment
 urlpatterns += [
     path('make-payment/', views.MakePaymentView.as_view(), name='make_payment'),
+    path('upload-receipt/', views.UploadPaymentReceiptView.as_view(), name='upload_receipt'), #noqa
 ]
