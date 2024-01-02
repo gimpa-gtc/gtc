@@ -111,6 +111,7 @@ class Application(models.Model):
     phone = models.CharField(max_length=20)
     company = models.CharField(max_length=100, default='None')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True) #noqa
+    certificate = models.FileField(upload_to='certificates', null=True, blank=True) #noqa
     application_status = models.CharField(max_length=20, default='PENDING', choices=APPLICATION_STATUS) #noqa
     payment_mode = models.CharField(max_length=20, default='ONLINE', choices=PAYMENT_MODE) #noqa
     payment_status = models.CharField(max_length=20, default='PENDING', choices=PAYMENT_STATUS) #noqa
@@ -191,12 +192,13 @@ class Payment(models.Model):
     network = models.CharField(max_length=10)
     number = models.CharField(max_length=15)
     receipt = models.ImageField(upload_to='receipts', null=True, blank=True) #noqa
+    # status codes: 000 - success, 004 - pending, 107 - failed
     status_code = models.CharField(max_length=20)
     status_message = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def get_payment_status(self):
-        '''Not paid, part payment, full payment'''
+        '''Not paid, part payment, full payment, over payment, pending'''
         if self.application and self.status_code == '000':
             if self.application.course.price == self.amount:
                 return 'FULL PAYMENT'
@@ -204,8 +206,21 @@ class Payment(models.Model):
                 return 'PART PAYMENT'
             else:
                 return 'OVER PAYMENT'
+        elif self.application and self.status_code == '104':
+            return 'PENDING'
         else:
             return 'NOT PAID'
+        
+    
+    def approve_payment(self):
+        '''Approves the payment'''
+        if self.application:
+            # payment is status
+            self.status_code = '000'
+            self.status_message = 'Payment Successfully Approved'
+            self.application.payment_status = 'PAID'
+            self.application.save()
+        return
 
     def __str__(self):
         return self.transaction_id
