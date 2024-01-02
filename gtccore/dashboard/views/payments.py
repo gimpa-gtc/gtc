@@ -62,6 +62,18 @@ class CreatePaymentView(View):
             for k, v in form.errors.items():
                 messages.error(request, f"{k}: {v}")
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            
+
+class ApproveDisapprovePaymentView(View):
+    '''Approve or disapprove payment'''
+    @method_decorator(StaffLoginRequired)
+    def get(self, request):
+        payment_id = request.GET.get('payment_id')
+        payment = Payment.objects.filter(id=payment_id).first()
+        if payment:
+            payment.approve()
+            messages.success(request, 'Payment Approved Successfully')
+        return redirect('dashboard:payments')
 
    
 
