@@ -28,6 +28,7 @@ urlpatterns += [
     path('create-update-application/', views.CreateUpdateApplicationView.as_view(), name='create_update_application'), #noqa
     path('admissions/', views.AdmissionsView.as_view(), name='admissions'),
     path('give-admission/', views.GiveAdmissionView.as_view(), name='give_admission'), #noqa
+    path('admit-one-student/', views.AdmitOneStudentView.as_view(), name='admit_one_student'), #noqa
     path('applicants/', views.ApplicantsView.as_view(), name='applicants'),
     path('delete-application/', views.DeleteApplicationView.as_view(), name='delete_application'), #noqa
     path('delete-applicant/', views.DeleteApplicantView.as_view(), name='delete_applicant'), #noqa
@@ -64,6 +65,7 @@ urlpatterns += [
 urlpatterns += [
     path('payments/', views.PaymentsView.as_view(), name='payments'),
     path('create-payment/', views.CreatePaymentView.as_view(), name='create_payment'), #noqa
+    path('verify-payment/', views.ApproveDisapprovePaymentView.as_view(), name='verify_payment'), #noqa
     path('download-payments/', views.DownloadPaymentsView.as_view(), name='download_payments'), #noqa
 ]
 
