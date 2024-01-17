@@ -212,13 +212,25 @@ class Payment(models.Model):
             return 'NOT PAID'
         
     
-    def approve_payment(self):
+    def approve(self):
         '''Approves the payment'''
         if self.application:
             # payment is status
             self.status_code = '000'
             self.status_message = 'Payment Successfully Approved'
+            # update application payment status
             self.application.payment_status = 'PAID'
+            self.application.save()
+            # update the actual payment status
+            self.save()
+        return
+    
+    def disapprove(self):
+        '''Disapproves the payment'''
+        if self.application:
+            self.status_code = '107'
+            self.status_message = 'Payment Disapproved'
+            self.application.payment_status = 'NOT PAID'
             self.application.save()
         return
 
