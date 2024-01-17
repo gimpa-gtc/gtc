@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 
 from dashboard.forms import ApplicationForm, ContactUsForm, CustomCourseReguestForm, PaymentForm
-from dashboard.models import (Application, Comment, Course, CourseCategory,
+from dashboard.models import (Admission, Application, Comment, Course, CourseCategory,
                               Facilitator, Faq, Image, ImageCategory, Testimonial)
 from gtccore.library.constants import PaymentStatus
 from gtccore.library.services import generate_admission_letter
@@ -269,8 +269,12 @@ class DownloadAdmissionLetterView(View):
 
     def get(self, request):
 
-
-        pdf = generate_admission_letter()
+        # get the admission
+        application_id = request.GET.get('application_id')
+        print(f"Value of application_id from View: {application_id}")
+        admission = Admission.objects.filter(application__application_id=application_id).first()
+        print(f"Value of admission from View: {admission}")
+        pdf = generate_admission_letter(admission)
 
         # Create a BytesIO buffer to store the PDF content
         pdf_buffer = BytesIO()
