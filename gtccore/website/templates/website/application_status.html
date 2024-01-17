@@ -102,7 +102,7 @@
                                 <br>
                                 {% if application.application_status == 'APPROVED' %}
                                 <div class="col-12 mt-5">
-                                    <a href="{% url 'website:download_letter' %}?application_id={{application.application_id}}?email={{application.email}}?phone={{application.phone}}" class="btn btn-primary btn-sm">Download Admission Letter</a>
+                                    <a href="{% url 'website:download_letter' %}?application_id={{application.application_id}}" class="btn btn-primary btn-sm">Download Admission Letter</a>
                                 </div>
                                 {% endif %}
                                 {% if application.get_payment_status != "FULL PAYMENT" %}
