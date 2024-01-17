@@ -34,7 +34,7 @@
                         <div class="course-list-block clearfix mb-30">
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumb"> <img alt="featured project"
-                                        src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/course/course-list1.jpg' %} {% endif %} "
+                                        src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/course/gtc-cl.png' %} {% endif %} "
                                         class="img-fullwidth mt-5"></div>
                             </div>
                             <div class="col-sm-6 col-md-8">
@@ -87,7 +87,7 @@
                             <div class="owl-carousel-1col">
                                 {% for course in latst_courses %}
                                 <div class="item">
-                                    <img src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} https://placehold.it/365x230 {% endif %} "
+                                    <img src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/carousel/LMP-28.jpg' %} {% endif %} "
                                         alt="">
                                     <h4 class="title"> <a
                                             href="{% url 'website:course_details' %}?course_id={{course.id}}&course_title={{course.title}}">{{course.title}}</a>
