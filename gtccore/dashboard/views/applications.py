@@ -11,6 +11,7 @@ from dashboard.forms import ApplicationForm
 from dashboard.models import Admission, Applicant, Application, Course
 from gtccore.library.constants import ApplicationStatus
 from gtccore.library.decorators import StaffLoginRequired
+from gtccore.library.logs import log_user_activity
 
 
 class ApplicationsView(View):
@@ -76,8 +77,12 @@ class CreateUpdateApplicationView(View):
         new_application.course = course                
         new_application.save()
         if application:
+            # log user activity
+            log_user_activity(request.user, 'Updated application', application, new_application) # noqa
             messages.success(request, 'Application Updated Successfully')
         else:
+            # log user activity
+            log_user_activity(request.user, 'Created application', None, new_application) # noqa
             messages.success(request, 'Application Created Successfully')
         return redirect('dashboard:applications')
     
@@ -160,6 +165,34 @@ class GiveAdmissionView(View):
             messages.error(request, 'No Applications Found')
             return redirect('dashboard:give_admission')
         
+
+class AdmitOneStudentView(View):
+    '''Admit just one student'''
+    template = 'dashboard/pages/admit_one_student.html' 
+
+    @method_decorator(StaffLoginRequired)
+    def get(self, request):
+        application_id = request.GET.get('application_id')
+        application = Application.objects.filter(application_id=application_id).first() # noqa
+        context = {
+            'application': application
+        }
+        return render(request, self.template, context)
+    
+    @method_decorator(StaffLoginRequired)
+    def post(self, request):
+        application_id = request.POST.get('application_id')
+        application = Application.objects.filter(application_id=application_id).first() # noqa
+        if application:
+            application.application_status = ApplicationStatus.APPROVED.name
+            application.save()
+            # log user activity
+            log_user_activity(request.user, 'Admitted student', application, None) # noqa
+            messages.success(request, 'Student Admitted Successfully')
+        else:
+            messages.error(request, 'Application Not Found')
+        return redirect('dashboard:applications')
+
 
 class ApplicantsView(View):
     '''applicants view'''
