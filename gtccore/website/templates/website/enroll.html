@@ -7,7 +7,7 @@
 <div class="main-content">
     <!-- Section: inner-header -->
     <section class="inner-header divider layer-overlay overlay-theme-colored-7"
-        data-bg-img="{% static 'website/images/bg/bg1.jpg' %}">
+        data-bg-img="{% static 'website/images/carousel/LMP-30.jpg' %}">
         <div class="container pt-120 pb-60">
             <!-- Section Content -->
             <div class="section-content">
@@ -37,7 +37,7 @@
                             <b>Course Title</b>
                             <p>{{course.title}}</p>
                         </div>
-                        <div class="col-md-6 col-xs- text-left mb-5">
+                        <div class="col-md-6 col-xs-12 text-left mb-5">
                             <b>Fees</b>
                             <p>{{course.price}}</p>
                         </div>
@@ -48,6 +48,14 @@
                         <div class="col-md-6 col-xs-12 text-left mb-5">
                             <b>Course Category</b>
                             <p>{{course.category}}</p>
+                        </div>
+                        <div class="col-md-6 col-xs-12 text-left mb-5">
+                            <b>Cohort</b>
+                            <p>{{course.cohort.name}}</p>
+                        </div>
+                        <div class="col-md-6 col-xs-12 text-left mb-5">
+                            <b>Start Date</b>
+                            <p>{{course.start_date}}</p>
                         </div>
                     </div>
                 </div>
@@ -83,6 +91,7 @@
                                 <div class="form-group mb-30">
                                     <input id="form_email" name="certificate" class="form-control"
                                         type="file" {% if course.requires_certificate %} required {% endif %} accept="image/*">
+                                        <small class="secondary-text-color">Upload Relevant Certificate</small>
                                 </div>
                             </div>
                         </div>
