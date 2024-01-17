@@ -28,3 +28,18 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'user'
+
+
+class UserLog(models.Model):
+    '''User activity log.'''
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    action = models.CharField(max_length=255)
+    pre_object = models.TextField(blank=True, null=True)
+    post_object = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.email + ": " + self.action
+
+    class Meta:
+        db_table = 'user_log'
