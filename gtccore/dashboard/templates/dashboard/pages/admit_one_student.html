@@ -1,0 +1,109 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="content-page-header">
+            <h5>Give Admission</h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="form-group-item">
+                        <h5 class="form-title">Application Details</h5>
+                        <form action="{% url 'dashboard:admit_one_student' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="application_id" value="{{application.application_id}}">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" value="{{application.name}}" placeholder="Enter Fullname" readonly>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" name="email" value="{{application.email}}" placeholder="Enter Email Address" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="text" class="form-control" value="{{application.phone}}" placeholder="Enter Phone Number" name="phone" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Course</label>
+                                    <input type="text" class="form-control" value="{{application.course.title}}" placeholder="Course title" name="" readonly>
+
+                                    {% comment %}
+                                    <select class="form-control" name="course_id" readonly>
+                                        {% for course in courses %}
+                                            <option value="{{course.id}}" {% if course.id == application.course.id %} selected {% endif %}>{{course.title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    {% endcomment %}
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <input type="text" class="form-control" value="{{application.company}}" placeholder="Enter Company" name="company" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Certificate</label> <br>
+                                    <img id="image-preview" src="{% if application.certificate %} {{application.certificate.url}} {% endif %} " alt="Certificate Preview" style="max-width: 100%; max-height: 150px; margin-top: 10px;" >
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="col-6">
+                                <p> <b>Total Paid</b></p>
+                                <p>GHC{{application.get_total_payments}}</p>
+                            </div>
+                            <div class="col-6">
+                                <p> <b>Payment History</b></p>
+                                {% for history in application.get_payment_history %}
+                                <p>GHC{{history.amount}} | {{history.date}}</p>
+                                {% endfor %}
+                            </div>
+                            <hr>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <input type="reset"  class="btn btn-danger" value="Clear">
+                                    <input type="submit"  class="btn btn-primary" value="Admit Student">
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper -->
+
+<script>
+    function displayImagePreview(input) {
+        var preview = document.getElementById('image-preview');
+        var file = input.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
+{% endblock content %}
