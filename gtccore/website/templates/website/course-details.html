@@ -43,14 +43,16 @@
                                 </div>
                             </li>
                             <li>
-                                <i class="fa fa-dollar text-theme-colored2 font-48"></i>
+                                <i class="fa fa-money text-theme-colored2 font-48">
+                                    <img src="static 'website/images/cedi.png' " alt="">
+                                </i>
                                 <div class="pull-right ml-10">
                                     <span>Course Price</span>
                                     <h5 class="mt-0">GHC{{course.price|floatformat:2}}</h5>
                                 </div>
                             </li>
                         </ul>
-                        <img src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/course/course-details1.jpg' %} {% endif %} "
+                        <img src="{% if course.thumbnail %} {{course.thumbnail.url}} {% else %} {% static 'website/images/carousel/LMP-24.jpg' %} {% endif %} "
                             alt="">
                         <h3 class="text-uppercase mt-30 mb-10">{{course.title}}</h3>
                         <div class="double-line-bottom-theme-colored-2 mt-10"></div>
