@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 
 from dashboard.models import Application, Payment
 from gtccore.library.decorators import StaffLoginRequired
+from gtccore.library.logs import log_user_activity
 
 
 class PaymentsView(View):
@@ -56,6 +57,8 @@ class CreatePaymentView(View):
             payment = form.save(commit=False)
             payment.application = application
             payment.save()
+            # log user activity
+            log_user_activity(request.user, 'Created payment', None, payment) # noqa
             messages.success(request, 'Payment Created Successfully')
             return redirect('dashboard:payments')
         else:
@@ -69,10 +72,30 @@ class ApproveDisapprovePaymentView(View):
     @method_decorator(StaffLoginRequired)
     def get(self, request):
         payment_id = request.GET.get('payment_id')
-        payment = Payment.objects.filter(id=payment_id).first()
-        if payment:
+        payment = Payment.objects.filter(transaction_id=payment_id).first()
+
+        context = {
+            'payment': payment
+        }
+        return render(request, 'dashboard/pages/verify_payment.html', context)
+
+   
+    @method_decorator(StaffLoginRequired)
+    def post(self, request):
+        payment_id = request.POST.get('payment_id')
+        payment = Payment.objects.filter(transaction_id=payment_id).first()
+
+        approval_status = request.POST.get('approval_status')
+        if approval_status:
             payment.approve()
+            # log user activity
+            log_user_activity(request.user, 'Approved Payment', None, payment) # noqa
             messages.success(request, 'Payment Approved Successfully')
+        else:
+            payment.disapprove()
+            # log user activity
+            log_user_activity(request.user, 'Disapproved Payment', None, payment)
+            messages.success(request, 'Payment Disapproved Successfully')
         return redirect('dashboard:payments')
 
    
