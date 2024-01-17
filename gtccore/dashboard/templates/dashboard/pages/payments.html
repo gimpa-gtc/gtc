@@ -80,7 +80,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <ul>
                                                         <li>
-                                                            <a class="dropdown-item" href=""><i class="far fa-eye me-2"></i>Verify</a>
+                                                            <a class="dropdown-item" href="{% url 'dashboard:verify_payment' %}?payment_id={{payment.transaction_id}}"><i class="far fa-eye me-2"></i>Verify</a>
                                                         </li>
                                                     </ul>
                                                 </div>
