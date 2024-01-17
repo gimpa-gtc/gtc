@@ -1,6 +1,6 @@
 from django import forms
 
-from dashboard.models import (Application, Cohort, Comment, Contact, Course,
+from dashboard.models import (Application, Cohort, Contact, Course,
                               CourseCategory, CustomCourseRequest, Facilitator, ImageCategory, Notification, Payment)
 
 
