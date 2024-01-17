@@ -102,6 +102,9 @@
                                                             <a class="dropdown-item" href="{% url 'dashboard:create_update_application' %}?application_id={{application.application_id}}"><i class="far fa-edit me-2"></i>Edit</a>
                                                         </li>
                                                         <li>
+                                                            <a class="dropdown-item" href="{% url 'dashboard:admit_one_student' %}?application_id={{application.application_id}}"><i class="far fa-square-check me-2"></i>Admit</a>
+                                                        </li>
+                                                        <li>
                                                             <a class="dropdown-item" href="#"
                                                                 onclick="confirmDelete('{{ application.application_id }}')">
                                                                 <i class="far fa-trash-alt me-2"></i>Delete
