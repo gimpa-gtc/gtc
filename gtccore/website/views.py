@@ -78,13 +78,9 @@ class ApplicationStatusView(View):
 
     def get(self, request):
         application_id = request.GET.get('application_id')
-        email = request.GET.get('email')
-        phone = request.GET.get('phone')
 
         application = Application.objects.filter(
-            Q(application_id=application_id.strip()) &
-            Q(email=email.strip()) &
-            Q(phone=phone.strip())
+            Q(application_id=application_id.strip())
         ).first()
 
         context = {
