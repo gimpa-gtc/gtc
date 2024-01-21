@@ -52,7 +52,7 @@
                                         <p><b>Cohort:</b> {{course.cohort.name}} || <b>Date:</b> {{course.start_date}} </p>
                                     </li>
                                 </ul>
-                                <p>{{course.description|safe}}</p>
+                                <p>{{course.description|slice:":150"|safe}}...</p>
                                 <a class="btn btn-default btn-sm text-uppercase mt-5"
                                     href="{% url 'website:course_details' %}?course_id={{course.id}}&course_title={{course.title}}">view
                                     details</a>
