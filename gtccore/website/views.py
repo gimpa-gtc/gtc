@@ -290,3 +290,20 @@ class DownloadAdmissionLetterView(View):
         response['Content-Type'] = 'application/pdf'
         response['Content-Disposition'] = 'attachment; filename="admission_letter.pdf"'
         return response
+    
+import datetime
+class DownloadSampleLetterView(View):
+    template = 'website/admission_letter.html'
+
+    def get(self, request):
+        
+        application_id = request.GET.get('application_id')
+        admission = Admission.objects.filter(application__application_id=application_id).first()
+        todays_date = datetime.datetime.now()
+
+        print(f"Value of todays_date from View: {todays_date}")
+        context = {
+            'todays_date': todays_date,
+            'admission': admission,
+        }
+        return render(request, self.template, context)

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- load static -->
+  {% load static %}
+  {% load humanize %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIMPA TRAINING AND CONSULTING | ADMISSION LETTER</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <!-- Favicon -->
+   <link rel="shortcut icon" href="{% static 'website/images/gimpa-round-logo.jpg' %}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 30px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .address {
+      margin-bottom: 10px;
+    }
+    .container {
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    .date {
+      margin-bottom: 20px;
+    }
+
+    .offer {
+      margin-top: 10px;
+    }
+
+    .details {
+      margin-top: 20px;
+      margin-left: 50px;
+    }
+
+    .account-details {
+      margin-top: 10px;
+    }
+
+    .note {
+      margin-top: 20px;
+    }
+
+    .signature {
+      margin-top: 30px;
+    }
+
+    .title {
+      margin: 0 10px 0 10px;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    @media print {
+            #print_btn {
+              display: none;
+            }
+
+            
+        }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="container card-body">
+      <b>
+        <p class="text-center title" >GHANA INSTITUTE OF MANAGEMENT AND PUBLIC ADMINISTRATION (GIMPA)</p>
+      </b>
+      <div class="row">
+        <div class="col-4">
+          <b>
+            <p class="address">Our Ref: GTC/{{todays_date|date:"d/m/Y"}}</p>
+          </b>
+          <b> 
+            <p>Your Ref...................................</p>
+          </b>
+        </div>
+        <!-- Insert Logo in the midle -->
+        <div class="col-4" style="text-align: center;">
+          <img src="{% static 'website/images/gimpa-round-logo.jpg' %}" alt="GIMPA Logo" class="img-fluid">
+        </div>
+        <div class="col-4 text-right">
+          <b>
+            <p class="address">P. 0. BOX AH 50<br>
+              Achimota, Accra</p>
+          </b>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="date">{{todays_date|date:"d F Y"}}</p>
+      </div>
+      
+      <div class="text-left">
+        <b>
+          <p>Dean Ebenezer Kulah<br>
+          Ministry of Agriculture</p>
+        </b>
+    
+        <p>Dear Sir/Madam,</p>
+      </div>
+  
+      
+  
+      <div class="text-center">
+        <u>
+          <b>
+            <h5>OFFER OF ADMISSION</h5>
+          </b>
+        </u>
+      </div>
+  
+      <p>I have the pleasure to offer you admission to the 
+        <span><b>{{admission.application.course.title}}</b></span>
+        <span>scheduled for
+        </span> 
+        <span> <b>{{admission.application.course.start_date|date:"d F Y"}} - {{admission.application.course.end_date|date:"d F Y"}}</b>
+        </span>
+      </p>
+  
+      <p class="offer">The total cost of the workshop is <b>{% with admission.application.course.price as price %}  {{price|intword}} {% endwith %} (GHC{{admission.application.course.price|intcomma}}) </b>. 
+        Please notify the Institute of your acceptance and participation in this workshop in writing or by email 
+        as soon as possible (<b>Email</b>:prince@gimpa.edu.gh).</p>
+  
+      <p>Your student identification (ID) number is <b>223046736</b> once you accept the offer.</p>
+  
+      <p class="details"><b>Start Date:</b> Monday 27th November, 2023<br>
+      <b>Time:</b> 8:30 am – 4:30 pm<br>
+      <b>Venue:</b> GIMPA Executive Conference Centre (GECC)</p>
+  
+      <p class="">The Course fee is <b>(US$4,200)</b> which covers tuition, meals, course materials, fieldtrip, recreational trip & accommodation.</p>
+  
+      <p class="">Payment of the course fees should be made using your Student ID Number into the Institute’s bank account quoted below.</p>
+  
+      <div class="container">
+        <h3 class="account-details"><b>US DOLLAR ACCOUNT DETAILS</b></h3>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>Account Name</td>
+              <td>GIMPA</td>
+            </tr>
+            <tr>
+              <td>Bank</td>
+              <td>ABSA BANK GH. LTD</td>
+            </tr>
+            <tr>
+              <td>Account Number</td>
+              <td>064-1290262</td>
+            </tr>
+            <tr>
+              <td>Currency</td>
+              <td>US DOLLAR</td>
+            </tr>
+            <tr>
+              <td>Branch</td>
+              <td>HEAD OFFICE, HIGH STREET ACCRA-GHANA</td>
+            </tr>
+            <tr>
+              <td>Swift Code</td>
+              <td>BARCGHAC</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="container">
+        <h3 class="account-details"><b>CEDI ACCOUNT DETAILS</b></h3>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>Account Name</td>
+              <td>GIMPA</td>
+            </tr>
+            <tr>
+              <td>Bank</td>
+              <td>ABSA BANK GH. LTD</td>
+            </tr>
+            <tr>
+              <td>Account Number</td>
+              <td>010-1763730</td>
+            </tr>
+            <tr>
+              <td>Currency</td>
+              <td>Cedi</td>
+            </tr>
+            <tr>
+              <td>Branch</td>
+              <td>Legon</td>
+            </tr>
+            <tr>
+              <td>Swift Code</td>
+              <td>BARCGHAC</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <b><p class="note">NB: WE DO NOT ACCEPT PERSONAL CHEQUES</p></b>
+  
+      <p>Sponsors should please note that where the Workshop Bill for a candidate is paid, and for some reason, the candidate is unable to attend the course at all, a refund would be made less of 10% administrative charges.</p>
+      <p>Please note that the Institute’s Clinic will attend to all minor ailments. However, in the event of any major medical treatment or hospitalization, the cost will be borne by the sponsors of participants.</p>
+      <p>We eagerly anticipate your presence here with us at GIMPA. We hope that you will find the program professionally beneficial, and the overall GIMPA experience enriching and conducive to the fuller development of your personality and potential.</p>
+  
+  
+      <p class="signature">Yours faithfully,</p>
+      <!-- <div class="container">
+      </div> -->
+      <img src="{% static 'website/images/gtc-sign.png' %}" alt="" style="height: 80px;">
+      <p class="signature">Prof. Charles Amoatey<br>
+      Director</p>
+  
+    </div>
+    
+    <div class="row container"><Button id="print_btn" class="btn btn-sm btn-outline-primary" onclick="printPage()">Print Admission Letter</Button></div>
+  </div>
+
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- static\website\js\print.js -->
+  <script src="{% static 'website/js/print.js' %}"></script>
+</body>
+</html>
