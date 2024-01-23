@@ -31,6 +31,6 @@ urlpatterns += [
 ]
 
 # debug
-urlpatterns += [
-    path('print-sample-letter/', views.DownloadSampleLetterView.as_view(), name='sample_letter'), #noqa
-]
+# urlpatterns += [
+#     path('print-sample-letter/', views.DownloadSampleLetterView.as_view(), name='sample_letter'), #noqa
+# ]

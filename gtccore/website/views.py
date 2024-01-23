@@ -263,7 +263,7 @@ class UploadPaymentReceiptView(View):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-class DownloadAdmissionLetterView(View):
+class DownloadAdmissionLetter1View(View):
     '''Download Admission Letter page view.'''
     template = 'website/download_admission_letter.html'
 
@@ -292,11 +292,10 @@ class DownloadAdmissionLetterView(View):
         return response
     
 import datetime
-class DownloadSampleLetterView(View):
+class DownloadAdmissionLetterView(View):
     template = 'website/admission_letter.html'
 
     def get(self, request):
-        
         application_id = request.GET.get('application_id')
         admission = Admission.objects.filter(application__application_id=application_id).first()
         todays_date = datetime.datetime.now()
