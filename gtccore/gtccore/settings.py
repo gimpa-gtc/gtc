@@ -12,7 +12,7 @@ SECRET_KEY = 'django-insecure-nptfgn701j3y_k&)5@b$m32!20*ss64)wsp3wowa=21dip+nxm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*", "gtc.gimpa.edu.gh", "www.gtc.gimpa.edu.gh"]
+ALLOWED_HOSTS = ["*", "gtc.gimpa.edu.gh"]
 
 
 # Application definition
@@ -115,7 +115,7 @@ STATIC_URL = '/static/'
 # STATIC_ROOT = BASE_DIR / 'staticfiles/' # For Debug True
 
 # for dreamhost
-STATIC_ROOT = '/home/dh_5p37hu/gtc.gimpa.edu.gh/public/staticfiles/'
+STATIC_ROOT = '/staticfiles/'
 # dh static files wdir: /home/dh_5p37hu/gtc.gimpa.edu.gh/public/staticfiles
 
 STATICFILES_DIRS = [
