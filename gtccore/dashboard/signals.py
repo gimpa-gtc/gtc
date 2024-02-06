@@ -44,8 +44,17 @@ def notify_applicant(sender, instance, created, **kwargs):
     '''Send the notification to applicants when they start an application'''
     if not(created):
         return
-    msg = f"Hello {instance.name}, \nYour Application has been received. We will get back to you shortly.\n\nApplication ID: {instance.application_id}\n\nThank you for choosing Gimpa Training & Consulting."
+    msg = f"Hello {instance.name}, \nYour Application has been received. We will get back to you shortly.\n\nApplication ID: {instance.application_id}\n\nThank you for choosing GIMPA Training & Consulting."
     send_sms(SENDER_ID, msg, [str(instance.phone)])
+    return True
+
+@receiver(post_save, sender=Admission)
+def notify_applicant_on_admission(sender, instance, created, **kwargs):
+    '''Notify the applicant when their application is approved/rejected'''
+    if not(created):
+        return
+    msg = f"Congratulations!\n\nDear {instance.application.name}, \nYour Application to study {instance.application.course.title} is successful! \n\nDownload your admission letter here for more details:\nhttp://gtc.gimpa.edu.gh/application/status/?application_id={instance.application.application_id} \n\nThank you for choosing GIMPA Training & Consulting."
+    send_sms(SENDER_ID, msg, [str(instance.application.phone)])
     return True
 
 
@@ -89,6 +98,6 @@ def send_user_password(sender, instance, created, **kwargs):
     password = str(random.randint(100000, 999999))
     instance.set_password(password)
     instance.save()
-    msg = f"Hello {instance.name}, \nYour GTC staff account has been created. \n\nKindly login with the credentials below: \n\nUsername: {instance.email} \nPassword: {password}.\nURL: http://gtc.gimpa.edu.gh\n\nThank!"
+    msg = f"Hello {instance.name}, \nYour GTC staff account has been created. \n\nKindly login with the credentials below: \n\nUsername: {instance.email} \nPassword: {password}.\nURL: http://gtc.gimpa.edu.gh/login/\n\nThanks!"
     send_sms(SENDER_ID, msg, [str(instance.phone)])
     return True

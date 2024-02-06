@@ -53,7 +53,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label>Certificate</label>
-                                    <input type="file" class="form-control" name="certificate" accept="image/*" onchange="displayImagePreview(this)" {% if application.course.requires_certificate %} required {% endif %}>
+                                    <input type="file" class="form-control" name="certificate" accept="image/*" onchange="displayImagePreview(this)" {% if application.course.requires_certificate and not application.certificate %} required {% endif %}>
                                     <img id="image-preview" src="{% if application.certificate %} {{application.certificate.url}} {% endif %} " alt="Certificate Preview" style="max-width: 100%; max-height: 150px; margin-top: 10px;" >
                                 </div>
                             </div>
