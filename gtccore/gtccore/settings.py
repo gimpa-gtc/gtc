@@ -115,7 +115,7 @@ STATIC_URL = '/static/'
 # STATIC_ROOT = BASE_DIR / 'staticfiles/' # For Debug True
 
 # for dreamhost
-STATIC_ROOT = '/staticfiles/'
+STATIC_ROOT = BASE_DIR / 'staticfiles/'
 # dh static files wdir: /home/dh_5p37hu/gtc.gimpa.edu.gh/public/staticfiles
 
 STATICFILES_DIRS = [
