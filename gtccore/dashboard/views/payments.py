@@ -52,7 +52,7 @@ class CreatePaymentView(View):
     def post(self, request):
         application_id = request.POST.get('application_id')
         application = Application.objects.filter(application_id=application_id).first()
-        form = PaymentForm(request.POST)
+        form = PaymentForm(request.POST, request.FILES or None)
         if form.is_valid():
             payment = form.save(commit=False)
             payment.application = application
