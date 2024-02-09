@@ -8,7 +8,7 @@ from django.views import View
 from django.utils.decorators import method_decorator
 
 from dashboard.forms import ApplicationForm
-from dashboard.models import Admission, Applicant, Application, Course
+from dashboard.models import Admission, Applicant, Application, Course, CourseCategory
 from gtccore.library.constants import ApplicationStatus
 from gtccore.library.decorators import StaffLoginRequired
 from gtccore.library.logs import log_user_activity
@@ -21,7 +21,9 @@ class ApplicationsView(View):
     @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
+        filtered = request.GET.get('form_id') == 'filter'
         applications = Application.objects.all().order_by('-created_at')
+        course_categories = CourseCategory.objects.all().order_by('name')
         if query:
             query = query.strip()
             applications = applications.filter(
@@ -34,9 +36,26 @@ class ApplicationsView(View):
                 Q(payment_mode__icontains=query) |
                 Q(payment_status__icontains=query)
             ).order_by('-created_at')
+        
+        if filtered:
+            category = request.GET.get('category')
+            start_date = request.GET.get('start_date')
+            end_date = request.GET.get('end_date')
+            if category == 'all':
+                pass # All applications are already filtered
+            else:
+                applications = applications.filter(course__category__id=category)
+            if start_date:
+                applications = applications.filter(course__start_date__gte=start_date)
+            if end_date:
+                applications = applications.filter(course__start_date__lte=end_date)
 
-        context ={
+        context = {
             'applications': applications,
+            'categories': course_categories,
+            'selected_category': request.GET.get('category') or 'all',
+            'start_date': request.GET.get('start_date') or '',
+            'end_date': request.GET.get('end_date') or '',
         }
         return render(request, self.template, context)
 
@@ -219,13 +238,26 @@ class DownloadApplicationsView(View):
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
+        filtered_download = request.GET.get('form_id') == 'filter'
+        category = request.GET.get('category')
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
         applications = Application.objects.all().order_by('-created_at')
+        if filtered_download:
+            if category == 'all':
+                pass # All applications are already filtered
+            else:
+                applications = applications.filter(course__category__id=category)
+            if start_date:
+                applications = applications.filter(course__start_date__gte=start_date)
+            if end_date:
+                applications = applications.filter(course__start_date__lte=end_date)
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="applications.csv"'
         writer = csv.writer(response)
-        writer.writerow(['application_id', 'name', 'email', 'phone', 'course', 'application_status', 'payment_mode', 'payment_status','created_at']) # noqa
+        writer.writerow(['application_id', 'name', 'email', 'phone', 'course', 'category', 'application_status', 'payment_mode', 'payment_status','created_at']) # noqa
         for application in applications:
-            writer.writerow([application.application_id, application.name, application.email, application.phone, application.course, application.application_status, application.payment_mode, application.get_payment_status(), application.created_at]) # noqa
+            writer.writerow([application.application_id, application.name, application.email, application.phone, application.course, application.course.category.name, application.application_status, application.payment_mode, application.get_payment_status(), application.created_at]) # noqa
         return response
     
 class DownloadApplicantsView(View):
