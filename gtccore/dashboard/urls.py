@@ -30,7 +30,7 @@ urlpatterns += [
     path('give-admission/', views.GiveAdmissionView.as_view(), name='give_admission'), #noqa
     path('admit-one-student/', views.AdmitOneStudentView.as_view(), name='admit_one_student'), #noqa
     path('applicants/', views.ApplicantsView.as_view(), name='applicants'),
-    path('delete-application/', views.DeleteApplicationView.as_view(), name='delete_application'), #noqa
+    # path('delete-application/', views.DeleteApplicationView.as_view(), name='delete_application'), #noqa
     path('delete-applicant/', views.DeleteApplicantView.as_view(), name='delete_applicant'), #noqa
 
 ]
