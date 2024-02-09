@@ -18,7 +18,9 @@ class CoursesView(View):
     @method_decorator(StaffLoginRequired)
     def get(self, request):
         query = request.GET.get('query')
+        filtered = request.GET.get('form_id') == 'filter'
         courses = Course.objects.all().order_by('-id')
+        course_categories = CourseCategory.objects.all().order_by('name')
         if query:
             courses = Course.objects.filter(
                 Q(title__icontains=query) | 
@@ -36,8 +38,27 @@ class CoursesView(View):
                 Q(requirements__icontains=query) | 
                 Q(syllabus__icontains=query)
             ).order_by('-id')
-        context ={
-            'courses': courses
+
+        if filtered:
+            category = request.GET.get('category')
+            start_date = request.GET.get('start_date')
+            end_date = request.GET.get('end_date')
+            if category == 'all':
+                pass # All applications are already filtered
+            else:
+                courses = courses.filter(category__id=category)
+            if start_date:
+                courses = courses.filter(start_date__gte=start_date)
+            if end_date:
+                courses = courses.filter(start_date__lte=end_date)
+
+        context = {
+            'courses': courses,
+            'categories': course_categories,
+            'selected_category': request.GET.get('category') or 'all',
+            'start_date': request.GET.get('start_date') or '',
+            'end_date': request.GET.get('end_date') or '',
+
         }
         return render(request, self.template, context)
     
@@ -102,14 +123,27 @@ class DownloadCoursesView(View):
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
+        filtered_download = request.GET.get('form_id') == 'filter'
+        category = request.GET.get('category')
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
         courses = Course.objects.all().order_by('-id')
+        if filtered_download:
+            if category == 'all':
+                pass
+            else:
+                courses = courses.filter(category__id=category)
+            if start_date:
+                courses = courses.filter(start_date__gte=start_date)
+            if end_date:
+                courses = courses.filter(start_date__lte=end_date)
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="courses.csv"'
         writer = csv.writer(response)
         writer.writerow(['title', 'description', 'details', 'category','cohort', 'start_date', 'end_date', 'price', 'duration', 'class_days', 'class_time', 'location', 'student_capacity', 'requirements', 'syllabus', 'thumbnail', 'created_at']) # noqa
         for course in courses:
             cohort = course.cohort.name if course.cohort else ''
-            writer.writerow([course.title, course.description, course.details, course.category, cohort ,course.start_date, course.end_date, course.price, course.duration, course.class_days, course.class_time, course.location, course.student_capacity, course.requirements, course.syllabus, course.thumbnail, course.created_at]) # noqa
+            writer.writerow([course.title, course.description, course.details, course.category, cohort, course.start_date, course.end_date, course.price, course.duration, course.class_days, course.class_time, course.location, course.student_capacity, course.requirements, course.syllabus, course.thumbnail, course.created_at]) # noqa
         return response
     
 
