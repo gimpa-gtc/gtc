@@ -36,7 +36,68 @@
             </div>
         </div>
         <!-- /Page Header -->
+        
+         <!-- All Invoice -->
+         <div class="card invoices-tabs-card">
+            <div class="invoices-main-tabs">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                        <div class="invoices-tabs">
+                            <ul>
+                                <li><a href="" class="active">Filter Courses</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /All Invoice -->
 
+        <!-- filter section -->
+        <div class="row">
+            <div class="col-sm-12">
+                <form action="" id="myForm" method="GET" style="display: inline;">
+
+                    <input type="hidden" name="form_id" value="filter">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="category">Course Category</label>
+                            <select name="category" id="category" class="form-control">
+                                <option value="all">All</option>
+                                {% for cat in categories %}
+                                <option value="{{cat.id}}" {% if cat.id == selected_category %} selected {% endif %} >{{cat.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+    
+                        <div class="col-3">
+                            <label for="">Start Date</label>
+                            <input type="date" class="form-control" name="start_date">
+                        </div>
+    
+                        <div class="col-3">
+                            <label for="">End Date</label>
+                            <input type="date" class="form-control" name="end_date">
+                        </div>
+
+
+                        <div class="col-1">
+                            <label for="">Filter</label>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="setFormAction('courses')">Filter</button>
+                        </div>
+                        <div class="col-2">
+                            <label for="">Download</label>
+                            <button type="button" class="btn btn-sm btn-outline-primary" onclick="setFormAction('download_courses')">Download</button>
+                        </div>
+
+                    </div>
+                    
+                </form>
+
+            </div>
+        </div>
+
+        <hr/>
 
         <!-- Table -->
         <div class="row">
@@ -175,7 +236,17 @@
                 // Redirect to the delete URL
                 window.location.href = "{% url 'dashboard:delete_course' %}?course_id=" + course_id;
             }
-        }
+        };
+
+        function setFormAction(action) {
+            if (action == 'download_courses') {
+                window.location.href = "{% url 'dashboard:download_courses' %}?"+ $('#myForm').serialize();
+                return;
+            } else if (action == 'courses') {
+                window.location.href = "{% url 'dashboard:courses' %}?"+ $('#myForm').serialize();
+                return;
+            }
+        };
     </script>
     <!-- /Delete Items alert confirmation -->
 </div>
