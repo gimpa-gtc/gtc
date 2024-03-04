@@ -75,8 +75,6 @@
             #print_btn {
               display: none;
             }
-
-            
         }
   </style>
 </head>
@@ -138,14 +136,14 @@
         </span>
       </p>
   
-      <p class="offer">The total cost of the workshop is <b>{% with admission.application.course.price as price %}  {{price|intword}} {% endwith %} (GHC{{admission.application.course.price|intcomma}}) </b>. 
+      <p class="offer">The total cost of the workshop is <b> GHC{{admission.application.course.price|intcomma}} for Ghanaians {% if  admission.application.course.fprice > 0 %} (USD{{admission.application.course.fprice|intcomma}} for Foreign Applicants) {% endif %} </b>. 
         Please notify the Institute of your acceptance and participation in this workshop in writing or by email 
-        as soon as possible (<b>Email</b>:prince@gimpa.edu.gh).</p>
+        as soon as possible (<b>Email</b>:alet@gimpa.edu.gh).</p>
   
-      <p>Your student identification (ID) number is <b>223046736</b> once you accept the offer.</p>
+      <p>Your student identification (ID) number is <b>{{admission.application.application_id}}</b> once you accept the offer.</p>
   
-      <p class="details"><b>Start Date:</b> Monday 27th November, 2023<br>
-      <b>Time:</b> 8:30 am – 4:30 pm<br>
+      <p class="details"><b>Start Date:</b> {{admission.application.course.start_date|date:"l d F Y"}}<br>
+      <b>Time:</b> {{admission.application.course.class_time}}<br>
       <b>Venue:</b> GIMPA Executive Conference Centre (GECC)</p>
   
       <p class="">The Course fee is <b>(US$4,200)</b> which covers tuition, meals, course materials, fieldtrip, recreational trip & accommodation.</p>
