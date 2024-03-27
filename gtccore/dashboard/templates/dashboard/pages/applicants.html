@@ -51,6 +51,8 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th>DoB</th>
+                                        <th>Address</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
@@ -63,6 +65,8 @@
                                         <td>{{applicant.name}}</td>
                                         <td>{{applicant.email}}</td>
                                         <td>{{applicant.phone}}</td>
+                                        <td>{{applicant.dob|date:"Y-m-d"}}</td>
+                                        <td>{{applicant.box_address}}</td>
                                         <td>{{applicant.created_at}}</td>
                                         <td class="d-flex align-items-center">
                                             <div class="dropdown dropdown-action">
