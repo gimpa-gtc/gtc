@@ -8,7 +8,7 @@ class ApplicationForm(forms.ModelForm):
     '''Application form.'''
     class Meta:
         model = Application
-        fields = ['name', 'email', 'phone', 'company', 'certificate']
+        fields = ['name', 'email', 'phone', 'company', 'certificate', 'dob', 'box_address']
 
 
 class FacilitatorForm(forms.ModelForm):
