@@ -113,6 +113,8 @@ class Application(models.Model):
     company = models.CharField(max_length=100, default='None')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True) #noqa
     certificate = models.FileField(upload_to='certificates', null=True, blank=True) #noqa
+    dob = models.DateField(default=timezone.now().date())
+    box_address = models.CharField(max_length=100, default='Accra - Ghana')
     application_status = models.CharField(max_length=20, default='PENDING', choices=APPLICATION_STATUS) #noqa
     payment_mode = models.CharField(max_length=20, default='ONLINE', choices=PAYMENT_MODE) #noqa
     payment_status = models.CharField(max_length=20, default='PENDING', choices=PAYMENT_STATUS) #noqa
@@ -244,6 +246,8 @@ class Applicant(models.Model):
     name = models.CharField(max_length=300)
     email = models.CharField(max_length=50)
     phone = models.CharField(max_length=10)
+    dob = models.DateField(default=timezone.now().date())
+    box_address = models.CharField(max_length=100, default='Accra - Ghana')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
