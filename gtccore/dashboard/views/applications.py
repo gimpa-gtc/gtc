@@ -255,9 +255,9 @@ class DownloadApplicationsView(View):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="applications.csv"'
         writer = csv.writer(response)
-        writer.writerow(['application_id', 'name', 'email', 'phone', 'course', 'category', 'application_status', 'payment_mode', 'payment_status','created_at']) # noqa
+        writer.writerow(['application_id', 'name', 'email', 'phone', 'dob', 'address_box_number', 'course', 'category', 'application_status', 'payment_mode', 'payment_status','created_at']) # noqa
         for application in applications:
-            writer.writerow([application.application_id, application.name, application.email, application.phone, application.course, application.course.category.name, application.application_status, application.payment_mode, application.get_payment_status(), application.created_at]) # noqa
+            writer.writerow([application.application_id, application.name, application.email, application.phone, application.dob, application.box_address, application.course, application.course.category.name, application.application_status, application.payment_mode, application.get_payment_status(), application.created_at]) # noqa
         return response
     
 class DownloadApplicantsView(View):
@@ -269,9 +269,9 @@ class DownloadApplicantsView(View):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="applicants.csv"'
         writer = csv.writer(response)
-        writer.writerow(['name', 'email', 'phone', 'created_at'])
+        writer.writerow(['name', 'email', 'phone', 'dob', 'address_box_number', 'created_at'])
         for applicant in applicants:
-            writer.writerow([applicant.name, applicant.email, applicant.phone, applicant.created_at]) # noqa
+            writer.writerow([applicant.name, applicant.email, applicant.phone, applicant.dob, applicant.box_address, applicant.created_at]) # noqa
         return response
     
 class DownloadAdmissionsView(View):
