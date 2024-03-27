@@ -36,12 +36,8 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label>Course</label>
-                                    <select class="form-control" name="course_id">
-                                        {% for course in courses %}
-                                            <option value="{{course.id}}" {% if course.id == application.course.id %} selected {% endif %}>{{course.title}}</option>
-                                        {% endfor %}
-                                    </select>
+                                    <label>Date of Birth</label>
+                                    <input type="date" class="form-control" value="{{application.dob|date:'Y-m-d'}}" name="dob">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -52,8 +48,35 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
+                                    <label>Address or Box No.</label>
+                                    <input type="text" class="form-control" value="{{application.box_address}}" placeholder="Enter Address" name="box_address">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Course</label>
+                                    <select class="form-control" name="course_id">
+                                        {% for course in courses %}
+                                            <option value="{{course.id}}" {% if course.id == application.course.id %} selected {% endif %}>{{course.title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Date Applied</label>
+                                    <input type="text" class="form-control" value="{{application.created_at|date:'Y-m-d H:i:s'}}" readonly>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
                                     <label>Certificate</label>
                                     <input type="file" class="form-control" name="certificate" accept="image/*" onchange="displayImagePreview(this)" {% if application.course.requires_certificate and not application.certificate %} required {% endif %}>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
                                     <img id="image-preview" src="{% if application.certificate %} {{application.certificate.url}} {% endif %} " alt="Certificate Preview" style="max-width: 100%; max-height: 150px; margin-top: 10px;" >
                                 </div>
                             </div>
