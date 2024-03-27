@@ -127,6 +127,11 @@ def send_sms(sender: str, message: str, recipients: array.array):
         "message": message,
         "recipients": recipients
     } 
-    response = requests.post(SEND_SMS_URL, headers=header, json=payload)
-    print(response.json())
-    return response.json()
+    try:
+        response = requests.post(SEND_SMS_URL, headers=header, json=payload)
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
+    else:
+        print(response.json())
+        return response.json()
