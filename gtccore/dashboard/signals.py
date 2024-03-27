@@ -24,7 +24,9 @@ def extract_applicant(sender, instance, created, **kwargs):
             Applicant.objects.create(
                 email=instance.email,
                 phone=instance.phone,
-                name=instance.name
+                name=instance.name,
+                dob=instance.dob,
+                box_address=instance.box_address,
             )
         except Exception as er:
             print(f"Error: {er}")
