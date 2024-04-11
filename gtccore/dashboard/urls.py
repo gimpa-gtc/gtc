@@ -30,7 +30,6 @@ urlpatterns += [
     path('give-admission/', views.GiveAdmissionView.as_view(), name='give_admission'), #noqa
     path('admit-one-student/', views.AdmitOneStudentView.as_view(), name='admit_one_student'), #noqa
     path('applicants/', views.ApplicantsView.as_view(), name='applicants'),
-    # path('delete-application/', views.DeleteApplicationView.as_view(), name='delete_application'), #noqa
     path('delete-applicant/', views.DeleteApplicantView.as_view(), name='delete_applicant'), #noqa
 
 ]
@@ -77,9 +76,11 @@ urlpatterns += [
     path('download-course-requests/', views.DownloadCourseRequestsView.as_view(), name='download_course_requests'), #noqa
     path('course-requests/', views.CourseRequestsView.as_view(), name='course_requests'), #noqa
     path('course-requests/reply/', views.ReplyCourseRequestView.as_view(), name='reply_course_request'), #noqa
+    path('delete-request/', views.DeleteCourseRequestView.as_view(), name='delete_request'), #noqa
     path('notifications/', views.NotificationsView.as_view(), name='notifications'), #noqa
     path('create-update-notification/', views.CreateUpdateNotificationView.as_view(), name='create_update_notification'), #noqa
     path('broadcast-notification/', views.BroadcastNotificationView.as_view(), name='broadcast'), #noqa
+    path('delete-notification/', views.DeleteNotificationView.as_view(), name='delete_notification'), #noqa
 ]
 
 #Content Management

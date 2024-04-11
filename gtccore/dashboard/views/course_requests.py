@@ -66,3 +66,18 @@ class DownloadCourseRequestsView(View):
         for message in messages:
             writer.writerow([message.name, message.email, message.phone, message.message, message.created_at])
         return response
+    
+
+class DeleteCourseRequestView(View):
+    '''Delete contact message view'''
+
+    @method_decorator(StaffLoginRequired)
+    def get(self, request):
+        request_id = request.GET.get('request_id')
+        custom_request = CustomCourseRequest.objects.filter(id=request_id).first()
+        if custom_request:
+            custom_request.delete()
+            messages.success(request, 'Course Request Deleted Successfully.')
+            return redirect('dashboard:course_requests')
+        messages.error(request, 'Course Request Not Found.')
+        return redirect('dashboard:course_requests')

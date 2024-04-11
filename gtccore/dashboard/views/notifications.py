@@ -108,3 +108,18 @@ class DownloadNotificationView(View):
         for notification in notifications:
             writer.writerow([notification.title, notification.content, notification.created_at])
         return response
+    
+
+class DeleteNotificationView(View):
+    '''Delete notification'''
+
+    @method_decorator(StaffLoginRequired)
+    def get(self, request):
+        notification_id = request.GET.get('notification_id')
+        notification = Notification.objects.filter(id=notification_id).first()
+        if notification:
+            notification.delete()
+            messages.success(request, 'Notification Deleted Successfully.')
+            return redirect('dashboard:notifications')
+        messages.error(request, 'Notification Not Found.')
+        return redirect('dashboard:notifications')
