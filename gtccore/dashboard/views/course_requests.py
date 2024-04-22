@@ -1,4 +1,5 @@
 import csv
+from django.utils import timezone
 
 from django.contrib import messages
 from django.db.models import Q
@@ -50,6 +51,12 @@ class ReplyCourseRequestView(View):
             messages.error(request, 'Invalid Request.')
             return redirect('dashboard:course_requests')
         custom_request.reply_message(f"{title}\n\n{message}")
+        # update custom course request
+        custom_request.is_replied = True
+        custom_request.replied_message = f"{title}\n\n{message}"
+        custom_request.replied_by = request.user
+        custom_request.replied_at = timezone.now()
+        custom_request.save()
         messages.success(request, 'Message Replied Successfully.')
         return redirect('dashboard:course_requests')
     
