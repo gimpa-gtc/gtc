@@ -1,4 +1,5 @@
 import csv
+from django.utils import timezone
 
 from django.contrib import messages
 from django.db.models import Q
@@ -50,8 +51,17 @@ class ReplyMessageView(View):
             return redirect('dashboard:contact_messages')
         reply_title = request.POST.get('reply_title')
         reply_message = request.POST.get('reply_message')
-        message.reply_message(f"{reply_title}\n\n{reply_message}")
-        messages.success(request, 'Message Replied Successfully.')
+        success = message.reply_message(f"{reply_title}\n\n{reply_message}", mtype='sms')
+        if success:
+            # update message
+            message.is_replied = True
+            message.replied_message = f"{reply_title}\n\n{reply_message}"
+            message.replied_by = request.user
+            message.replied_at = timezone.now()
+            message.save()
+            messages.success(request, 'Message Replied Successfully.')
+        else:
+            messages.error(request, 'Failed to Reply Message.')
         return redirect('dashboard:contact_messages')
     
 class DownloadContactMessagesView(View):
