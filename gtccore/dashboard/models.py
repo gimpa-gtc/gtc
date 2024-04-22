@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 
+from accounts.models import User
 from gtccore.library.constants import (ApplicationStatus, PaymentMode,  # noqa
                                        PaymentStatus)
 from gtccore.library.services import send_sms
@@ -317,11 +318,24 @@ class Contact(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     message = models.TextField()
+    is_replied = models.BooleanField(default=False)
+    replied_message = models.TextField(default='')
+    replied_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE) #noqa
+    replied_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def reply_message(self, msg: str):
+    def reply_message(self, msg: str, mtype: str = 'sms') -> bool:
         '''Replies the message'''
-        subject = 'GTC - Contact Message'
+        if mtype.lower() == 'sms':
+            print('Sending sms to contact...')
+            try:
+                res = send_sms(sender=SENDER_ID, message=msg, recipients=[self.phone])
+                print(f"RESPONSE: {res}")
+            except Exception as e:
+                print(f'Error: {e}')
+                return False
+            return res['status'] == 'success'
+        subject = 'GTC Support'
         from_email = None
         receipients = [self.email]
         template = "dashboard/notifications/contact-reply.html"
@@ -348,6 +362,10 @@ class CustomCourseRequest(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     message = models.TextField()
+    is_replied = models.BooleanField(default=False)
+    replied_message = models.TextField(default='')
+    replied_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE) #noqa
+    replied_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def reply_message(self, msg: str):
