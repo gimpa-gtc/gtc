@@ -36,7 +36,7 @@ class CourseCategoryForm(forms.ModelForm):
     '''Course category form.'''
     class Meta:
         model = CourseCategory
-        fields = ['name']
+        fields = ['name', 'coordinator_email', 'coordinator_phone']
 
 class NotificationForm(forms.ModelForm):
     '''Notification form.'''
