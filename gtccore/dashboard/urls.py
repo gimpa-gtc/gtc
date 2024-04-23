@@ -25,7 +25,7 @@ urlpatterns += [
 # applications
 urlpatterns += [
     path('applications/', views.ApplicationsView.as_view(), name='applications'),
-    path('create-update-application/', views.CreateUpdateApplicationView.as_view(), name='create_update_application'), #noqa
+    path('create-application/', views.CreateApplicationView.as_view(), name='create_application'), #noqa
     path('admissions/', views.AdmissionsView.as_view(), name='admissions'),
     path('give-admission/', views.GiveAdmissionView.as_view(), name='give_admission'), #noqa
     path('admit-one-student/', views.AdmitOneStudentView.as_view(), name='admit_one_student'), #noqa
