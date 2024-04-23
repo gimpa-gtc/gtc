@@ -1,10 +1,12 @@
-from django.shortcuts import render
-from django.views import View
-from django.utils.decorators import method_decorator
-from dashboard.models import Application, Applicant, Payment, Admission, Course, CourseCategory
 from django.db.models import Sum
+from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views import View
 
+from dashboard.models import (Admission, Applicant, Application, Course,
+                              CourseCategory, Payment)
 from gtccore.library.decorators import StaffLoginRequired
+
 
 class DashboardView(View):
     template = 'dashboard/pages/dashboard.html'
