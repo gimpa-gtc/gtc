@@ -1,5 +1,5 @@
 import csv
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -13,8 +13,9 @@ from gtccore.library.decorators import StaffLoginRequired
 from gtccore.library.logs import log_user_activity
 
 
-class PaymentsView(View):
+class PaymentsView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/payments.html'
+    permission_required = ['dashboard.view_payment']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -33,9 +34,10 @@ class PaymentsView(View):
         return render(request, self.template, context)
 
 
-class CreatePaymentView(View):
+class CreatePaymentView(PermissionRequiredMixin, View):
     '''Create payment'''
     template = 'dashboard/pages/create-payment.html'
+    permission_required = ['dashboard.add_payment']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -67,8 +69,10 @@ class CreatePaymentView(View):
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             
 
-class ApproveDisapprovePaymentView(View):
+class ApproveDisapprovePaymentView(PermissionRequiredMixin, View):
     '''Approve or disapprove payment'''
+    permission_required = ['dashboard.change_payment']
+
     @method_decorator(StaffLoginRequired)
     def get(self, request):
         payment_id = request.GET.get('payment_id')
@@ -100,8 +104,9 @@ class ApproveDisapprovePaymentView(View):
 
    
 
-class DownloadPaymentsView(View):
+class DownloadPaymentsView(PermissionRequiredMixin, View):
     '''Download payments as csv'''
+    permission_required = ['dashboard.view_payment']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
