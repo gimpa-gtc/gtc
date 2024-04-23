@@ -18,6 +18,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    failed_login_attempt = models.IntegerField(default=0)
 
     objects = AccountManager()
 
