@@ -60,34 +60,35 @@ class ApplicationsView(View):
         return render(request, self.template, context)
 
 
-class CreateUpdateApplicationView(View):
-    '''Create or update application view'''
-    template = 'dashboard/pages/create-update-application.html'
+class CreateApplicationView(View):
+    '''Create application view'''
+    template = 'dashboard/pages/create-application.html'
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
         courses = Course.objects.all().order_by('title')
-        application_id = request.GET.get('application_id')
-        application = Application.objects.filter(application_id=application_id).first() # noqa
+        # application_id = request.GET.get('application_id')
+        # application = Application.objects.filter(application_id=application_id).first() # noqa
         context = {
             'courses': courses,
-            'application': application,
+            # 'application': application,
         }
         return render(request, self.template, context)
     
 
     @method_decorator(StaffLoginRequired)
     def post(self, request):
-        application_id = request.POST.get('application_id')
+        # application_id = request.POST.get('application_id')
         course_id = request.POST.get('course_id')
         course = Course.objects.filter(id=course_id).first()
-        application = Application.objects.filter(application_id=application_id).first() # noqa
+        # application = Application.objects.filter(application_id=application_id).first() # noqa
 
         if not course:
             messages.error(request, 'Invalid Course')
             return redirect('dashboard:create_update_application')
         
-        form = ApplicationForm(request.POST, request.FILES, instance=application)
+        # form = ApplicationForm(request.POST, request.FILES, instance=application)
+        form = ApplicationForm(request.POST, request.FILES)
         if not form.is_valid():
             for k, v in form.errors.items():
                 messages.error(request, f"{k}: {v}")
@@ -95,14 +96,14 @@ class CreateUpdateApplicationView(View):
         new_application = form.save(commit=False)
         new_application.course = course                
         new_application.save()
-        if application:
+        # if application:
+        #     # log user activity
+        #     log_user_activity(request.user, 'Updated application', application, new_application) # noqa
+        #     messages.success(request, 'Application Updated Successfully')
+        # else:
             # log user activity
-            log_user_activity(request.user, 'Updated application', application, new_application) # noqa
-            messages.success(request, 'Application Updated Successfully')
-        else:
-            # log user activity
-            log_user_activity(request.user, 'Created application', None, new_application) # noqa
-            messages.success(request, 'Application Created Successfully')
+        log_user_activity(request.user, 'Created application', None, new_application) # noqa
+        messages.success(request, 'Application Created Successfully')
         return redirect('dashboard:applications')
     
 
