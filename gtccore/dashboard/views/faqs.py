@@ -1,5 +1,5 @@
 import csv
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse
@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from dashboard.models import Faq
 from gtccore.library.decorators import StaffLoginRequired
 
-class FAQsView(View):
+class FAQsView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/faqs.html'
 
     @method_decorator(StaffLoginRequired)
@@ -28,8 +28,12 @@ class FAQsView(View):
         }
         return render(request, self.template, context)
     
-class CreateUpdateFAQView(View):
+class CreateUpdateFAQView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/create-update-faq.html'
+    permission_required = [
+        'dashboard.add_faq',
+        'dashboard.change_faq'
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -48,7 +52,7 @@ class CreateUpdateFAQView(View):
         answer = request.POST.get('answer')
         faq_id = request.POST.get('faq_id')
         if faq_id:
-            faq = Faq.objects.get(pk=faq_id)
+            faq = Faq.objects.filter(pk=faq_id).first()
             faq.question = question
             faq.answer = answer
             faq.save()
@@ -61,8 +65,9 @@ class CreateUpdateFAQView(View):
             messages.success(request, 'FAQ created successfully')
         return redirect(reverse('dashboard:faqs'))
     
-class DeleteFAQView(View):
+class DeleteFAQView(PermissionRequiredMixin, View):
     '''Delete FAQ view'''
+    permission_required = ['dashboard.delete_faq']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
