@@ -51,9 +51,8 @@
                                         <th>Name</th>
                                         <th># Courses</th>
                                         <th># Applications</th>
-                                        <th># Admissions</th>
-                                        <th># Inactive Courses</th>
-                                        <th># Active Courses</th>
+                                        <th>Coordinator's Email</th>
+                                        <th>Coordinator's Phone</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
@@ -66,9 +65,8 @@
                                         <td>{{category.name}}</td>
                                         <td>{{category.get_total_courses}}</td>
                                         <td>{{category.get_total_applications}}</td>
-                                        <td>{{category.get_total_admissions}}</td>
-                                        <td>{{category.get_inactive_courses}}</td>
-                                        <td>{{category.get_active_courses}}</td>
+                                        <td>{{category.coordinator_email}}</td>
+                                        <td>{{category.coordinator_phone}}</td>
                                         <td>{{category.created_at}}</td>
                                         <td class="d-flex align-items-center">
                                             <div class="dropdown dropdown-action">
