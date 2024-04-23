@@ -1,12 +1,14 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views import View
 from django.utils.decorators import method_decorator
+from django.views import View
+
 from dashboard.models import Testimonial
 from gtccore.library.decorators import StaffLoginRequired
+
 
 class TestimonialsView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/testimonials.html'
