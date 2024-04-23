@@ -50,14 +50,18 @@ class ReplyCourseRequestView(View):
         if not custom_request:
             messages.error(request, 'Invalid Request.')
             return redirect('dashboard:course_requests')
-        custom_request.reply_message(f"{title}\n\n{message}")
+        success = custom_request.reply_message(f"{title}\n\n{message}", mtype='sms')
+        
         # update custom course request
-        custom_request.is_replied = True
-        custom_request.replied_message = f"{title}\n\n{message}"
-        custom_request.replied_by = request.user
-        custom_request.replied_at = timezone.now()
-        custom_request.save()
-        messages.success(request, 'Message Replied Successfully.')
+        if success:
+            custom_request.is_replied = True
+            custom_request.replied_message = f"{title}\n\n{message}"
+            custom_request.replied_by = request.user
+            custom_request.replied_at = timezone.now()
+            custom_request.save()
+            messages.success(request, 'Message Replied Successfully.')
+        else:
+            messages.error(request, 'Failed to reply message.')
         return redirect('dashboard:course_requests')
     
 class DownloadCourseRequestsView(View):
