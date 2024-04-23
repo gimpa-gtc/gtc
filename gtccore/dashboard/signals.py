@@ -1,12 +1,13 @@
 import random
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from accounts.models import User
 
+from accounts.models import User
 from gtccore.library.services import send_mail, send_sms
 from gtccore.settings import SENDER_ID
 
-from .models import (Admission, Applicant, Application, CustomCourseRequest)
+from .models import Admission, Applicant, Application, CustomCourseRequest
 
 
 @receiver(post_save, sender=Application)
