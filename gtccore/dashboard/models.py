@@ -264,6 +264,7 @@ class Notification(models.Model):
     title = models.CharField(max_length=400)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    is_broadcasted = models.BooleanField(default=False)
 
     def broadcast(self, btype='sms'):
         '''Broadcasts the notification to all applicants'''
@@ -371,9 +372,18 @@ class CustomCourseRequest(models.Model):
     replied_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def reply_message(self, msg: str):
+    def reply_message(self, msg: str, mtype: str = 'sms') -> bool:
         '''Replies the message'''
-        subject = 'GTC - Course Request'
+        if mtype.lower() == 'sms':
+            print('Sending sms to contact...')
+            try:
+                res = send_sms(sender=SENDER_ID, message=msg, recipients=[self.phone])
+                print(f"RESPONSE: {res}")
+            except Exception as e:
+                print(f'Error: {e}')
+                return False
+            return res['status'] == 'success'
+        subject = 'GTC Support'
         from_email = None
         receipients = [self.email]
         template = "dashboard/notifications/contact-reply.html"
