@@ -1,9 +1,9 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
-from django.views import View
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
+from django.views import View
 
 from gtccore.library.decorators import StaffLoginRequired
 
