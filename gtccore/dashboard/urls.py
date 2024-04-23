@@ -16,9 +16,13 @@ urlpatterns = [
 # users
 urlpatterns += [
     path('users/', views.UsersView.as_view(), name='users'),
+    path('user-details/', views.UserDetailsView.as_view(), name='user_details'),
     path('create-update-user/', views.CreateUpdateUser.as_view(), name='create_update_user'), #noqa
     path('update-user-pic/', views.UpdateUserProfilePicView.as_view(), name='update_profile_pic'), #noqa
     path('download-users/', views.DownloadUsersView.as_view(), name='download_users'), #noqa
+
+    path('add-user-to-group/', views.AddUserToGroupsView.as_view(), name='add_user_to_group'), #noqa
+    path('add-perm-to-user/', views.AddPermsToUserView.as_view(), name='add_perm_to_user'), #noqa
 ]
 
 
@@ -105,4 +109,12 @@ urlpatterns += [
     path('add-images/', views.AddImages.as_view(), name='add_images'), #noqa
     path('delete-image/', views.DeleteImageView.as_view(), name='delete_image'), #noqa
     path('delete-image-category/', views.DeleteImageCategoryView.as_view(), name='delete_img_cat'), #noqa
+]
+
+# groups and permissions
+urlpatterns += [
+    path('groups/', views.GroupsView.as_view(), name='groups'), #noqa
+    path('create-update-group/', views.CreateUpdateGroupView.as_view(), name='create_update_group'), #noqa
+    path('update-group-perm/', views.UpdatePermissionsToGroupView.as_view(), name='update_group_perm'), #noqa
+    path('delete-group/', views.DeleteGroupView.as_view(), name='delete_group'), #noqa
 ]
