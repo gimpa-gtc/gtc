@@ -1,8 +1,8 @@
 import csv
-
+from django.contrib.auth.models import Group, Permission
 from django.contrib import messages
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
@@ -89,6 +89,30 @@ class CreateUpdateUser(View):
         return redirect(redirect_url)
 
 
+class UserDetailsView(View):
+    '''CBV for user details'''
+    template = 'dashboard/pages/user_details.html'
+
+    @method_decorator(StaffLoginRequired)
+    def get(self, request):
+        user_id = request.GET.get('user_id')
+        user = User.objects.filter(id=user_id).first()
+        groups = Group.objects.all().order_by('name')
+        if user:
+            permissions = Permission.objects.all().order_by('name')
+            saved_permissions = user.user_permissions.all()
+            saved_groups = user.groups.all()
+            context = {
+                'user': user,
+                'groups': groups,
+                'permissions': permissions,
+                'saved_permissions': saved_permissions,
+                'saved_groups': saved_groups,
+            }
+        return render(request, self.template, context)
+
+
+
 class UpdateUserProfilePicView(View):
     '''Update user profile picture'''
 
@@ -109,6 +133,88 @@ class UpdateUserProfilePicView(View):
         else:
             messages.error(request, 'User Not Found')
             return redirect('dashboard:users')
+
+
+
+class AddUserToGroupsView(View):
+    '''CBV for adding user to groups'''
+    template = 'dashboard/pages/user_details.html'
+
+    @method_decorator(StaffLoginRequired)
+    def get(self, request):
+        user_id = request.GET.get('user_id') or None
+        user = User.objects.filter(id=user_id).first()
+        groups = Group.objects.all().order_by('name')
+        if user:
+            permissions = Permission.objects.all().order_by('name')
+            saved_permissions = user.user_permissions.all()
+            saved_groups = user.groups.all()
+            context = {
+                'user': user,
+                'permissions': permissions,
+                'saved_groups': saved_groups,
+                'groups': groups,
+                'saved_permissions': saved_permissions,
+            }
+            return render(request, self.template, context)  # noqa
+        messages.info(request, 'User Does Not Exist')
+        return redirect('dashboard:users')
+
+    @method_decorator(StaffLoginRequired)
+    def post(self, request):
+        user_id = request.POST.get('user_id') or None
+        user = User.objects.filter(id=user_id).first()
+        user_groups = request.POST.getlist('groups')
+        if user:
+            user.groups.clear()
+            for group in user_groups:
+                item = Group.objects.filter(id=group).first()
+                user.groups.add(item)
+            user.save()
+            messages.success(request, 'User Groups Updated Successfully')  # noqa
+        else:
+            messages.info(request, 'User Does Not Exist')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class AddPermsToUserView(View):
+    '''CBV for assigning permissions to user'''
+
+    @method_decorator(StaffLoginRequired)
+    def get(self, request):
+        user_id = request.GET.get('user_id') or None
+        user = User.objects.filter(id=user_id).first()
+        groups = Group.objects.all().order_by('name')
+        if user:
+            permissions = Permission.objects.all().order_by('name')
+            saved_permissions = user.user_permissions.all()
+            saved_groups = user.groups.all()
+            context = {
+                'user': user,
+                'permissions': permissions,
+                'saved_groups': saved_groups,
+                'groups': groups,
+                'saved_permissions': saved_permissions,
+            }
+            return render(request, self.template, context)  # noqa
+        messages.info(request, 'User Does Not Exist')
+        return redirect('dashboard:users')
+
+    @method_decorator(StaffLoginRequired)
+    def post(self, request):
+        user_id = request.POST.get('user_id') or None
+        user = User.objects.filter(id=user_id).first()
+        user_permissions = request.POST.getlist('permissions')
+        if user:
+            user.user_permissions.clear()
+            for permission in user_permissions:
+                item = Permission.objects.filter(id=permission).first()
+                user.user_permissions.add(item)
+            user.save()
+            messages.success(request, 'User Permissions Updated Successfully')  # noqa
+        else:
+            messages.info(request, 'User Does Not Exist')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class DownloadUsersView(View):
