@@ -27,6 +27,12 @@
                                     <textarea class="form-control" name="content" cols="30" rows="5" placeholder="Notification content" readonly>{{notification.content}}</textarea>
                                 </div>
                             </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Total Recipients(Old Applicants)</label>
+                                    <input class="form-control" type="number" value="{{applicants}}" readonly>
+                                </div>
+                            </div>
                         </div>
                         </form>
                         <div class=""><a href="{% url 'dashboard:create_update_notification' %}?notification_id={{notification.id}}">Edit Notification</a></div>
