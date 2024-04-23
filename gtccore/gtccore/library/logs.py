@@ -1,5 +1,7 @@
 from django.forms.models import model_to_dict
+
 from accounts.models import User, UserLog
+
 
 def log_user_activity(user: User, action: str, pre_object = None, post_object = None):
     """Log user activity."""
