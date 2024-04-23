@@ -16,6 +16,8 @@ from gtccore.settings import SENDER_ID
 class CourseCategory(models.Model):
     '''Course category model'''
     name = models.CharField(max_length=100)
+    coordinator_email = models.EmailField(default="trainingandconsulting@gimpa.edu.gh")
+    coordinator_phone = models.CharField(max_length=13, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -57,6 +59,7 @@ class Course(models.Model):
     end_date = models.DateField()
     price = models.IntegerField(default=0)
     fprice = models.IntegerField(default=0) #for foreign students | given in USD
+    residential_fees = models.IntegerField(default=0) #for Ghanaian students | given in GHC
     duration = models.CharField(max_length=100, default='1 MONTH')
     class_days = models.CharField(max_length=100, default='')
     class_time = models.TimeField()
