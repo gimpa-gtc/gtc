@@ -1,6 +1,6 @@
 import csv
 from django.utils import timezone
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse
@@ -11,9 +11,10 @@ from django.utils.decorators import method_decorator
 from dashboard.models import Contact
 from gtccore.library.decorators import StaffLoginRequired
 
-class ContactMessagesView(View):
+class ContactMessagesView(PermissionRequiredMixin, View):
     '''Contact messages view'''
     template = 'dashboard/pages/contact_messages.html'
+    permission_required = ['dashboard.view_contact']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -29,9 +30,10 @@ class ContactMessagesView(View):
         }
         return render(request, self.template, context)
 
-class ReplyMessageView(View):
+class ReplyMessageView(PermissionRequiredMixin, View):
     '''Reply message view'''
     template = 'dashboard/pages/reply_message.html'
+    permission_required = ['dashboard.view_contact']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -64,8 +66,9 @@ class ReplyMessageView(View):
             messages.error(request, 'Failed to Reply Message.')
         return redirect('dashboard:contact_messages')
     
-class DownloadContactMessagesView(View):
+class DownloadContactMessagesView(PermissionRequiredMixin, View):
     '''Download contact messages view'''
+    permission_required = ['dashboard.view_contact']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
