@@ -15,6 +15,7 @@ from gtccore.library.decorators import StaffLoginRequired
 
 class FAQsView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/faqs.html'
+    permission_required = ['dashboard.view_faq']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
