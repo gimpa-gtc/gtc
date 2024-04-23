@@ -49,6 +49,7 @@
                                         <th>#</th>
                                         <th>Title</th>
                                         <th>Content</th>
+                                        <th>Broadcasted?</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
@@ -60,6 +61,7 @@
                                         <td>{{forloop.counter}}</td>
                                         <td>{{noti.title}}</td>
                                         <td>{{noti.content|truncatewords:10}}</td>
+                                        <td>{% if noti.is_broadcasted %} <span class="badge bg-primary">YES</span> {% else %} <span class="badge bg-secondary">NO</span> {% endif %}</td>
                                         <td>{{noti.created_at}}</td>
                                         <td class="d-flex align-items-center">
                                             <div class="dropdown dropdown-action">
