@@ -7,13 +7,14 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 from django.utils.decorators import method_decorator
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from accounts.models import User
 from gtccore.library.decorators import StaffLoginRequired
 
 
-class UsersView(View):
+class UsersView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/users.html'
+    permission_required = ['accounts.view_user']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -31,9 +32,13 @@ class UsersView(View):
         return render(request, self.template, context)
     
 
-class CreateUpdateUser(View):
+class CreateUpdateUser(PermissionRequiredMixin, View):
     '''Create or update user'''
     template = 'dashboard/pages/create-update-user.html'
+    permission_required = [
+        'accounts.add_user',
+        'accounts.change_user'
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -89,9 +94,10 @@ class CreateUpdateUser(View):
         return redirect(redirect_url)
 
 
-class UserDetailsView(View):
+class UserDetailsView(PermissionRequiredMixin, View):
     '''CBV for user details'''
     template = 'dashboard/pages/user_details.html'
+    permission_required = ['accounts.view_user']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -113,8 +119,9 @@ class UserDetailsView(View):
 
 
 
-class UpdateUserProfilePicView(View):
+class UpdateUserProfilePicView(PermissionRequiredMixin, View):
     '''Update user profile picture'''
+    permission_required = ['accounts.change_user']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -136,9 +143,10 @@ class UpdateUserProfilePicView(View):
 
 
 
-class AddUserToGroupsView(View):
+class AddUserToGroupsView(PermissionRequiredMixin, View):
     '''CBV for adding user to groups'''
     template = 'dashboard/pages/user_details.html'
+    permission_required = ['accounts.change_user']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -177,8 +185,10 @@ class AddUserToGroupsView(View):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-class AddPermsToUserView(View):
+class AddPermsToUserView(PermissionRequiredMixin, View):
     '''CBV for assigning permissions to user'''
+    template = 'dashboard/pages/user_details.html'
+    permission_required = ['accounts.change_user']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -217,8 +227,9 @@ class AddPermsToUserView(View):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-class DownloadUsersView(View):
+class DownloadUsersView(PermissionRequiredMixin, View):
     '''Download users as csv'''
+    permission_required = ['accounts.view_user']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
