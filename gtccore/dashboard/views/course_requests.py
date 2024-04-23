@@ -1,6 +1,6 @@
 import csv
 from django.utils import timezone
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse
@@ -11,9 +11,10 @@ from django.utils.decorators import method_decorator
 from dashboard.models import CustomCourseRequest
 from gtccore.library.decorators import StaffLoginRequired
 
-class CourseRequestsView(View):
+class CourseRequestsView(PermissionRequiredMixin, View):
     '''Contact messages view'''
     template = 'dashboard/pages/course_requests.html'
+    permission_required = ['dashboard.view_customcourserequest']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -28,9 +29,10 @@ class CourseRequestsView(View):
         }
         return render(request, self.template, context)
 
-class ReplyCourseRequestView(View):
+class ReplyCourseRequestView(PermissionRequiredMixin, View):
     '''Reply message view'''
     template = 'dashboard/pages/reply_course_request.html'
+    permission_required = ['dashboard.view_customcourserequest']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -64,8 +66,9 @@ class ReplyCourseRequestView(View):
             messages.error(request, 'Failed to reply message.')
         return redirect('dashboard:course_requests')
     
-class DownloadCourseRequestsView(View):
+class DownloadCourseRequestsView(PermissionRequiredMixin, View):
     '''Download contact messages view'''
+    permission_required = ['dashboard.view_customcourserequest']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -79,8 +82,9 @@ class DownloadCourseRequestsView(View):
         return response
     
 
-class DeleteCourseRequestView(View):
+class DeleteCourseRequestView(PermissionRequiredMixin, View):
     '''Delete contact message view'''
+    permission_required = ['dashboard.delete_customcourserequest']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
