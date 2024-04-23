@@ -8,7 +8,7 @@ from django.views import View
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.utils.decorators import method_decorator
 
-from dashboard.models import Notification
+from dashboard.models import Applicant, Notification
 from dashboard.forms import NotificationForm
 from gtccore.library.decorators import StaffLoginRequired
 
@@ -74,8 +74,10 @@ class BroadcastNotificationView(View):
     def get(self, request):
         notification_id = request.GET.get('notification_id')
         notification = Notification.objects.filter(id=notification_id).first()
+        applicants = Applicant.objects.count()
         context = {
-            'notification': notification
+            'notification': notification,
+            'applicants': applicants
         }
         return render(request, self.template, context)
 
