@@ -1,4 +1,4 @@
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import redirect, render
@@ -8,8 +8,9 @@ from django.utils.decorators import method_decorator
 from dashboard.models import Testimonial
 from gtccore.library.decorators import StaffLoginRequired
 
-class TestimonialsView(View):
+class TestimonialsView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/testimonials.html'
+    permission_required = ['dashboard.view_testimonial']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -26,8 +27,12 @@ class TestimonialsView(View):
         }
         return render(request, self.template, context)
 
-class CreateUpdateTestimonialView(View):
+class CreateUpdateTestimonialView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/create-update-testimonial.html'
+    permission_required = [
+        'dashboard.add_testimonial',
+        'dashboard.change_testimonial'
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -66,8 +71,9 @@ class CreateUpdateTestimonialView(View):
             messages.success(request, 'Testimonial created successfully')
         return redirect(reverse('dashboard:testimonials'))
     
-class DeleteTestimonialView(View):
+class DeleteTestimonialView(PermissionRequiredMixin, View):
     '''Delete testimonial view'''
+    permission_required = ['dashboard.delete_testimonial']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
