@@ -52,6 +52,10 @@ class CreateUpdateUser(View):
         phone = request.POST.get('phone')
         role = request.POST.get('role')
         status = request.POST.get('status')
+        # check if email contains the gimpa domain 'gimpa.edu.gh'
+        if email and 'gimpa.edu.gh' not in email:
+            messages.error(request, 'Email must contain gimpa.edu.gh')
+            return redirect('dashboard:create_update_user')
         try:
             user_id = int(user_id)
         except:
