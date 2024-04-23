@@ -29,7 +29,7 @@
                         </li>
                       
                         <li>
-                            <a class="btn btn-primary" href="{% url 'dashboard:create_update_application' %}"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New Application</a>
+                            <a class="btn btn-primary" href="{% url 'dashboard:create_application' %}"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New Application</a>
                         </li>
                     </ul>
                 </div>
@@ -145,10 +145,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <ul>
                                                         <li>
-                                                            <a class="dropdown-item" href="{% url 'dashboard:create_update_application' %}?application_id={{application.application_id}}"><i class="far fa-edit me-2"></i>Edit</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="{% url 'dashboard:admit_one_student' %}?application_id={{application.application_id}}"><i class="far fa-square-check me-2"></i>Admit</a>
+                                                            <a class="dropdown-item" href="{% url 'dashboard:admit_one_student' %}?application_id={{application.application_id}}"><i class="far fa-square-check me-2"></i>View/Admit</a>
                                                         </li>
                                                     </ul>
                                                 </div>
