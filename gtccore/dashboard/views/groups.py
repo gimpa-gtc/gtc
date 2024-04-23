@@ -1,11 +1,12 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import Group, Permission
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.contrib.auth.mixins import PermissionRequiredMixin
+
 from gtccore.library.decorators import StaffLoginRequired
 
 
