@@ -1,7 +1,8 @@
 from django import forms
 
 from dashboard.models import (Application, Cohort, Contact, Course,
-                              CourseCategory, CustomCourseRequest, Facilitator, ImageCategory, Notification, Payment)
+                              CourseCategory, CustomCourseRequest, Facilitator,
+                              ImageCategory, Notification, Payment)
 
 
 class ApplicationForm(forms.ModelForm):
