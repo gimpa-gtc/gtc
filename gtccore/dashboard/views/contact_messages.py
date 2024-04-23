@@ -1,15 +1,17 @@
 import csv
-from django.utils import timezone
-from django.contrib.auth.mixins import PermissionRequiredMixin
+
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.views import View
+from django.utils import timezone
 from django.utils.decorators import method_decorator
+from django.views import View
 
 from dashboard.models import Contact
 from gtccore.library.decorators import StaffLoginRequired
+
 
 class ContactMessagesView(PermissionRequiredMixin, View):
     '''Contact messages view'''
