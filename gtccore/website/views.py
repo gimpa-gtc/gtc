@@ -9,7 +9,6 @@ from dashboard.forms import ApplicationForm, ContactUsForm, CustomCourseReguestF
 from dashboard.models import (Admission, Application, Comment, Course, CourseCategory,
                               Facilitator, Faq, Image, ImageCategory, Testimonial)
 from gtccore.library.constants import PaymentStatus
-from gtccore.library.services import generate_admission_letter
 
 
 class HomeView(View):
