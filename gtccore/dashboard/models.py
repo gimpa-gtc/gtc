@@ -1,10 +1,10 @@
 import random
 import string
 
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.db import models
-from django.utils import timezone
-from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.utils import timezone
 
 from accounts.models import User
 from gtccore.library.constants import (ApplicationStatus, PaymentMode,  # noqa
