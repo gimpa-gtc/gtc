@@ -1,16 +1,18 @@
 import csv
-from django.contrib.auth.mixins import PermissionRequiredMixin
+
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.views import View
-from django.core.mail import send_mail, EmailMultiAlternatives
 from django.utils.decorators import method_decorator
+from django.views import View
 
-from dashboard.models import Applicant, Notification
 from dashboard.forms import NotificationForm
+from dashboard.models import Applicant, Notification
 from gtccore.library.decorators import StaffLoginRequired
+
 
 class NotificationsView(View):
     '''Notifications view'''
