@@ -136,17 +136,19 @@
         </span>
       </p>
   
-      <p class="offer">The total cost of the workshop is <b> GHC{{admission.application.course.price|intcomma}} for Ghanaians {% if  admission.application.course.fprice > 0 %} (USD{{admission.application.course.fprice|intcomma}} for Foreign Applicants) {% endif %} </b>. 
+      <p class="offer">The total cost of the workshop is <b> GHC{{admission.application.course.price|intcomma}} for Ghanaians.</b>. 
         Please notify the Institute of your acceptance and participation in this workshop in writing or by email 
-        as soon as possible (<b>Email</b>:alet@gimpa.edu.gh).</p>
+        as soon as possible (<b>Email</b>:alet@gimpa.edu.gh). {% if admission.application.course.residential_fees > 0 %} <br>There is an optional accommodation for Ghanaian applicants at a fee of <b>GHC{{admission.application.course.residential_fees|intcomma}}.</b>{% endif %} </p>
   
-      <p>Your student identification (ID) number is <b>{{admission.application.application_id}}</b> once you accept the offer.</p>
+      <p>Your tentative student identification (ID) number is <b>{{admission.application.application_id}}</b> once you accept the offer.</p>
   
       <p class="details"><b>Start Date:</b> {{admission.application.course.start_date|date:"l d F Y"}}<br>
       <b>Time:</b> {{admission.application.course.class_time}}<br>
       <b>Venue:</b> GIMPA Executive Conference Centre (GECC)</p>
   
-      <p class="">The Course fee is <b>(US$4,200)</b> which covers tuition, meals, course materials, fieldtrip, recreational trip & accommodation.</p>
+      {% if admission.application.course.fprice > 0 %}
+      <p class="">The Course fee for foreigners is <b>USD{{admission.application.course.fprice|intcomma}}</b> which covers tuition, meals, course materials, fieldtrip, recreational trip & accommodation.</p>
+      {% endif %}
   
       <p class="">Payment of the course fees should be made using your Student ID Number into the Institute’s bank account quoted below.</p>
   
