@@ -1,5 +1,5 @@
 import csv
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse
@@ -12,9 +12,10 @@ from dashboard.models import Image, ImageCategory
 from gtccore.library.decorators import StaffLoginRequired
 
 
-class ImageCategoriesView(View):
+class ImageCategoriesView(PermissionRequiredMixin, View):
     '''Course categories view'''
     template = 'dashboard/pages/image_categories.html'
+    permission_required = ['dashboard.view_imagecategory']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -30,9 +31,13 @@ class ImageCategoriesView(View):
         return render(request, self.template, context)
     
 
-class CreateUpdateImageCategoryView(View):
+class CreateUpdateImageCategoryView(PermissionRequiredMixin, View):
     '''Create and update course category view'''
     template = 'dashboard/pages/create-update-image-category.html'
+    permission_required = [
+        'dashboard.add_imagecategory', 
+        'dashboard.change_imagecategory'
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -65,8 +70,9 @@ class CreateUpdateImageCategoryView(View):
                 return redirect('dashboard:img_category')
     
 
-class ImagesView(View):
+class ImagesView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/images.html'
+    permission_required = ['dashboard.view_image']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -82,8 +88,9 @@ class ImagesView(View):
         return render(request, self.template, context)
     
 
-class AddImages(View):
+class AddImages(PermissionRequiredMixin, View):
     template = 'dashboard/pages/add-images.html'
+    permission_required = ['dashboard.add_image']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -113,8 +120,9 @@ class AddImages(View):
         messages.error(request, 'Something went wrong.')
         return redirect('dashboard:images')
     
-class DeleteImageCategoryView(View):
+class DeleteImageCategoryView(PermissionRequiredMixin, View):
     '''Delete course category view'''
+    permission_required = ['dashboard.delete_imagecategory']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -127,8 +135,9 @@ class DeleteImageCategoryView(View):
         messages.error(request, 'Category Does Not Exist.')
         return redirect('dashboard:img_category')
     
-class DeleteImageView(View):
+class DeleteImageView(PermissionRequiredMixin, View):
     '''Delete course view'''
+    permission_required = ['dashboard.delete_image']
     
     @method_decorator(StaffLoginRequired)
     def get(self, request):
