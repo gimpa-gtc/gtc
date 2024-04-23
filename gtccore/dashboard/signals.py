@@ -36,6 +36,8 @@ def extract_applicant(sender, instance, created, **kwargs):
 @receiver(post_save, sender=CustomCourseRequest)
 def notify_custom_course_requester(sender, instance, created, **kwargs):
     '''Send the notification to applicants upon saving of notification'''
+    if not created:
+        return
     msg = f"Hello {instance.name}, \nYour request for a custom course has been received. We will get back to you shortly."
     send_sms(SENDER_ID, msg, [str(instance.phone)])
     return True
@@ -86,6 +88,8 @@ def notify_applicant_on_admission(sender, instance, created, **kwargs):
 @receiver(post_save, sender=CustomCourseRequest)
 def notify_custom_course_admin(sender, instance, created, **kwargs):
     '''Send the notification to applicants upon saving of notification'''
+    if not created:
+        return
     msg = f"Hello Admin, \nA new request for a custom course has been received. Please check the admin panel for details."
     admins = User.objects.filter(is_staff=True)
     receivers = [str(admin.prefered_notification_phone) if admin.prefered_notification_phone else admin.phone for admin in admins]
