@@ -5,9 +5,11 @@ from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
 
-from dashboard.forms import ApplicationForm, ContactUsForm, CustomCourseReguestForm, PaymentForm
-from dashboard.models import (Admission, Application, Comment, Course, CourseCategory,
-                              Facilitator, Faq, Image, ImageCategory, Testimonial)
+from dashboard.forms import (ApplicationForm, ContactUsForm,
+                             CustomCourseReguestForm, PaymentForm)
+from dashboard.models import (Admission, Application, Comment, Course,
+                              CourseCategory, Facilitator, Faq, Image,
+                              ImageCategory, Testimonial)
 from gtccore.library.constants import PaymentStatus
 
 
@@ -291,6 +293,8 @@ class DownloadAdmissionLetter1View(View):
         return response
     
 import datetime
+
+
 class DownloadAdmissionLetterView(View):
     template = 'website/admission_letter.html'
 
