@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
 from django.utils.decorators import method_decorator
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from dashboard.forms import ApplicationForm
 from dashboard.models import Admission, Applicant, Application, Course, CourseCategory
 from gtccore.library.constants import ApplicationStatus
@@ -14,9 +14,10 @@ from gtccore.library.decorators import StaffLoginRequired
 from gtccore.library.logs import log_user_activity
 
 
-class ApplicationsView(View):
+class ApplicationsView(PermissionRequiredMixin, View):
     '''Applications view'''
     template = 'dashboard/pages/applications.html'
+    permission_required = ['dashboard.view_application']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -60,15 +61,17 @@ class ApplicationsView(View):
         return render(request, self.template, context)
 
 
-class CreateApplicationView(View):
+class CreateApplicationView(PermissionRequiredMixin, View):
     '''Create application view'''
     template = 'dashboard/pages/create-application.html'
+    permission_required = [
+        'dashboard.add_application',
+        'dashboard.change_application',
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
         courses = Course.objects.all().order_by('title')
-        # application_id = request.GET.get('application_id')
-        # application = Application.objects.filter(application_id=application_id).first() # noqa
         context = {
             'courses': courses,
             # 'application': application,
@@ -78,16 +81,13 @@ class CreateApplicationView(View):
 
     @method_decorator(StaffLoginRequired)
     def post(self, request):
-        # application_id = request.POST.get('application_id')
         course_id = request.POST.get('course_id')
         course = Course.objects.filter(id=course_id).first()
-        # application = Application.objects.filter(application_id=application_id).first() # noqa
 
         if not course:
             messages.error(request, 'Invalid Course')
             return redirect('dashboard:create_update_application')
         
-        # form = ApplicationForm(request.POST, request.FILES, instance=application)
         form = ApplicationForm(request.POST, request.FILES)
         if not form.is_valid():
             for k, v in form.errors.items():
@@ -96,20 +96,15 @@ class CreateApplicationView(View):
         new_application = form.save(commit=False)
         new_application.course = course                
         new_application.save()
-        # if application:
-        #     # log user activity
-        #     log_user_activity(request.user, 'Updated application', application, new_application) # noqa
-        #     messages.success(request, 'Application Updated Successfully')
-        # else:
-            # log user activity
         log_user_activity(request.user, 'Created application', None, new_application) # noqa
         messages.success(request, 'Application Created Successfully')
         return redirect('dashboard:applications')
     
 
-class AdmissionsView(View):
+class AdmissionsView(PermissionRequiredMixin, View):
     '''Admissions view'''
     template = 'dashboard/pages/admissions.html'
+    permission_required = ['dashboard.view_admission']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -129,9 +124,12 @@ class AdmissionsView(View):
         return render(request, self.template, context)
 
 
-class GiveAdmissionView(View):
+class GiveAdmissionView(PermissionRequiredMixin, View):
     '''Give admission to applicant'''
     template = 'dashboard/pages/give-admission.html'
+    permission_required = [
+        'dashboard.add_admission',
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -186,9 +184,12 @@ class GiveAdmissionView(View):
             return redirect('dashboard:give_admission')
         
 
-class AdmitOneStudentView(View):
+class AdmitOneStudentView(PermissionRequiredMixin, View):
     '''Admit just one student'''
     template = 'dashboard/pages/admit_one_student.html' 
+    permission_required = [
+        'dashboard.add_admission',
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -214,9 +215,10 @@ class AdmitOneStudentView(View):
         return redirect('dashboard:applications')
 
 
-class ApplicantsView(View):
+class ApplicantsView(PermissionRequiredMixin, View):
     '''applicants view'''
     template = 'dashboard/pages/applicants.html'
+    permission_required = ['dashboard.view_applicant']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -234,8 +236,9 @@ class ApplicantsView(View):
         }
         return render(request, self.template, context)
     
-class DownloadApplicationsView(View):
+class DownloadApplicationsView(PermissionRequiredMixin, View):
     '''Download applications as csv'''
+    permission_required = ['dashboard.view_application']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -261,8 +264,9 @@ class DownloadApplicationsView(View):
             writer.writerow([application.application_id, application.name, application.email, application.phone, application.dob, application.box_address, application.course, application.course.category.name, application.application_status, application.payment_mode, application.get_payment_status(), application.created_at]) # noqa
         return response
     
-class DownloadApplicantsView(View):
+class DownloadApplicantsView(PermissionRequiredMixin, View):
     '''Download applicants as csv'''
+    permission_required = ['dashboard.view_applicant']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -275,8 +279,9 @@ class DownloadApplicantsView(View):
             writer.writerow([applicant.name, applicant.email, applicant.phone, applicant.dob, applicant.box_address, applicant.created_at]) # noqa
         return response
     
-class DownloadAdmissionsView(View):
+class DownloadAdmissionsView(PermissionRequiredMixin, View):
     '''Download admissions as csv'''
+    permission_required = ['dashboard.view_admission']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -290,8 +295,9 @@ class DownloadAdmissionsView(View):
         return response
     
 
-class DeleteApplicationView(View):
+class DeleteApplicationView(PermissionRequiredMixin, View):
     '''Delete application'''
+    permission_required = ['dashboard.delete_application']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -305,8 +311,9 @@ class DeleteApplicationView(View):
         return redirect('dashboard:applications')
     
 
-class DeleteApplicantView(View):
+class DeleteApplicantView(PermissionRequiredMixin, View):
     '''Delete applicant'''
+    permission_required = ['dashboard.delete_applicant']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
