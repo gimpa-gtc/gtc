@@ -1,5 +1,5 @@
 import csv
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse
@@ -12,8 +12,9 @@ from dashboard.models import Cohort, Course, CourseCategory
 from gtccore.library.decorators import StaffLoginRequired
 
 
-class CoursesView(View):
+class CoursesView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/courses.html'
+    permission_required = ['dashboard.view_course']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -62,8 +63,12 @@ class CoursesView(View):
         }
         return render(request, self.template, context)
     
-class CreateUpdateCourseView(View):
+class CreateUpdateCourseView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/create-update-course.html'
+    permission_required = [
+        'dashboard.add_course',
+        'dashboard.change_course'
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -116,10 +121,9 @@ class CreateUpdateCourseView(View):
                 messages.error(request, f"{k}: {v}")
                 return redirect('dashboard:courses')
 
-
-    
-class DownloadCoursesView(View):
+class DownloadCoursesView(PermissionRequiredMixin, View):
     '''Download courses as csv'''
+    permission_required = ['dashboard.view_course']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -147,8 +151,9 @@ class DownloadCoursesView(View):
         return response
     
 
-class DeleteCourseView(View):
+class DeleteCourseView(PermissionRequiredMixin, View):
     '''Delete course view'''
+    permission_required = ['dashboard.delete_course']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -162,8 +167,9 @@ class DeleteCourseView(View):
         return redirect('dashboard:courses')
     
 
-class DeleteCohortView(View):
+class DeleteCohortView(PermissionRequiredMixin, View):
     '''Delete cohort view'''
+    permission_required = ['dashboard.delete_cohort']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
