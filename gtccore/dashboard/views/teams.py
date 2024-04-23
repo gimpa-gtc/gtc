@@ -1,5 +1,5 @@
 import csv
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse
@@ -11,8 +11,9 @@ from django.utils.decorators import method_decorator
 from dashboard.models import Facilitator
 from gtccore.library.decorators import StaffLoginRequired
 
-class TeamsView(View):
+class TeamsView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/teams.html'
+    permission_required = ['dashboard.view_facilitator']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -29,9 +30,13 @@ class TeamsView(View):
         }
         return render(request, self.template, context)
     
-class CreateUpdateTeamView(View):
+class CreateUpdateTeamView(PermissionRequiredMixin, View):
     '''Create or update team'''
     template = 'dashboard/pages/create-update-team.html'
+    permission_required = [
+        'dashboard.add_facilitator',
+        'dashboard.change_facilitator'
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -71,8 +76,9 @@ class CreateUpdateTeamView(View):
             messages.success(request, 'Facilitator created successfully')
         return redirect(reverse('dashboard:teams'))
     
-class DownloadTeamsView(View):
+class DownloadTeamsView(PermissionRequiredMixin, View):
     ''' Download teams as csv'''
+    permission_required = ['dashboard.view_facilitator']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -85,8 +91,9 @@ class DownloadTeamsView(View):
             writer.writerow([facilitator.name, facilitator.title, facilitator.specialization])
         return response
     
-class DeleteTeamView(View):
+class DeleteTeamView(PermissionRequiredMixin, View):
     '''Delete team'''
+    permission_required = ['dashboard.delete_facilitator']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -95,19 +102,3 @@ class DeleteTeamView(View):
         facilitator.delete()
         messages.success(request, 'Facilitator deleted successfully')
         return redirect(reverse('dashboard:teams'))
-    
-
-
-class DeleteTeamView(View):
-    '''Delete team'''
-
-    @method_decorator(StaffLoginRequired)
-    def get(self, request):
-        member_id = request.GET.get('member_id')
-        member = Facilitator.objects.filter(id=member_id).first()
-        if member:
-            member.delete()
-            messages.success(request, 'Member Deleted Successfully.')
-            return redirect('dashboard:teams')
-        messages.error(request, 'Member Does Not Exist.')
-        return redirect('dashboard:teams')
