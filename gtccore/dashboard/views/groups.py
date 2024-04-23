@@ -5,13 +5,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from gtccore.library.decorators import StaffLoginRequired
 
 
-class GroupsView(View):
+class GroupsView(PermissionRequiredMixin, View):
     '''View for managing user groups and permissions in the system'''
     template = 'dashboard/pages/groups.html'
+    permission_required = ['auth.view_group']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -27,9 +28,10 @@ class GroupsView(View):
         return render(request, self.template, context)
     
 
-class CreateUpdateGroupView(View):
+class CreateUpdateGroupView(PermissionRequiredMixin, View):
     '''View for creating and updating user groups in the system'''
     template = 'dashboard/pages/create_update_group.html'
+    permission_required = ['auth.add_group', 'auth.change_group']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -57,9 +59,10 @@ class CreateUpdateGroupView(View):
         return redirect('dashboard:groups')
     
 
-class UpdatePermissionsToGroupView(View):
+class UpdatePermissionsToGroupView(PermissionRequiredMixin, View):
     '''CBV for updating permissions to a group'''
     template = 'dashboard/pages/update_permissions.html'
+    permission_required = ['auth.change_group']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -94,8 +97,9 @@ class UpdatePermissionsToGroupView(View):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-class DeleteGroupView(View):
+class DeleteGroupView(PermissionRequiredMixin, View):
     '''CBV for deleting a group'''
+    permission_required = ['auth.delete_group']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
