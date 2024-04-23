@@ -6,15 +6,16 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 from django.utils.decorators import method_decorator
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from dashboard.forms import CohortForm, CourseCategoryForm
 from dashboard.models import Cohort, CourseCategory
 from gtccore.library.decorators import StaffLoginRequired
 
 
-class CourseCategoriesView(View):
+class CourseCategoriesView(PermissionRequiredMixin, View):
     '''Course categories view'''
     template = 'dashboard/pages/course_categories.html'
+    permission_required = ['dashboard.view_coursecategory']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -30,9 +31,13 @@ class CourseCategoriesView(View):
         return render(request, self.template, context)
     
 
-class CreateUpdateCourseCategoryView(View):
+class CreateUpdateCourseCategoryView(PermissionRequiredMixin, View):
     '''Create and update course category view'''
     template = 'dashboard/pages/create-update-course-category.html'
+    permission_required = [
+        'dashboard.add_coursecategory', 
+        'dashboard.change_coursecategory'
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -64,8 +69,9 @@ class CreateUpdateCourseCategoryView(View):
                 messages.error(request, f"{k}: {v}")
                 return redirect('dashboard:course_categories')
     
-class DownloadCategoriesView(View):
+class DownloadCategoriesView(PermissionRequiredMixin, View):
     '''Download categories as csv'''
+    permission_required = ['dashboard.view_coursecategory']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -79,8 +85,9 @@ class DownloadCategoriesView(View):
         return response
     
 
-class CohortsView(View):
+class CohortsView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/cohorts.html'
+    permission_required = ['dashboard.view_cohort']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -97,8 +104,12 @@ class CohortsView(View):
         return render(request, self.template, context)
     
 
-class CreateUpdateCohortView(View):
+class CreateUpdateCohortView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/create-update-cohort.html'
+    permission_required = [
+        'dashboard.add_cohort',
+        'dashboard.change_cohort'
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -133,8 +144,9 @@ class CreateUpdateCohortView(View):
                 messages.error(request, f"{k}: {v}")
                 return redirect('dashboard:cohorts')
     
-class DownloadCohortView(View):
+class DownloadCohortView(PermissionRequiredMixin, View):
     '''Download cohorts as csv'''
+    permission_required = ['dashboard.view_cohort']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
