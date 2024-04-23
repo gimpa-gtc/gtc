@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from accounts.models import User
 
-from gtccore.library.services import send_sms
+from gtccore.library.services import send_mail, send_sms
 from gtccore.settings import SENDER_ID
 
 from .models import (Admission, Applicant, Application, CustomCourseRequest)
@@ -57,12 +57,21 @@ def notify_coordinator(sender, instance, created, **kwargs):
         return
     coordinator_email = instance.course.category.coordinator_email
     coordinator_phone = instance.course.category.coordinator_phone
-    msg = f"New Application!\n\nDear Coordinator, \nA new application has been received for the course {instance.course.title}. \n\nApplicant: {instance.name} \nEmail: {instance.email} \nPhone: {instance.phone} \n\nApplication ID: {instance.application_id}\n\nThanks!"
+    msg = f"Dear Coordinator, \nA new application has been received for the course {instance.course.title}. \n\nApplicant: {instance.name} \nEmail: {instance.email} \nPhone: {instance.phone} \n\nApplication ID: {instance.application_id}\n\nThanks!"
     if coordinator_phone is not None and coordinator_phone != '':
         send_sms(SENDER_ID, msg, [str(coordinator_phone)])
 
     if coordinator_email is not None and coordinator_email != '':
-        pass
+        send_mail([coordinator_email], 'New Application', msg)
+    return True
+
+@receiver(post_save, sender=Application)
+def notify_team_on_new_application(sender, instance, created, **kwargs):
+    '''Notify the team via their unified official mail'''
+    if not(created):
+        return
+    msg = f"Hi Team!, \nA new application has been received for the course {instance.course.title}. \n\nApplicant: {instance.name} \nEmail: {instance.email} \nPhone: {instance.phone} \n\nApplication ID: {instance.application_id}\n\nThanks!"
+    send_mail(["trainingandconsulting@gimpa.edu.gh"], 'New Application', msg)
     return True
 
 @receiver(post_save, sender=Admission)
