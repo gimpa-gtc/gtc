@@ -1,5 +1,5 @@
 import csv
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse
@@ -13,8 +13,9 @@ from dashboard.models import Facilitator
 from gtccore.library.decorators import StaffLoginRequired
 
 
-class FacilitorsView(View):
+class FacilitorsView(PermissionRequiredMixin, View):
     template = 'dashboard/pages/facilitors.html'
+    permission_required = ['dashboard.view_facilitator']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -32,9 +33,13 @@ class FacilitorsView(View):
         return render(request, self.template, context)
     
 
-class CreateUpdateFacilitatorView(View):
+class CreateUpdateFacilitatorView(PermissionRequiredMixin, View):
     '''Create or update facilitator'''
     template = 'dashboard/pages/create-update-facilitator.html'
+    permission_required = [
+        'dashboard.add_facilitator',
+        'dashboard.change_facilitator'
+    ]
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
@@ -64,8 +69,9 @@ class CreateUpdateFacilitatorView(View):
         return redirect(redirect_url)
 
 
-class DownloadFacilitatorsView(View):
+class DownloadFacilitatorsView(PermissionRequiredMixin, View):
     '''Download facilitators as csv'''
+    permission_required = ['dashboard.view_facilitator']
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
