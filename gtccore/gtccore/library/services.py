@@ -1,9 +1,11 @@
 import array
+
 import requests
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
 from gtccore import settings
+
 
 def send_sms(sender: str, message: str, recipients: array.array):
     '''Sends an SMS to the specified recipients'''
