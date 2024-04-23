@@ -14,3 +14,4 @@ from .faqs import *
 from .testimonials import *
 from .teams import *
 from .gallery import *
+from .groups import *
