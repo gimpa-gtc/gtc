@@ -10,7 +10,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-nptfgn701j3y_k&)5@b$m32!20*ss64)wsp3wowa=21dip+nxm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = GtcCred().debug_value()
+# DEBUG = GtcCred().debug_value()
+DEBUG = True
 
 ALLOWED_HOSTS = ["*", "gtc.gimpa.edu.gh"]
 
