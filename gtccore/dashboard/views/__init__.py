@@ -15,3 +15,4 @@ from .settings import *
 from .teams import *
 from .testimonials import *
 from .users import *
+from .error import *
