@@ -33,6 +33,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # customer error handling middleware
+    'dashboard.middleware.error.CustomErrorMiddleware',
+    # 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
