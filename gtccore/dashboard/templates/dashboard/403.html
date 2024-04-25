@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIMPA Training and Consulting</title>
+
+    <!-- load static -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'website/css/error.css' %}">
+</head>
+<body>
+    <div class="text-wrapper">
+        <div class="title" data-content="404">
+            403 - ACCESS DENIED
+        </div>
+    
+        <div class="subtitle">
+            Oops, You don't have permission to access this page.
+        </div>
+        <div class="isi">
+    Status code 403 responses are the result of the web server being configured to deny access, for some reason, to the requested resource by the client.
+             </div>
+    
+        <div class="buttons">
+            <a class="button" href="{% url 'website:home' %}">Go to homepage</a>
+        </div>
+    </div>
+</body>
+</html>
