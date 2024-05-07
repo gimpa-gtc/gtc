@@ -28,10 +28,21 @@
                                     <input type="number" class="form-control" value="{{course.price}}" placeholder="Course Price" name="price">
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="col-lg-3 col-md-3 col-sm-12">
                                 <div class="form-group">
-                                    <label>Foreign Price(USD) (For Foreigners) (0 means n/a)</label>
+                                    <label>Price (For Foreigners)</label>
                                     <input type="number" class="form-control" value="{{course.fprice}}" placeholder="Course Price (Foreigners)" name="fprice">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="form-group">
+                                    <label>Foreign Price Currency</label>
+                                    <select name="fprice_currency" class="form-control">
+                                        <option value="USD" {% if course.fprice_currency == 'USD' %} selected {% endif %}>USD</option>
+                                        <option value="GBP" {% if course.fprice_currency == 'GBP' %} selected {% endif %}>GBP</option>
+                                        <option value="EUR" {% if course.fprice_currency == 'EUR' %} selected {% endif %}>EUR</option>
+                                        <option value="GHC" {% if course.fprice_currency == 'GHC' %} selected {% endif %}>GHC</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
