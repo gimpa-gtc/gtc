@@ -85,7 +85,7 @@
                                         <span class="course-info-title">
                                             <i
                                                 class="fa fa-money font-26 vertical-align-middle text-theme-colored2 mr-10"></i>Course Price:</span>
-                                        <span class="course-info-details">GHC{{course.price|intcomma}} {% if course.fprice > 0 %} (USD{{course.fprice|intcomma}} For Foreign Applicants) {% endif %} </span>
+                                        <span class="course-info-details">GHC{{course.price|intcomma}} {% if course.fprice > 0 %} ({{course.fprice_currency}}{{course.fprice|intcomma}} For Foreign Applicants) {% endif %} </span>
                                     </li>
                                     <li>
                                         <span class="course-info-title">
