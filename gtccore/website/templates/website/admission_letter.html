@@ -147,7 +147,7 @@
       <b>Venue:</b> GIMPA Executive Conference Centre (GECC)</p>
   
       {% if admission.application.course.fprice > 0 %}
-      <p class="">The Course fee for foreigners is <b>USD{{admission.application.course.fprice|intcomma}}</b> which covers tuition, meals, course materials, fieldtrip, recreational trip & accommodation.</p>
+      <p class="">The Course fee for foreigners is <b>{{admission.application.course.fprice_currency}}{{admission.application.course.fprice|intcomma}}</b> which covers tuition, meals, course materials, fieldtrip, recreational trip & accommodation.</p>
       {% endif %}
   
       <p class="">Payment of the course fees should be made using your Student ID Number into the Institute’s bank account quoted below.</p>
