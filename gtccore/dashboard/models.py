@@ -58,7 +58,8 @@ class Course(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     price = models.IntegerField(default=0)
-    fprice = models.IntegerField(default=0) #for foreign students | given in USD
+    fprice = models.IntegerField(default=0) #foreign students | default in USD
+    fprice_currency = models.CharField(max_length=10, default='USD')
     residential_fees = models.IntegerField(default=0) #for Ghanaian students | given in GHC
     duration = models.CharField(max_length=100, default='1 MONTH')
     class_days = models.CharField(max_length=100, default='')
