@@ -1,0 +1,51 @@
+{% extends 'base/primary_base.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- Start main-content -->
+<div class="main-content">
+    <!-- Section: inner-header -->
+    <section class="inner-header divider layer-overlay overlay-theme-colored-7"
+        data-bg-img="{% static 'website/images/bg/bg1.jpg' %}">
+        <div class="container pt-120 pb-60">
+            <!-- Section Content -->
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="secondary-text-color font-36">Enrollment</h2>
+                        <ol class="breadcrumb text-left mt-10 white">
+                            <li><a href="{% url 'website:home' %}">Home</a></li>
+                            <li><a href="{% url 'website:home' %}#about-gtc">Courses</a></li>
+                            <li class="active">Duplicate Enrollment</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider: Contact -->
+    <section class="divider">
+        <div class="container pt-50 pb-70">
+            <div class="row pt-10">
+                <div class="col-md-12">
+                    <h4 class="mt-0 mb-30 line-bottom-theme-colored-2">We found an existing application for you</h4>
+                    <!--  -->
+                    <small class="secondary-text-color mb-5">Click the button below to track your application status.</small> 
+                    <br> <br>
+                    <!-- Contact Form -->
+                    <form id="contact_form" name="contact_form" class="" action="{% url 'website:application_status' %}" method="GET">
+                        <input type="hidden" name="application_id" value="{{duplicate.application_id}}">
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-flat btn-default primary-color text-white bg-hover-theme-colored mr-5" data-loading-text="Please wait...">Check Status</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- end main-content -->
+{% endblock %}

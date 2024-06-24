@@ -84,8 +84,10 @@
                         </div>
                     </div>
                     <hr>
-                    <!--  -->
+                    <!-- NOTE: UNCOMMENT THE ONLINE PAYMENT IMPLEMENTATION -->
+                    {% comment %}
                     <small class="secondary-text-color mb-5">Make sure you've verified the application before making payment.</small> 
+                    <!--  -->
                     <br> <br>
                     <!-- Contact Form -->
                     <form id="contact_form" name="contact_form" action="{% url 'website:make_payment' %}" method="POST">
@@ -120,6 +122,7 @@
                         </div>
                     </form>
                     <!--  -->
+                    {% endcomment %}
                     <hr>
                     <small class="secondary-text-color mb-5">Already paid at the Bank? Go ahead and upload the receipt.</small> 
                     <br> <br>

@@ -192,6 +192,7 @@ class EnrollView(View):
     '''Enroll page view.'''
     template = 'website/enroll.html'
     template_make_payment = 'website/online-payment.html'
+    template_duplicate = 'website/duplicate-enrollment.html'
 
     def get(self, request):
         course_id = request.GET.get('course_id')
@@ -210,6 +211,18 @@ class EnrollView(View):
         course = Course.objects.filter(id=course_id).first()
         if course is None:
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        
+        # check for duplicate enrollment
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        duplicate_application = Application.objects.filter(
+            email=email,
+            phone=phone,
+            course=course
+        ).first()
+        if duplicate_application is not None:
+            context = {"duplicate": duplicate_application}
+            return render(request, self.template_duplicate, context)
 
         if form.is_valid():
             application = form.save(commit=False)
