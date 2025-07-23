@@ -277,34 +277,6 @@ class UploadPaymentReceiptView(View):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-class DownloadAdmissionLetter1View(View):
-    '''Download Admission Letter page view.'''
-    template = 'website/download_admission_letter.html'
-
-    def get(self, request):
-
-        # get the admission
-        application_id = request.GET.get('application_id')
-        print(f"Value of application_id from View: {application_id}")
-        admission = Admission.objects.filter(application__application_id=application_id).first()
-        print(f"Value of admission from View: {admission}")
-        pdf = generate_admission_letter(admission)
-
-        # Create a BytesIO buffer to store the PDF content
-        pdf_buffer = BytesIO()
-
-        # Output the PDF to the BytesIO buffer
-        pdf.output(pdf_buffer)
-
-        # Seek to the beginning of the buffer
-        pdf_buffer.seek(0)
-
-        # Create a response
-        response = FileResponse(pdf_buffer)
-        response['Content-Type'] = 'application/pdf'
-        response['Content-Disposition'] = 'attachment; filename="admission_letter.pdf"'
-        return response
-    
 import datetime
 
 
@@ -316,7 +288,6 @@ class DownloadAdmissionLetterView(View):
         admission = Admission.objects.filter(application__application_id=application_id).first()
         todays_date = datetime.datetime.now()
 
-        print(f"Value of todays_date from View: {todays_date}")
         context = {
             'todays_date': todays_date,
             'admission': admission,
