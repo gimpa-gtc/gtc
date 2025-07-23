@@ -29,8 +29,3 @@ urlpatterns += [
     path('make-payment/', views.MakePaymentView.as_view(), name='make_payment'),
     path('upload-receipt/', views.UploadPaymentReceiptView.as_view(), name='upload_receipt'), #noqa
 ]
-
-# debug
-# urlpatterns += [
-#     path('print-sample-letter/', views.DownloadSampleLetterView.as_view(), name='sample_letter'), #noqa
-# ]
