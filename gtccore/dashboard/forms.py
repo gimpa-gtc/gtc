@@ -16,7 +16,7 @@ class FacilitatorForm(forms.ModelForm):
     '''Facilitator form.'''
     class Meta:
         model = Facilitator
-        fields = ['name', 'title', 'image', 'specialization']
+        fields = ['name', 'title', 'image', 'specialization', 'precedence']
 
 
 class CohortForm(forms.ModelForm):

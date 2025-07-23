@@ -443,6 +443,7 @@ class Facilitator(models.Model): #GTC TEAM
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to='facilitators')
+    precedence = models.IntegerField(default=0) # used to order the facilitators
     specialization = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

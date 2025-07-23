@@ -19,7 +19,7 @@ class HomeView(View):
 
     def get(self, request):
         popular_courses = Course.objects.all().order_by('-id')[:5]
-        team = Facilitator.objects.all()
+        team = Facilitator.objects.all().order_by('precedence')  # order by precedence
         testimonials = Testimonial.objects.all()
         images = Image.objects.all()
 
