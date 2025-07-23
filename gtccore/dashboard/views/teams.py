@@ -56,6 +56,8 @@ class CreateUpdateTeamView(PermissionRequiredMixin, View):
         name = request.POST.get('name')
         title = request.POST.get('title')
         specialization = request.POST.get('specialization')
+        precedence = request.POST.get('precedence', 0)
+        precedence = int(precedence) if precedence else 0
         image = request.FILES.get('image')
         print(image)
         team_id = request.POST.get('team_id')
@@ -64,6 +66,7 @@ class CreateUpdateTeamView(PermissionRequiredMixin, View):
             facilitator.name = name
             facilitator.title = title
             facilitator.specialization = specialization
+            facilitator.precedence = precedence
             if image:
                 facilitator.image = image
             facilitator.save()
