@@ -2,8 +2,23 @@
 // Handles rendering of the Applications Analysis chart on the dashboard page
 
 document.addEventListener('DOMContentLoaded', function () {
-    if (typeof applicationsAnalysis !== 'undefined' && document.getElementById('dashboard_applications_chart')) {
-        const ctx = document.getElementById('dashboard_applications_chart').getContext('2d');
+    const chartEl = document.getElementById('dashboard_applications_chart');
+    const errorEl = document.getElementById('dashboard_chart_error');
+    let applicationsAnalysis = null;
+    try {
+        applicationsAnalysis = JSON.parse(document.getElementById('dashboard_applications_data').textContent);
+        console.log('Parsed chart data:', applicationsAnalysis);
+    } catch (e) {
+        console.error('Error parsing chart data:', e);
+        if (errorEl) errorEl.style.display = 'block';
+        return;
+    }
+    if (chartEl && applicationsAnalysis) {
+        if (!applicationsAnalysis.labels || !applicationsAnalysis.applications || !applicationsAnalysis.admissions) {
+            if (errorEl) errorEl.style.display = 'block';
+            return;
+        }
+        const ctx = chartEl.getContext('2d');
         new Chart(ctx, {
             type: 'line',
             data: {

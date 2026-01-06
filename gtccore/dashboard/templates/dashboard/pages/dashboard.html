@@ -160,7 +160,9 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div id="dashboard_applications_chart"></div>
+                        <canvas id="dashboard_applications_chart" height="120"></canvas>
+                        {{ applications_analysis|json_script:"dashboard_applications_data" }}
+                        <div id="dashboard_chart_error" style="color:red; display:none;">Chart data missing or invalid.</div>
                     </div>
                 </div>
             </div>
@@ -174,8 +176,5 @@
 {% block extra_js %}
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const applicationsAnalysis = {{ applications_analysis|safe }};
-</script>
 <script src="{% static 'dashboard/assets/js/dashboard_chart.js' %}"></script>
 {% endblock %}
